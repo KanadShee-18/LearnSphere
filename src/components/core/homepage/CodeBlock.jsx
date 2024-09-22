@@ -1,7 +1,7 @@
 import React from "react";
 import CTAButton from "./CTAButton";
-import HighlightText from "./HighlightText";
 import { FaArrowRight } from "react-icons/fa6";
+import { TypeAnimation } from "react-type-animation";
 
 const CodeBlock = ({
     position,
@@ -31,10 +31,44 @@ const CodeBlock = ({
                         </div>
                     </CTAButton>
                     <CTAButton active={ctaBtn2.active} linkto={ctaBtn2.linkto}>
-                        <div className="flex gap-3 items-center font-poppins">
+                        <div className="flex gap-3 items-center font-popp">
                             {ctaBtn2.btnTxt}
                         </div>
                     </CTAButton>
+                </div>
+            </div>
+
+            {/* Section: 2 */}
+            <div className="flex relative h-fit flex-row text-sm w-full py-2 lg:w-[500px] bg-slate-600 bg-opacity-25 rounded-md">
+                {/* BG Gradient */}
+                {backgroundGradient}
+
+                <div className="text-center flex flex-col w-[10%] text-slate-400 font-inter z-10">
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>5</p>
+                    <p>6</p>
+                    <p>7</p>
+                    <p>8</p>
+                    <p>9</p>
+                    <p>10</p>
+                    <p>11</p>
+                </div>
+                <div
+                    className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} px-2`}
+                >
+                    <TypeAnimation
+                        sequence={[codeBlock, 1000, ""]}
+                        repeat={Infinity}
+                        cursor={true}
+                        style={{
+                            whiteSpace: "pre-line",
+                            display: "block",
+                        }}
+                        omitDeletionAnimation={true}
+                    />
                 </div>
             </div>
         </div>

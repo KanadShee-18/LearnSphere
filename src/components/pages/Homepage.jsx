@@ -46,23 +46,42 @@ const Homepage = () => {
                     />
                 </div>
 
-                <div className="relative videoContainer my-12 mx-auto w-3/4">
-                    <video
-                        src={banner1}
-                        muted
-                        loop
-                        autoPlay
-                        className="w-full"
-                    ></video>
+                {/* <div className="relative my-12 mx-auto w-3/4">
+                    <div className="absolute inset-0 videoGradient z-0"></div>
+
+                    <div className="videoContainer z-10">
+                        <video
+                            src={banner1}
+                            muted
+                            loop
+                            autoPlay
+                            className="w-full videoFile"
+                        ></video>
+                    </div>
+                </div> */}
+                <div className="relative my-12 mx-auto w-3/4">
+                    {/* Gradient Background */}
+                    <div className="absolute videoGradient z-0"></div>
+
+                    {/* Video Container */}
+                    <div className="videoContainer relative z-10">
+                        <video
+                            src={banner1}
+                            muted
+                            loop
+                            autoPlay
+                            className="w-full videoFile"
+                        ></video>
+                    </div>
                 </div>
 
                 {/* Code Section: 1 */}
                 <div>
                     <CodeBlock
-                        position={"lg:flex-row"}
+                        position={"sm:flex-row flex-col"}
                         heading={
                             <div className="text-4xl font-semibold font-inter">
-                                Empower Your
+                                Empower your
                                 <HighlightText text={"coding potential"} />
                                 &nbsp;with our online courses
                             </div>
@@ -80,8 +99,41 @@ const Homepage = () => {
                             linkto: "/login",
                             active: false,
                         }}
-                        codeBlock={`<<!DOCTYPE html>\n<html>\n<head><title>LearnCoding</title><linkrel="stylesheet"href="style.css">\n<head/>\n`}
-                        codeColor={"text-caribbeangreen-100"}
+                        codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>LearnCoding</title> <linkrel="stylesheet"href="style.css">\n<head/>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav><a href="/one">One</a><a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>`}
+                        codeColor={"text-caribbeangreen-50"}
+                        backgroundGradient={
+                            <div className="codeblock1 absolute"></div>
+                        }
+                    />
+                </div>
+                {/* Code Section: 2 */}
+                <div>
+                    <CodeBlock
+                        position={"sm:flex-row-reverse flex-col"}
+                        heading={
+                            <div className="text-4xl font-semibold font-inter">
+                                Learn & start
+                                <HighlightText text={"coding in seconds"} />
+                            </div>
+                        }
+                        subHeading={
+                            "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
+                        }
+                        ctaBtn1={{
+                            btnTxt: "Continue Lesson",
+                            linkto: "/login",
+                            active: true,
+                        }}
+                        ctaBtn2={{
+                            btnTxt: "Learn More",
+                            linkto: "/login",
+                            active: false,
+                        }}
+                        codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>LearnCoding</title> <linkrel="stylesheet"href="style.css">\n<head/>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav><a href="/one">One</a><a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>`}
+                        codeColor={"text-caribbeangreen-50"}
+                        backgroundGradient={
+                            <div className="codeblock2 absolute"></div>
+                        }
                     />
                 </div>
             </div>
