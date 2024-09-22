@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 } */
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+.videoContainer {
+    box-shadow: 10px 10px 1px rgb(4, 135, 135);
+}
