@@ -1,10 +1,15 @@
 import React from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRight, FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import HighlightText from "../core/homepage/HighlightText";
 import CTAButton from "../core/homepage/CTAButton";
 import banner1 from "../../assets/Images/banner1.mp4";
 import CodeBlock from "../core/homepage/CodeBlock";
+import TimeLineSection from "../core/homepage/TimeLineSection";
+import LearningLanguageSection from "../core/homepage/LearningLanguageSection";
+import InstructorSection from "../core/homepage/InstructorSection";
+import Footer from "../../components/common/Footer";
+import ExploreMore from "../core/homepage/ExploreMore";
 
 const Homepage = () => {
     return (
@@ -59,7 +64,7 @@ const Homepage = () => {
                         ></video>
                     </div>
                 </div> */}
-                <div className="relative my-12 mx-auto w-3/4">
+                <div className="relative my-24 mx-auto w-3/4">
                     {/* Gradient Background */}
                     <div className="absolute videoGradient z-0"></div>
 
@@ -136,11 +141,66 @@ const Homepage = () => {
                         }
                     />
                 </div>
+                <ExploreMore />
             </div>
 
             {/* Section: 2 */}
+            <div className="bg-gradient-to-bl sm:mt-32 from-[#c7f5e2] via-[#f0f2f1] to-[#c6f5e2] text-slate-700 section2">
+                <div className="homepage_bg sm:h-[330px] h-[250px]">
+                    <div className="w-11/12 max-w-maxContent h-full flex items-center justify-center gap-5 mx-auto">
+                        <div className="flex flex-row text-white font-inter gap-8">
+                            <CTAButton active={true} linkto={"/signup"}>
+                                <div className="flex flex-row items-center gap-3 text-slate-700">
+                                    Explore Full Catalog
+                                    <FaArrowRightLong />
+                                </div>
+                            </CTAButton>
+                            <CTAButton active={false} linkto={"/signup"}>
+                                <div>Learn More</div>
+                            </CTAButton>
+                        </div>
+                    </div>
+                </div>
+                <div className="mx-auto max-w-maxContent w-11/12 flex flex-col items-center justify-between gap-8 py-20">
+                    <div className="flex sm:flex-row flex-col gap-6">
+                        <div className="font-poppins text-4xl s3ht">
+                            <p className="font-semibold">
+                                Get the skills you need for a{" "}
+                                <HighlightText text={"job that is in demand"} />
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-start gap-5 font-inter font-medium">
+                            <p className="text-start text-sm">
+                                The modern LearnSphere is the dictates its own
+                                terms. Today, to be a competitive specialist
+                                requires more than professional skills.
+                            </p>
+                            <div className="w-[150px]">
+                                <CTAButton
+                                    active={true}
+                                    children={"Learn More"}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <TimeLineSection />
+                    <LearningLanguageSection />
+                </div>
+            </div>
             {/* Section: 3 */}
+
+            <div className="section3 bAT">
+                <div className="w-11/12 max-w-maxContent h-full flex flex-col items-center justify-center gap-5 mx-auto">
+                    <InstructorSection />
+                    {/* Reviews slider */}
+                    <p className="text-4xl text-slate-400 font-inter mb-6">
+                        Reviews from other Learners
+                    </p>
+                </div>
+            </div>
+
             {/* Section: 4 - Footer */}
+            <Footer />
         </div>
     );
 };

@@ -101,3 +101,19 @@ body {
     filter: blur(34px);
     transform: matrix(1, 0, -0.03, 1, 0, 0);
 }
+
+.homepage_bg {
+    background: url("../src/assets/Images/bghome.svg");
+}
+
+.timelineImg {
+    box-shadow: 10px 10px 0px rgb(11, 148, 148);
+}
+
+.instructorImg {
+    box-shadow: -10px -10px 1px rgb(38, 133, 133);
+}
+
+.activeCard {
+    box-shadow: 10px 10px 2px rgb(53, 170, 145);
+}

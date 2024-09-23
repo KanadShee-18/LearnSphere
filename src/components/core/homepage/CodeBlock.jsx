@@ -39,7 +39,7 @@ const CodeBlock = ({
             </div>
 
             {/* Section: 2 */}
-            <div className="flex relative h-fit flex-row text-sm w-full py-2 lg:w-[500px] bg-slate-600 bg-opacity-25 rounded-md">
+            <div className="flex relative h-fit flex-row text-sm w-full py-2 md:w-[500px] bg-slate-800 bg-opacity-35 rounded-md">
                 {/* BG Gradient */}
                 {backgroundGradient}
 
