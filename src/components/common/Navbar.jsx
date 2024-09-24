@@ -75,7 +75,7 @@ const Navbar = () => {
                                                             <Link
                                                                 to={`${subLink.name}`}
                                                                 key={index}
-                                                                className="w-full h-14 rounded-lg bg-[#52628b] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start p-2 text-start font-medium font-poppins text-sm text-[#e3fdff] shadow-md shadow-[#435275]"
+                                                                className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start p-2 text-start font-medium font-poppins text-sm text-[#e3fdff] shadow-md shadow-[#435275]"
                                                             >
                                                                 <p className="w-full h-full transition-all ease-in-out duration-500 hover:translate-x-2 flex items-center drop-shadow-xl justify-start">
                                                                     {
@@ -124,14 +124,14 @@ const Navbar = () => {
                     )}
                     {token === null && (
                         <Link to={"/login"}>
-                            <button className="border-[1px] border-teal-900 bg-slate-800 bg-opacity-65 px-4 py-2 hover:bg-slate-700 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-200 rounded-md">
+                            <button className="border-[1px] border-cyan-700 bg-slate-800 bg-opacity-65 px-4 py-2 hover:bg-cyan-700 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-50 rounded-md">
                                 Log in
                             </button>
                         </Link>
                     )}
                     {token === null && (
                         <Link to={"/signup"}>
-                            <button className="border-[1px] border-teal-900 bg-slate-800 bg-opacity-65 px-4 py-2 hover:bg-slate-700 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-200 rounded-md">
+                            <button className="border-[1px] border-cyan-700 bg-slate-800 bg-opacity-65 px-4 py-2 hover:bg-cyan-700 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-50 rounded-md">
                                 Sign up
                             </button>
                         </Link>

@@ -1,15 +1,15 @@
 import React from "react";
-import { FaArrowRight, FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import HighlightText from "../core/homepage/HighlightText";
-import CTAButton from "../core/homepage/CTAButton";
-import banner1 from "../../assets/Images/banner1.mp4";
-import CodeBlock from "../core/homepage/CodeBlock";
-import TimeLineSection from "../core/homepage/TimeLineSection";
-import LearningLanguageSection from "../core/homepage/LearningLanguageSection";
-import InstructorSection from "../core/homepage/InstructorSection";
-import Footer from "../../components/common/Footer";
-import ExploreMore from "../core/homepage/ExploreMore";
+import HighlightText from "../components/core/homepage/HighlightText";
+import CTAButton from "../components/core/homepage/CTAButton";
+import banner1 from "../assets/Images/banner1.mp4";
+import CodeBlock from "../components/core/homepage/CodeBlock";
+import TimeLineSection from "../components/core/homepage/TimeLineSection";
+import LearningLanguageSection from "../components/core/homepage/LearningLanguageSection";
+import InstructorSection from "../components/core/homepage/InstructorSection";
+import Footer from "../components/common/Footer";
+import ExploreMore from "../components/core/homepage/ExploreMore";
 
 const Homepage = () => {
     return (
