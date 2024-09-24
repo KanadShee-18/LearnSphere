@@ -19,8 +19,10 @@ const Homepage = () => {
             <div className="section1 relative mx-auto flex flex-col w-11/12 items-center text-white justify-between max-w-maxContent">
                 <Link to={"/signup"}>
                     <div className="mx-auto group mt-16 rounded-full bg-slate-800 font-semibold font-playwrite text-slate-300 shadow-sm shadow-slate-500 transition-all duration-200 hover:scale-95">
-                        <div className="flex px-4 rounded-full py-3 flex-row items-center justify-center gap-x-3 transition-all duration-300 group-hover:bg-richblack-700 group-active:bg-slate-700">
-                            <p className="text-sm">Become an Instructor</p>{" "}
+                        <div className="flex px-4 rounded-full py-3 flex-row items-center justify-center gap-x-3 transition-all duration-300 group-hover:bg-slate-900 group-active:bg-slate-600">
+                            <p className="text-sm font-medium">
+                                Become an Instructor
+                            </p>{" "}
                             <FaArrowRightLong />
                         </div>
                     </div>

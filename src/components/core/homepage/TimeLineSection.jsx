@@ -34,10 +34,16 @@ const TimeLineSection = () => {
                 <div className="leftBox flex flex-col gap-9 lg:gap-14 md:w-[45%] w-[90%] text-slate-700 font-inter ">
                     {timeLine.map((el, index) => {
                         return (
-                            <div className="flex flex-row gap-8" key={index}>
-                                <div className="w-12 h-12 bg-white flex items-center shadow-inner shadow-teal-600 rounded-xl justify-center">
+                            <div
+                                className="flex relative flex-row gap-8"
+                                key={index}
+                            >
+                                <div className="w-12 h-12 bg-white flex items-center shadow-inner shadow-teal-800 rounded-xl justify-center">
                                     <img src={el.logo} alt="img1" />
                                 </div>
+                                {index !== timeLine.length - 1 && (
+                                    <div className="absolute left-6 top-12 h-[100%] w-[2px] bg-slate-400 z-0"></div>
+                                )}
                                 <div>
                                     <h2 className="font-bold">{el.heading}</h2>
                                     <p className="text-sm font-semibold text-[#008489]">

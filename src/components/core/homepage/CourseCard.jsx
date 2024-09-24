@@ -9,9 +9,9 @@ const CourseCard = (props) => {
         <div
             className={`w-[280px] flex font-inter flex-col h-[270px] sm:w-[280px] sm:h-[260px] justify-between  ${
                 active
-                    ? "bg-[#ffffff] activeCard"
+                    ? "bg-gradient-to-bl from-[#acd6c5] via-[#e2e7e5] to-[#bde7d6] activeCard"
                     : "bg-slate-800 shadow-md shadow-slate-200"
-            }  hover:cursor-pointer transition-all hover:scale-95 hover:translate-x-2 duration-200`}
+            }  hover:cursor-pointer transition-all hover:scale-95 duration-300`}
         >
             <div className="p-4 flex flex-col gap-y-3">
                 <p
@@ -23,7 +23,7 @@ const CourseCard = (props) => {
                 </p>
                 <p
                     className={`${
-                        active ? "text-slate-500" : "text-richblack-400"
+                        active ? "text-slate-500" : "text-slate-500"
                     } text-sm font-poppins font-medium`}
                 >
                     {desc}

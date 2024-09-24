@@ -43,7 +43,7 @@ const ExploreMore = () => {
                                 currentTab === element
                                     ? "bg-slate-900 text-slate-200 font-semibold"
                                     : "bg-[#14292e] text-slate-400 font-medium"
-                            } rounded-full transition-all cursor-pointer hover:bg-[#19333a] hover:text-slate-300 px-4 py-2 duration-150 active:bg-slate-500`}
+                            } rounded-full transition-all cursor-pointer hover:bg-[#2e484e] hover:text-slate-300 px-4 py-2 duration-150 active:bg-slate-500`}
                             key={index}
                             onClick={() => setMyCards(element)}
                         >
