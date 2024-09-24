@@ -75,7 +75,7 @@ const Navbar = () => {
                                                             <Link
                                                                 to={`${subLink.name}`}
                                                                 key={index}
-                                                                className="w-full h-14 rounded-lg bg-[#546183] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start p-2 text-start font-medium font-poppins text-sm text-[#e3fdff] shadow-md shadow-[#435275]"
+                                                                className="w-full h-14 rounded-lg bg-[#52628b] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start p-2 text-start font-medium font-poppins text-sm text-[#e3fdff] shadow-md shadow-[#435275]"
                                                             >
                                                                 <p className="w-full h-full transition-all ease-in-out duration-500 hover:translate-x-2 flex items-center drop-shadow-xl justify-start">
                                                                     {
