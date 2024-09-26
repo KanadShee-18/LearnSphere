@@ -176,7 +176,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(402).json({
+      return res.status(400).json({
         success: false,
         message: "All fileds are mandatory.",
       });
@@ -210,12 +210,13 @@ exports.login = async (req, res) => {
         httpOnly: true,
       };
       res
-        .status(201)
+        .status(200)
         .cookie("authToken", token, options)
         .json({
           success: true,
           message: "User logged in successfully.",
           loggedUser: {
+            token: token,
             dataUser: {
               data: user,
             },
@@ -223,13 +224,17 @@ exports.login = async (req, res) => {
         });
     } else {
       // password doesn't match
+      const errorMessage =
+        "Password is incorrect. Please re-type the correct password.";
       return res.status(401).json({
         success: false,
-        message: "Password is incorrect. Please re-type the correct password.",
+        message: errorMessage,
       });
     }
   } catch (error) {
-    res.status(400).json({
+    console.log("Error: ", error.message);
+
+    res.status(500).json({
       success: false,
       message: "Some error occurred while login. Please try again.",
     });
