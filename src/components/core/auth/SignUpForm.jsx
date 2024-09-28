@@ -5,6 +5,7 @@ import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkValidData } from "../../../utils/validate";
+import { Link } from "react-router-dom";
 
 import { sendOtp } from "../../../services/operations/authAPI";
 import { ACCOUNT_TYPE } from "../../../utils/constants";
@@ -159,9 +160,9 @@ const SignUpForm = () => {
               className="absolute right-3 top-[38px] z-[10] cursor-pointer"
             >
               {showPassword ? (
-                <IoMdEyeOff fontSize={20} fill="#AFB2BF" />
-              ) : (
                 <IoMdEye fontSize={20} fill="#AFB2BF" />
+              ) : (
+                <IoMdEyeOff fontSize={20} fill="#AFB2BF" />
               )}
             </span>
           </label>
@@ -183,23 +184,28 @@ const SignUpForm = () => {
               className="absolute right-3 top-[38px] z-[10] cursor-pointer"
             >
               {showConfirmPassword ? (
-                <IoMdEyeOff fontSize={20} fill="#AFB2BF" />
-              ) : (
                 <IoMdEye fontSize={20} fill="#AFB2BF" />
+              ) : (
+                <IoMdEyeOff fontSize={20} fill="#AFB2BF" />
               )}
             </span>
           </label>
         </div>
         {errMessage ? (
-          <p className="text-base font-medium text-red-400 font-eduSa">
+          <p className="text-sm font-medium text-red-400 font-poppins">
             {errMessage}
           </p>
         ) : (
           <PassValidator />
         )}
+        <Link to={"/login"}>
+          <p className="mt-1 ml-auto text-sm max-w-max text-cyan-500 hover:underline">
+            Already have an account?
+          </p>
+        </Link>
         <button
           type="submit"
-          className="mt-6 rounded-[8px] bg-teal-500 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600 py-[10px] px-[12px] font-medium text-richblack-900 transition-all duration-150"
+          className="mt-3 rounded-[8px] bg-teal-500 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600 py-[10px] px-[12px] font-medium text-richblack-900 transition-all duration-150"
         >
           Create Account
         </button>

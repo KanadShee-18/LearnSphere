@@ -1,4 +1,5 @@
 const Profile = require("../models/Profile");
+const mongoose = require("mongoose");
 const User = require("../models/User");
 const Course = require("../models/Course");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
@@ -8,45 +9,41 @@ require("dotenv").config();
 exports.updateProfile = async (req, res) => {
   try {
     // Fetch data
-    const { dateOfBirth = "", gender, about = "", contactNumber } = req.body;
+    const {
+      dateOfBirth = "",
+      gender,
+      about = "",
+      contactNumber,
+      profession = "",
+      displayName = "",
+    } = req.body;
     // Get user id from the req.user we have passed through auth middleware
-    // const userId = req.user.id || req.headers.userid;
-    const userId = req.headers.userid;
+    const id = req.user.id;
 
-    // Validate
-    if (!gender || !contactNumber || !userId) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required.",
-      });
-    }
-    // As we don't have profile id so get the user details and from there we have to take profile id
-    const userDetails = await User.findById({ _id: userId }).populate(
-      "additionalDetails"
-    );
-    const profileId = userDetails.additionalDetails;
-    const profileDetails = await Profile.findById(profileId);
+    // Find the profile by id
+    const userDetails = await User.findById(id);
+    const profile = await Profile.findById(userDetails.additionalDetails);
 
-    // Update profile details
-    profileDetails.gender = gender;
-    profileDetails.dateOfBirth = dateOfBirth;
-    profileDetails.about = about;
-    profileDetails.contactNumber = contactNumber;
+    // Update the profile fields
+    profile.dateOfBirth = dateOfBirth;
+    profile.about = about;
+    profile.contactNumber = contactNumber;
+    profile.gender = gender;
+    profile.profession = profession;
+    profile.displayName = displayName;
 
-    await profileDetails.save();
+    // Save the updated profile
+    await profile.save();
 
-    // Return response
-    return res.status(200).json({
+    // Find the updated user details
+    const updatedUserDetails = await User.findById(id)
+      .populate("additionalDetails")
+      .exec();
+
+    return res.json({
       success: true,
-      message: "Profile Details have been updated successfully.",
-      data: {
-        details: {
-          profile: [
-            { profileDetails: profileDetails },
-            { userDetails: userDetails },
-          ],
-        },
-      },
+      message: "Profile updated successfully",
+      updatedUserDetails,
     });
   } catch (error) {
     res.status(500).json({
@@ -61,9 +58,8 @@ exports.updateProfile = async (req, res) => {
 
 exports.deleteProfile = async (req, res) => {
   try {
-    // get the id:
-    // const userId = req.user.id;
-    const userId = req.body.userId;
+    const userId = req.user.id;
+    // const userId = req.body.userId;
     // validate id:
     const findUser = await User.findById(userId);
     if (!findUser) {
@@ -87,9 +83,11 @@ exports.deleteProfile = async (req, res) => {
     );
     // Now delete the User
     const deletedUser = await User.findByIdAndDelete(userId);
+    console.log("Deleted User", deletedUser);
+
     // Return Success Response
     return res.status(200).json({
-      success: false,
+      success: true,
       message: "User account has been deleted successfully.",
       account: {
         deleted: [
@@ -104,6 +102,7 @@ exports.deleteProfile = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
+      error: error.message,
       success: false,
       message:
         "Some error occurred while deleting the user account. Please try again.",
@@ -152,10 +151,10 @@ exports.getUserAllDetails = async (req, res) => {
 // Update Display Picture:
 exports.updateDisplayPicture = async (req, res) => {
   try {
-    const displayPicture = req.files.displayPicture;
-    // const userId = req.user.id || req.files.id;
-    const userId = req.headers.userid;
+    const displayPicture = req.images;
+    console.log(req.images);
 
+    const userId = req.user.id;
     const image = await uploadImageToCloudinary(
       displayPicture,
       process.env.CLOUDINARY_FOLDER_NAME,
@@ -189,8 +188,8 @@ exports.updateDisplayPicture = async (req, res) => {
 
 exports.getEnrolledCourses = async (req, res) => {
   try {
-    // const userId = req.user.id;
-    const userId = req.headers.userid;
+    const userId = req.user.id;
+    // const userId = req.headers.userid;
     const userDetails = await User.findOne({
       _id: userId,
     })

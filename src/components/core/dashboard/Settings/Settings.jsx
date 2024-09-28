@@ -3,19 +3,32 @@ import ChangeProfilePicture from "./ChangeProfilePicture";
 import EditProfile from "./EditProfile";
 import UpdatePassword from "./UpdatePassword";
 import DeleteAccount from "./DeleteAccount";
+import { Link, useLocation } from "react-router-dom";
 
 const Settings = () => {
-    return (
-        <>
-            <h1 className="mb-14 text-3xl font-medium text-slate-200">
-                Edit Profile
-            </h1>
-            <ChangeProfilePicture />
-            <EditProfile />
-            <UpdatePassword />
-            <DeleteAccount />
-        </>
-    );
+  const location = useLocation();
+  return (
+    <div className="flex flex-col w-full mx-auto ">
+      <h1 className="my-8 ml-4 text-xs text-slate-400">
+        Home<span className="text-[#ace320]">{location.pathname}</span>
+      </h1>
+      <div className="w-10/12 max-w-[1000px] mx-auto flex flex-row justify-between items-center mb-8">
+        <h1 className="text-4xl font-medium text-start text-cyan-500 font-poppins">
+          Edit Profile
+        </h1>
+        <Link
+          to={"/dashboard/my-profile"}
+          className="flex flex-row items-center text-sm text-teal-500 transition-all duration-200 hover:-translate-x-2"
+        >
+          &larr;<p className="ml-3">Back to Profile</p>
+        </Link>
+      </div>
+      <ChangeProfilePicture />
+      <EditProfile />
+      <UpdatePassword />
+      <DeleteAccount />
+    </div>
+  );
 };
 
 export default Settings;

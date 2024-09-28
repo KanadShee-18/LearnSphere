@@ -7,14 +7,14 @@ import ContactFormSection from "../components/core/AboutPage/ContactFormSection"
 import LearningGrid from "../components/core/AboutPage/LearningGrid";
 import Quote from "../components/core/AboutPage/Quote";
 import StatsComponenet from "../components/core/AboutPage/Stats";
-import HighlightText from "../components/core/homepage/HighlightText";
+import HighlightText from "../components/core/Homepage/HighlightText";
 // import ReviewSlider from "../components/common/ReviewSlider";
 import Footer from "../components/common/Footer";
 import Vision from "../components/core/AboutPage/Vision";
 
 const About = () => {
   return (
-    <div className="text-white mt-14">
+    <div className="text-white mt-14 selection:bg-cyan-800">
       {/* Section 1 */}
       <section className=" pt-32 pb-48 bg-[#161d29] flex items-center justify-center">
         <div className="relative flex flex-col items-center justify-center gap-y-3 max-w-maxContent">
@@ -63,6 +63,11 @@ const About = () => {
       {/* Section: 5 */}
       <section className="w-11/12 mx-auto max-w-maxContent">
         <LearningGrid />
+        <ContactFormSection />
+      </section>
+
+      <section className="mt-20">
+        <Footer />
       </section>
     </div>
   );

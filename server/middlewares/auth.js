@@ -10,6 +10,8 @@ exports.auth = async (req, res, next) => {
       req.body.token ||
       req.header("authorization").replace("Bearer ", "");
 
+    console.log("Token comes in backend auth is: ", token);
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -21,6 +23,7 @@ exports.auth = async (req, res, next) => {
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decode;
+      console.log("Decoded user from auth: ", decode);
     } catch (error) {
       return res.status(401).json({
         success: false,

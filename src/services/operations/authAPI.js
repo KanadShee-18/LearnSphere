@@ -106,13 +106,15 @@ export function login(email, password, navigate) {
         ?.dataUser?.data;
       const user = await response?.data?.loggedUser?.dataUser?.data;
 
+      console.log("Auth User set as: ", user);
+
       toast.success("Login Successful");
       dispatch(setToken(token));
 
       const userImage = image
         ? image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`;
-      dispatch(setUser({ user, image: userImage }));
+      dispatch(setUser({ ...user, image: userImage }));
 
       localStorage.setItem("token", JSON.stringify(token));
       localStorage.setItem("user", JSON.stringify(user));
@@ -129,6 +131,8 @@ export function login(email, password, navigate) {
 }
 
 export function logout(navigate) {
+  console.log("Logout action triggered!");
+
   return (dispatch) => {
     dispatch(setToken(null));
     dispatch(setUser(null));

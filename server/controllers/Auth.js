@@ -181,7 +181,9 @@ exports.login = async (req, res) => {
         message: "All fileds are mandatory.",
       });
     }
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email })
+      .populate("additionalDetails")
+      .exec();
     if (!existingUser) {
       return res.status(401).json({
         success: false,
@@ -246,7 +248,9 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     // Get data from req body
-    const { email, oldPassword, newPassword, confirmNewPassword } = req.body;
+    const { oldPassword, newPassword, confirmNewPassword } = req.body;
+
+    const email = req.user.email || req.user.body;
 
     // Find the existing user
     const existingUser = await User.findOne({ email });

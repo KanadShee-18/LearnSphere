@@ -52,7 +52,7 @@ const ForgotPassword = () => {
             )}
             <button
               type="submit"
-              className="w-full py-3 text-center rounded-md shadow-md text-slate-800 hover:text-slate-400 bg-cyan-700 shadow-slate-600 hover:bg-teal-700 active:bg-cyan-600"
+              className="w-full py-3 text-center rounded-md shadow-md text-slate-300 hover:text-slate-200 bg-cyan-700 shadow-slate-600 hover:bg-teal-700 active:bg-cyan-600"
             >
               {!emailSent ? "Reset Password" : "Resend Email"}
             </button>

@@ -32,7 +32,7 @@ const LogInForm = () => {
   return (
     <form
       onSubmit={handleOnSubmit}
-      className="flex flex-col w-full mt-6 text-white  gap-y-5"
+      className="flex flex-col w-full mt-6 text-white gap-y-5"
     >
       <label className="w-full">
         <p className="text-slate-300 mb-1 text-sm leading-[1.375rem]">
@@ -72,11 +72,18 @@ const LogInForm = () => {
             <IoMdEyeOff fontSize={24} fill="#AFB2BF" />
           )}
         </span>
-        <Link to={"/forgot-password"}>
-          <p className="mt-1 ml-auto text-xs max-w-max text-cyan-500 hover:underline">
-            Forgot Password
-          </p>
-        </Link>
+        <div className="flex flex-row items-center justify-between px-2">
+          <Link to={"/signup"}>
+            <p className="mt-1 text-sm max-w-max text-cyan-600 hover:underline">
+              No Account?
+            </p>
+          </Link>
+          <Link to={"/forgot-password"}>
+            <p className="mt-1 text-xs max-w-max text-cyan-500 hover:underline">
+              Forgot Password
+            </p>
+          </Link>
+        </div>
       </label>
       <button
         type="submit"

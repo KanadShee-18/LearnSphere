@@ -184,3 +184,10 @@ body {
 .mainImg {
   box-shadow: -5px -5px 10px teal;
 }
+
+/* Radio input */
+#radioInput1,
+#radioInput2,
+#radioInput3 {
+  accent-color: rgb(198, 255, 41) !important;
+}

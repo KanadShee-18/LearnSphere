@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+// Auth:
+const { auth } = require("../middlewares/auth");
+const { fileUploadAuth } = require("../middlewares/FileUploadAuth");
+
 // Profile handler function:
 const {
   updateProfile,
@@ -11,10 +15,10 @@ const {
 } = require("../controllers/Profile");
 
 // Profile routes:
-router.delete("/deleteProfile", deleteProfile);
+router.delete("/deleteProfile", auth, deleteProfile);
 router.get("/getUserDetails", getUserAllDetails);
-router.put("/updateProfile", updateProfile);
-router.get("/getEnrolledCourses", getEnrolledCourses);
-router.put("/updateDisplayPicture", updateDisplayPicture);
+router.put("/updateProfile", auth, updateProfile);
+router.get("/getEnrolledCourses", auth, getEnrolledCourses);
+router.put("/updateDisplayPicture", auth, fileUploadAuth, updateDisplayPicture);
 
 module.exports = router;

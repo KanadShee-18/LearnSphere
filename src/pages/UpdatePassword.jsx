@@ -110,14 +110,14 @@ const UpdatePassword = () => {
               />
             </label>
             {errMessage && (
-              <p className="text-base font-medium text-red-400 font-eduSa">
+              <p className="text-sm font-medium text-red-400 font-poppins">
                 {errMessage}
               </p>
             )}
             <PasswordValidator />
             <button
               type="submit"
-              className="w-full py-3 font-semibold text-center rounded-md bg-cyan-500 text-slate-700 hover:bg-teal-500 active:bg-cyan-400"
+              className="w-full py-3 font-semibold text-center rounded-md bg-cyan-500 text-slate-900 hover:bg-teal-500 active:bg-cyan-400"
             >
               Reset Password
             </button>

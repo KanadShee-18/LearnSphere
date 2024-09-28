@@ -82,7 +82,7 @@ const Navbar = () => {
                             </Link>
                           ))
                         ) : (
-                          <div>No sublinks available</div>
+                          <div>No Category</div>
                         )}
                       </div>
                     </div>
@@ -109,8 +109,8 @@ const Navbar = () => {
 
         <div className="flex items-center text-sm gap-x-4">
           {user && user?.accountType !== "Instructor" && (
-            <Link to={"/dashboard/cart"} className="relative">
-              <AiOutlineShoppingCart />
+            <Link to={"/dashboard/cart"} className="relative text-slate-400">
+              <AiOutlineShoppingCart className="size-5" />
               {totalItems > 0 && <span className="absolute">{totalItems}</span>}
             </Link>
           )}

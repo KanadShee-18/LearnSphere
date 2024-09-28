@@ -1,6 +1,6 @@
 import React from "react";
-import HighlightText from "../homepage/HighlightText";
-import CTAButton from "../../../components/core/HomePage/CTAButton";
+import HighlightText from "../Homepage/HighlightText";
+import CTAButton from "../Homepage/CTAButton";
 
 const LearningGridArray = [
   {
@@ -46,7 +46,7 @@ const LearningGridArray = [
 
 const LearningGrid = () => {
   return (
-    <div className="grid w-11/12 grid-cols-1 mx-auto my-10 text-white lg:grid-cols-4">
+    <div className="grid w-11/12 grid-cols-1 mx-auto my-32 text-white lg:grid-cols-4">
       {LearningGridArray.map((card, index) => (
         <div
           key={index}
@@ -54,7 +54,7 @@ const LearningGrid = () => {
             ${
               card.order % 2 === 1
                 ? "bg-gradient-to-br from-slate-700 to-richblack-700"
-                : "bg-gradient-to-br from-blue-500 to-slate-700"
+                : "bg-gradient-to-br from-blue-600 to-slate-700"
             }
             ${card.order === 3 && "lg:col-start-2"}
             mx-auto col-span-1 lg:w-auto md:w-[350px] lg:h-[270px] 

@@ -1,19 +1,21 @@
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import HighlightText from "../components/core/homepage/HighlightText";
-import CTAButton from "../components/core/homepage/CTAButton";
+import HighlightText from "../components/core/Homepage/HighlightText";
 import banner1 from "../assets/Images/banner1.mp4";
-import CodeBlock from "../components/core/homepage/CodeBlock";
-import TimeLineSection from "../components/core/homepage/TimeLineSection";
-import LearningLanguageSection from "../components/core/homepage/LearningLanguageSection";
-import InstructorSection from "../components/core/homepage/InstructorSection";
+import CodeBlock from "../components/core/Homepage/CodeBlock";
+import TimeLineSection from "../components/core/Homepage/TimeLineSection";
+import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
+import InstructorSection from "../components/core/Homepage/InstructorSection";
 import Footer from "../components/common/Footer";
-import ExploreMore from "../components/core/homepage/ExploreMore";
+import ExploreMore from "../components/core/Homepage/ExploreMore";
+import CTAButton from "../components/core/Homepage/CTAButton";
 
 const Homepage = () => {
   return (
     <div className="mt-16">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0 h-[50vh]"></div>
+
       {/* Section: 1 */}
 
       <div className="relative flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
@@ -47,19 +49,6 @@ const Homepage = () => {
           />
         </div>
 
-        {/* <div className="relative w-3/4 mx-auto my-12">
-                    <div className="absolute inset-0 z-0 videoGradient"></div>
-
-                    <div className="z-10 videoContainer">
-                        <video
-                            src={banner1}
-                            muted
-                            loop
-                            autoPlay
-                            className="w-full videoFile"
-                        ></video>
-                    </div>
-                </div> */}
         <div className="relative w-3/4 mx-auto my-24">
           {/* Gradient Background */}
           <div className="absolute z-0 videoGradient"></div>
