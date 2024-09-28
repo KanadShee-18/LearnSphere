@@ -19,7 +19,7 @@ const DeleteAccount = () => {
   };
 
   return (
-    <div className="mt-24 mb-36">
+    <div className="relative mt-24 mb-36">
       <div className="flex mt-12 flex-row gap-x-5 w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#5a042d] border-[1px] border-[#ff439b]">
         <div className="flex items-start justify-center">
           <span className="bg-[#881940] p-3 rounded-full hover:border-[1px] cursor-pointer hover:border-[#ff439b] border-dashed border-[1px] border-[#ff58a6] m-2">

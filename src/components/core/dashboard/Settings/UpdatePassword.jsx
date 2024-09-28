@@ -17,30 +17,6 @@ const UpdatePassword = () => {
   const oldPassword = useRef(null);
   const newPassword = useRef(null);
 
-  //   const handleOnSubmit = (e) => {
-  //     e.preventDefault();
-  //     const passwords = [oldPassword.current.value, newPassword.current.value];
-
-  //     const data = {
-  //       oldPassword: passwords[0],
-  //       newPassword: passwords[1],
-  //     };
-
-  //     try {
-  //       console.log("Updating password...");
-  //       setLoading(true);
-  //       const formData = new FormData();
-  //       formData.append("oldPassword", data.oldPassword);
-  //       formData.append("newPassword", data.newPassword);
-  //       console.log("Form data:", formData);
-  //       dispatch(changePassword(token, formData)).then(() => {
-  //         setLoading(false);
-  //       });
-  //     } catch (error) {
-  //       console.log("Error message while file uploading: ", error.message);
-  //     }
-  //   };
-
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const passwords = {
@@ -69,7 +45,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <form onSubmit={handleOnSubmit} className="flex flex-col gap-y-6 ">
+    <form onSubmit={handleOnSubmit} className="relative flex flex-col gap-y-6 ">
       <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#161d29ec] border-[1px] border-[#2c2c46]">
         <label className="relative flex flex-col gap-y-1 w-[45%]">
           <span className="text-teal-400">
@@ -87,7 +63,7 @@ const UpdatePassword = () => {
             placeholder="Enter current password"
             ref={oldPassword}
             name="changePassword"
-            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-cyan-300 outline-4 outline-cyan-400 shadow-teal-500"
+            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-cyan-300 outline-4 outline-cyan-400 shadow-[#ace320] "
           />
         </label>
         <label className="relative flex flex-col gap-y-1 w-[45%]">
@@ -106,7 +82,7 @@ const UpdatePassword = () => {
             placeholder="Enter new password"
             ref={newPassword}
             name="newPassword"
-            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-cyan-300 outline-4 outline-cyan-400 shadow-teal-500"
+            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-cyan-300 outline-4 outline-cyan-400 shadow-[#ace320] "
           />
         </label>
       </div>

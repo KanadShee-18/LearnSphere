@@ -191,3 +191,20 @@ body {
 #radioInput3 {
   accent-color: rgb(198, 255, 41) !important;
 }
+
+.orbital {
+  left: 0;
+  top: 0;
+  opacity: 0.05;
+  animation: 100s linear infinite rotateOrbital;
+  /* z-index: 5; */
+}
+
+@keyframes rotateOrbital {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(60deg);
+  }
+}

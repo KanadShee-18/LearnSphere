@@ -54,12 +54,12 @@ const ChangeProfilePicture = () => {
 
   return (
     <div>
-      <div className=" flex flex-row justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-slate-200 bg-[#161d29ec] border-[1px] border-[#2c2c46]">
+      <div className="relative flex flex-row justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-slate-200 bg-[#161d29ec] border-[1px] border-[#2c2c46]">
         <div className="flex flex-row items-center justify-start gap-x-5">
           <img
             src={previewSource || user?.image}
             alt=""
-            className="aspect-square rounded-full w-[84px] object-cover"
+            className="aspect-square rounded-full w-[84px] object-cover hover:scale-110 transition-all duration-300 cursor-pointer hover:opacity-95 border-4 border-[#ace320]"
           />
           <div className="space-y-2">
             <p>

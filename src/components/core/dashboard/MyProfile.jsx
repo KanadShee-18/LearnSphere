@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import IconBtn from "../../common/IconBtn";
 import { MdEditDocument } from "react-icons/md";
+import orbital from "../../../assets/Images/orbital.png";
 const MyProfile = () => {
   const { user } = useSelector((state) => state.profile);
   const location = useLocation();
@@ -12,8 +13,9 @@ const MyProfile = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col w-full mx-auto">
-      <h1 className="my-8 ml-4 text-xs text-slate-400">
+    <div className="relative flex flex-col w-full mx-auto">
+      <img src={orbital} alt="orbital" className="absolute orbital" />
+      <h1 className="relative my-8 ml-4 text-xs text-slate-400">
         Home<span className="text-[#ace320]">{location.pathname}</span>
       </h1>
       <h1 className="w-10/12 max-w-[1000px] mx-auto text-start text-4xl font-medium text-cyan-500 font-poppins">
@@ -21,7 +23,7 @@ const MyProfile = () => {
       </h1>
       {/* Section 1 */}
 
-      <div className=" flex flex-row justify-between w-10/12 max-w-[1000px] p-7 mx-auto mt-8 rounded-lg text-slate-200 bg-[#161d29] border-[1px] border-[#2c2c46]">
+      <div className="relative flex flex-row justify-between w-10/12 max-w-[1000px] p-7 mx-auto mt-8 rounded-lg text-slate-200 bg-[#161d29] border-[1px] border-[#2c2c46]">
         <div className="flex flex-row items-center gap-x-5">
           <img
             src={user?.image}
@@ -29,7 +31,7 @@ const MyProfile = () => {
             className="aspect-square rounded-full w-[84px] object-cover"
           />
           <div>
-            <p className="text-lg text-slate-200 font-playwrite">
+            <p className="text-lg text-[#ace320] font-playwrite">
               {user?.firstName + " " + user?.lastName}
             </p>
             <p className="text-sm text-slate-400">{user?.email}</p>
@@ -48,7 +50,7 @@ const MyProfile = () => {
       </div>
 
       {/* Section 2 */}
-      <div className="flex flex-col justify-between w-10/12 max-w-[1000px] p-7 mx-auto mt-8 rounded-lg text-slate-200 bg-[#161d29] border-[1px] border-[#2c2c46]">
+      <div className="flex relative flex-col justify-between w-10/12 max-w-[1000px] p-7 mx-auto mt-8 rounded-lg text-slate-200 bg-[#161d29] border-[1px] border-[#2c2c46]">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-xl ">About</h1>
           <IconBtn
@@ -62,19 +64,16 @@ const MyProfile = () => {
             }
           ></IconBtn>
         </div>
-        <div className="bg-slate-500 w-full mx-auto h-[1px] mb-5" />
-        {additionalDetails.about ? (
-          <p className="text-sm text-teal-500">{additionalDetails.about}</p>
-        ) : (
-          <p className="text-sm text-teal-500">
-            Tell us something about yourself.
-          </p>
-        )}
+        <div className="bg-[#2a324d] w-full mx-auto h-[1px] mb-5" />
+
+        <p className="text-sm text-[#5f71b6] font-poppins">
+          {additionalDetails.about ?? "Tell us something about yourself."}
+        </p>
       </div>
 
       {/* Section 3 */}
 
-      <div className="flex flex-col justify-between w-10/12 max-w-[1000px] p-7 mx-auto mt-8 mb-32 rounded-lg text-slate-200 bg-[#161d29] border-[1px] border-[#2c2c46]">
+      <div className="flex flex-col relative justify-between w-10/12 max-w-[1000px] p-7 mx-auto mt-8 mb-32 rounded-lg text-slate-200 bg-[#161d29] border-[1px] border-[#2c2c46]">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-xl ">Personal Details</h1>
           <IconBtn
@@ -88,21 +87,21 @@ const MyProfile = () => {
             }
           ></IconBtn>
         </div>
-        <div className="bg-slate-500 w-full mx-auto h-[1px] mb-5" />
+        <div className="bg-[#2a324d] w-full mx-auto h-[1px] mb-5" />
 
         <div className="flex flex-col justify-between w-full md:flex-row">
           <div className="flex flex-col items-start justify-start w-full gap-y-4">
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">First Name</p>
-              <p className="text-sm text-teal-600">{firstName}</p>
+              <p className="text-sm text-[#5f71b6] font-poppins">{firstName}</p>
             </span>
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Email</p>
-              <p className="text-sm text-teal-600">{email}</p>
+              <p className="text-sm text-[#5f71b6]  font-poppins">{email}</p>
             </span>
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Gender</p>
-              <p className="text-sm text-teal-600">
+              <p className="text-sm text-[#5f71b6] font-poppins">
                 {additionalDetails.gender ?? "Tell us your gender"}
               </p>
             </span>
@@ -110,18 +109,18 @@ const MyProfile = () => {
           <div className="flex flex-col items-start justify-start w-full gap-y-4">
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Last Name</p>
-              <p className="text-sm text-teal-600">{lastName}</p>
+              <p className="text-sm text-[#5f71b6] font-poppins">{lastName}</p>
             </span>
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Phone Number</p>
 
-              <p className="text-sm text-teal-600">
+              <p className="text-sm text-[#5f71b6] font-poppins">
                 {additionalDetails.contactNumber ?? "Fill this field!"}
               </p>
             </span>
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Date of Birth</p>
-              <p className="text-sm text-teal-600">
+              <p className="text-sm text-[#5f71b6] font-poppins">
                 {additionalDetails.dateOfBirth ?? "Fill this field!"}
               </p>
             </span>
@@ -129,14 +128,14 @@ const MyProfile = () => {
           <div className="flex flex-col items-start justify-start w-full gap-y-4">
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Username</p>
-              <p className="text-sm text-teal-600">
+              <p className="text-sm text-[#5f71b6] font-poppins">
                 {additionalDetails.displayName ?? "Not Given!"}
               </p>
             </span>
             <span className="flex flex-col p-2 transition-all rounded-lg cursor-pointer ">
               <p className="text-slate-300">Profession</p>
 
-              <p className="text-sm text-teal-600">
+              <p className="text-sm text-[#5f71b6] font-poppins">
                 {additionalDetails.profession ?? "Not filled!"}
               </p>
             </span>

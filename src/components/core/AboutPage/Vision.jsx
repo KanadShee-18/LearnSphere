@@ -1,11 +1,13 @@
 import React from "react";
 import RedHighlight from "../AboutPage/ResHighlight";
 import FoundingStory from "../../../assets/Images/FoundingStory.png";
+import orbital from "../../../assets/Images/orbital.png";
 
 const Vision = () => {
   return (
-    <section className="mt-24">
-      <div className="flex flex-col items-center justify-between mx-auto max-w-maxContent md:flex-row md:gap-x-3">
+    <section className="relative mt-24">
+      <img src={orbital} alt="orbital" className="absolute orbital" />
+      <div className="relative flex flex-col items-center justify-between mx-auto max-w-maxContent md:flex-row md:gap-x-3">
         <div className="flex flex-col w-full md:w-[45%] px-3 md:px-8">
           <h1 className="mb-5 text-5xl font-semibold">
             <RedHighlight text={"Our Founding Story"} />

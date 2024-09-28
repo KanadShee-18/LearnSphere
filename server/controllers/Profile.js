@@ -2,7 +2,10 @@ const Profile = require("../models/Profile");
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Course = require("../models/Course");
-const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const {
+  uploadImageToCloudinary,
+  destroyImageFromCloudinary,
+} = require("../utils/imageUploader");
 require("dotenv").config();
 
 // Update Profile
@@ -155,12 +158,28 @@ exports.updateDisplayPicture = async (req, res) => {
     console.log(req.images);
 
     const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    const oldImgUrl = user.image;
+
+    const publicId = oldImgUrl.split("/").slice(-2).join("/").split(".")[0];
+    console.log("The public id is: ", publicId);
+
+    // Destroying old image
+    if (publicId) {
+      const deletedImg = await destroyImageFromCloudinary(publicId);
+      console.log(deletedImg);
+    }
+
+    // Uploading new image.
+
     const image = await uploadImageToCloudinary(
       displayPicture,
       process.env.CLOUDINARY_FOLDER_NAME,
       1000,
       70
     );
+    console.log("Uploaded image details: ", image);
 
     const updatedProfile = await User.findByIdAndUpdate(
       userId,

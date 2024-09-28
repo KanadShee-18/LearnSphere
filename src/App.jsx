@@ -123,33 +123,34 @@ function App() {
         >
           <Route path="dashboard/my-profile" element={<MyProfile />} />
           <Route path="dashboard/settings" element={<Settings />} />
-          <Route
+          {/* <Route path="dashboard/cart" element={<Cart />} /> */}
+          {/* <Route
             path="dashboard/enrolled-courses"
             element={<EnrolledCourses />}
-          />
+          /> */}
+
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path="dashboard/cart" element={<Cart />} />
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+            </>
+          )}
+
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="dashboard/instructor" element={<Instructor />} />
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+              <Route path="dashboard/my-courses" element={<MyCourses />} />
+              <Route
+                path="dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              />
+            </>
+          )}
         </Route>
-
-        {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-          <>
-            <Route path="dashboard/cart" element={<Cart />} />
-            <Route
-              path="dashboard/enrolled-courses"
-              element={<EnrolledCourses />}
-            />
-          </>
-        )}
-
-        {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
-          <>
-            <Route path="dashboard/instructor" element={<Instructor />} />
-            <Route path="dashboard/add-course" element={<AddCourse />} />
-            <Route path="dashboard/my-courses" element={<MyCourses />} />
-            <Route
-              path="dashboard/edit-course/:courseId"
-              element={<EditCourse />}
-            />
-          </>
-        )} */}
 
         <Route path="*" element={<Error />} />
       </Routes>
