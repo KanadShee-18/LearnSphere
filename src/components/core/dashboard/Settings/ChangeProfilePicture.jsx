@@ -54,12 +54,12 @@ const ChangeProfilePicture = () => {
 
   return (
     <div>
-      <div className="relative flex flex-row justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-slate-200 bg-[#161d29ec] border-[1px] border-[#2c2c46]">
+      <div className="relative flex flex-row justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-slate-200 bg-[#1d334b] border-[1px] border-[#4d4d66]">
         <div className="flex flex-row items-center justify-start gap-x-5">
           <img
             src={previewSource || user?.image}
             alt=""
-            className="aspect-square rounded-full w-[84px] object-cover hover:scale-110 transition-all duration-300 cursor-pointer hover:opacity-95 border-4 border-[#ace320]"
+            className="aspect-square rounded-full w-[84px] object-cover hover:scale-110 transition-all duration-300 cursor-pointer hover:opacity-95 border-[5px] border-[#2d98fc]"
           />
           <div className="space-y-2">
             <p>
@@ -77,7 +77,7 @@ const ChangeProfilePicture = () => {
               <button
                 onClick={handleClick}
                 disabled={loading}
-                className="px-5 py-2 font-semibold rounded-md cursor-pointer bg-[#ace320] hover:bg-teal-600 hover:text-slate-100 text-richblack-700"
+                className="px-5 py-2 font-semibold rounded-md cursor-pointer bg-[#4c9da0] hover:bg-teal-600 hover:text-slate-100 text-slate-700"
               >
                 Select
               </button>

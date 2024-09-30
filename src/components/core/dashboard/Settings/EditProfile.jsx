@@ -66,7 +66,7 @@ const EditProfile = () => {
         onSubmit={handleSubmit(submitContactForm)}
         className="relative flex flex-col justify-center text-cyan-500"
       >
-        <div className="flex flex-col gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#161d29ec] border-[1px] border-[#2c2c46]">
+        <div className="flex flex-col gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-richblack-200 font-medium bg-[#253c53] border-[1px] border-[#2c2c46] bg-opacity-40">
           <h2 className="text-lg text-richblack-25">Profile Information</h2>
           <div className="flex flex-col justify-between gap-5 md:flex-row">
             {/* Display name */}
@@ -75,7 +75,7 @@ const EditProfile = () => {
                 Display Name <span className="text-pink-100">*</span>{" "}
               </label>
               <input
-                className="px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-[#ace320] text-teal-500 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
+                className="px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-slate-400 text-slate-400 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
                 type="text"
                 name="displayName"
                 id="displayName"
@@ -93,10 +93,10 @@ const EditProfile = () => {
             <div className="flex flex-col gap-y-2 md:w-[45%] w-full">
               <label htmlFor="profession">
                 Profession{" "}
-                <span className="text-sm text-teal-500">(Optional)</span>
+                <span className="text-sm text-slate-400">(Optional)</span>
               </label>
               <input
-                className="px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-[#ace320]  text-teal-500 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
+                className="px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-slate-400  text-slate-400 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
                 type="text"
                 name="profession"
                 id="profession"
@@ -111,13 +111,13 @@ const EditProfile = () => {
             <div className="relative flex flex-col gap-y-2 md:w-[45%] w-full">
               <label htmlFor="dateOfBirth">Date of Birth</label>
               <input
-                className="w-full px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-[#ace320]  text-teal-500 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins cursor-pointer"
+                className="w-full px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-slate-400  text-slate-400 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins cursor-pointer"
                 type="date"
                 name="dateOfBirth"
                 id="dateOfBirth"
                 {...register("dateOfBirth", { required: true })}
               />
-              <span className="absolute text-teal-500 pointer-events-none right-2 top-11">
+              <span className="absolute pointer-events-none text-slate-400 right-2 top-11">
                 <FaCalendarAlt className="w-6 h-6" />
               </span>
             </div>
@@ -126,7 +126,7 @@ const EditProfile = () => {
               <label htmlFor="gender">
                 Gender <span className="text-pink-100">*</span>{" "}
               </label>
-              <div className="flex space-x-4 px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-[#ace320]  text-teal-500 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins">
+              <div className="flex space-x-4 px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-slate-400  text-slate-400 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins">
                 <label className="flex items-center space-x-2">
                   <input
                     type="radio"
@@ -138,7 +138,7 @@ const EditProfile = () => {
                       required: "Please select your gender",
                     })}
                   />
-                  <span className="font-medium text-teal-500">Male</span>
+                  <span className="font-medium text-slate-400">Male</span>
                 </label>
                 <label className="flex items-center space-x-2">
                   <input
@@ -151,7 +151,7 @@ const EditProfile = () => {
                       required: "Please select your gender",
                     })}
                   />
-                  <span className="font-medium text-teal-500">Female</span>
+                  <span className="font-medium text-slate-400">Female</span>
                 </label>
                 <label className="flex items-center space-x-2">
                   <input
@@ -164,7 +164,7 @@ const EditProfile = () => {
                       required: "Please select your gender",
                     })}
                   />
-                  <span className="font-medium text-teal-500">Other</span>
+                  <span className="font-medium text-slate-400">Other</span>
                 </label>
               </div>
 
@@ -189,8 +189,9 @@ const EditProfile = () => {
                   name="countrycode"
                   id="countrycode"
                   {...register("countrycode", { required: true })}
-                  className="py-2 h-[48px] text-sm text-slate-400 rounded-lg shadow-sm outline-none bg-gradient-to-bl from-slate-800 shadow-[#ace320]  to-slate-700 scrollbar-hide"
+                  className="py-2 h-[48px] text-sm text-slate-400 rounded-lg shadow-sm outline-none bg-gradient-to-bl from-slate-800 shadow-slate-400  to-slate-700 scrollbar-hide"
                 >
+                  <option value="" defaultValue={true}></option>
                   {CountryCode.map((element, index) => {
                     return (
                       <option
@@ -225,7 +226,7 @@ const EditProfile = () => {
                     minLength: { value: 8, message: "Invalid Phone Number" },
                   })}
                   placeholder="874XXXXXX0"
-                  className="px-2 w-full py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-[#ace320]  text-teal-500 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
+                  className="px-2 w-full py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-slate-400  text-slate-400 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
                 />
                 {errors.contactNumber && (
                   <span className="px-2 text-sm text-pink-100 ">
@@ -239,7 +240,7 @@ const EditProfile = () => {
             <div className="flex flex-col gap-y-2 md:w-[45%] w-full">
               <label htmlFor="about">About</label>
               <input
-                className="px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-[#ace320] text-teal-500 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
+                className="px-2 py-3 rounded-md bg-gradient-to-bl from-slate-800 to-slate-700 shadow-sm shadow-slate-400 text-slate-400 text-[15px] outline-none focus:border-cyan-300 focus:border-[1px] font-medium font-poppins"
                 name="about"
                 id="about"
                 placeholder="Enter Bio Details"
@@ -265,7 +266,7 @@ const EditProfile = () => {
               navigate("/dashboard/settings");
             }}
             customClasses={
-              "px-4 h-fit py-2 bg-[#ace320] my-auto rounded-md text-slate-700 font-semibold hover:bg-teal-600 hover:text-slate-100 active:bg-slate-700 active:text-slate-100 gap-x-2 text-sm"
+              "px-4 h-fit py-2 bg-[#4c9da0] my-auto rounded-md text-slate-700 font-semibold hover:bg-teal-600 hover:text-slate-100 active:bg-slate-700 active:text-slate-100 gap-x-2 text-sm"
             }
           ></IconBtn>
           <IconBtn

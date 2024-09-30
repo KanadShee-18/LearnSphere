@@ -57,7 +57,7 @@ const {
 router.post("/createCourse", auth, isInstructor, createCourse);
 router.post("/addSection", auth, isInstructor, createSection);
 router.post("/updateSection", auth, isInstructor, updateSection);
-router.post("/deleteSection/:sectionId", auth, isInstructor, deleteSection);
+router.post("/deleteSection", auth, isInstructor, deleteSection);
 router.post("/addSubSection", auth, isInstructor, createSubSection);
 router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 router.post(

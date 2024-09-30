@@ -20,6 +20,9 @@ exports.createCourse = async (req, res) => {
       instructions,
     } = req.body;
 
+    console.log("Req body receives as: ", req.body);
+    console.log("Req file receives as: ", req.files.thumbnailImage);
+
     // get thumbnail
     const thumbnail = req.files.thumbnailImage;
 

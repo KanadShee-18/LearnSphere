@@ -46,14 +46,14 @@ const UpdatePassword = () => {
 
   return (
     <form onSubmit={handleOnSubmit} className="relative flex flex-col gap-y-6 ">
-      <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#161d29ec] border-[1px] border-[#2c2c46]">
+      <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#253c53] bg-opacity-55 border-[1px] border-[#2c2c46]">
         <label className="relative flex flex-col gap-y-1 w-[45%]">
-          <span className="text-teal-400">
+          <span className="text-richblack-100">
             Current Password <sup className="text-pink-200">*</sup>
           </span>
           <span
             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-            className="absolute text-xl cursor-pointer hover:text-cyan-500 text-cyan-300 right-4 top-10"
+            className="absolute text-xl cursor-pointer hover:text-richblack-100 text-slate-400 right-4 top-10"
           >
             {showCurrentPassword ? <IoMdEye /> : <IoMdEyeOff />}
           </span>
@@ -63,16 +63,16 @@ const UpdatePassword = () => {
             placeholder="Enter current password"
             ref={oldPassword}
             name="changePassword"
-            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-cyan-300 outline-4 outline-cyan-400 shadow-[#ace320] "
+            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-slate-300 outline-4 outline-cyan-400 shadow-slate-400 "
           />
         </label>
         <label className="relative flex flex-col gap-y-1 w-[45%]">
-          <span className="text-teal-400">
+          <span className="text-richblack-100">
             New Password <sup className="text-pink-200">*</sup>
           </span>
           <span
             onClick={() => setShowNewPassword(!showNewPassword)}
-            className="absolute text-xl cursor-pointer hover:text-cyan-500 text-cyan-300 right-4 top-10"
+            className="absolute text-xl cursor-pointer hover:text-cyan-500 text-slate-300 right-4 top-10"
           >
             {showNewPassword ? <IoMdEye /> : <IoMdEyeOff />}
           </span>
@@ -82,7 +82,7 @@ const UpdatePassword = () => {
             placeholder="Enter new password"
             ref={newPassword}
             name="newPassword"
-            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-cyan-300 outline-4 outline-cyan-400 shadow-[#ace320] "
+            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-slate-400 outline-4 outline-cyan-400 shadow-slate-400 "
           />
         </label>
       </div>
@@ -94,7 +94,7 @@ const UpdatePassword = () => {
         )}
         <button
           type="submit"
-          className="bg-[#ace320] px-3 text-sm py-2 rounded-md text-slate-800 font-medium hover:bg-teal-600 hover:text-slate-100 active:bg-slate-700 active:text-slate-100"
+          className="bg-[#4c9da0] px-3 text-sm py-2 rounded-md text-slate-800 font-medium hover:bg-teal-600 hover:text-slate-100 active:bg-slate-700 active:text-slate-100"
         >
           Update
         </button>

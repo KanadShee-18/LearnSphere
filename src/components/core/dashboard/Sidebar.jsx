@@ -56,7 +56,7 @@ const Sidebar = () => {
                 btn2Handler: () => setConfirmationModal(null),
               })
             }
-            className="px-8 py-2 text-sm font-medium text-teal-700 rounded-md hover:bg-pink-300 hover:text-slate-200"
+            className="px-8 py-2 text-sm font-medium text-teal-700 rounded-md hover:bg-pink-700 hover:text-slate-200"
           >
             <div className="flex flex-row gap-x-2">
               <VscSignOut className="text-lg" />

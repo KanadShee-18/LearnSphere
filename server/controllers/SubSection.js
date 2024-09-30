@@ -9,9 +9,9 @@ exports.createSubSection = async (req, res) => {
     // Fetch data from body
     const { sectionId, title, timeDuration, description } = req.body;
     // fetch video from req.files
-    const video = req.files.videoFile;
+    const video = req.files.video;
     // validate
-    if (!sectionId || !title || !timeDuration || !description) {
+    if (!sectionId || !title || !description) {
       return res.status(400).json({
         success: false,
         message: "All fields are required!",
@@ -32,41 +32,25 @@ exports.createSubSection = async (req, res) => {
     // create sub-section with fetched data and secure_url
     const newSubSection = await SubSection.create({
       title: title,
-      timeDuration: timeDuration,
+      timeDuration: `${uploadVideoDetails.duration}`,
       description: description,
       videoUrl: uploadVideoDetails.secure_url,
     });
     // update section schema with the created sub-section _id.
-    await Section.findByIdAndUpdate(sectionId, {
-      $push: {
-        subSection: newSubSection._id,
-      },
-    }).populate("subSection");
+    // Update the corresponding section with the newly created sub-section
+    const updatedSection = await Section.findByIdAndUpdate(
+      { _id: sectionId },
+      { $push: { subSection: newSubSection._id } },
+      { new: true }
+    ).populate("subSection");
 
-    // get updated details
-    const findUpdatedSection = await Section.findById(sectionId).populate(
-      "subSection"
-    );
+    console.log("Updated sub section details: ", updatedSection);
 
-    // return success response
-    return res.status(200).json({
-      success: true,
-      message: "New sub-section has been created successfully.",
-      data: {
-        sectionAndsubSectionDetails: {
-          data: [
-            {
-              subSectionData: newSubSection,
-            },
-            {
-              sectionData: findUpdatedSection,
-            },
-          ],
-        },
-      },
-    });
+    // Return the updated section in the response
+    return res.status(200).json({ success: true, data: updatedSection });
   } catch (error) {
     return res.status(500).json({
+      error: error.message,
       success: false,
       message: "Some error occurred while creating the sub-section",
     });
