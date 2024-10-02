@@ -208,3 +208,7 @@ body {
     transform: rotate(60deg);
   }
 }
+
+.publishedCourse {
+  box-shadow: -5px 5px 1px teal;
+}

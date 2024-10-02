@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa";
 import CourseInformationForm from "./CourseInformation/CourseInformationForm";
 import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm";
-// import { PublishCourse } from "./PublishCourse/index";
+import PublishCourse from "./PublishCourse/PublishCourse";
 
 const RenderSteps = () => {
   const { step } = useSelector((state) => state.course);
@@ -32,9 +32,9 @@ const RenderSteps = () => {
               <button
                 className={`grid cursor-default aspect-square w-[34px] place-items-center rounded-full border-[1px] ${
                   step >= item.id
-                    ? "border-cyan-400 bg-[#1b2536] text-teal-300"
+                    ? "border-teal-500 bg-[#1b2536] text-teal-500"
                     : "border-richblack-700 bg-richblack-800 text-richblack-300"
-                } ${step > item.id && "bg-cyan-300 text-yellow-50"}} `}
+                } ${step > item.id && "bg-teal-400 text-yellow-50"}} `}
               >
                 {step > item.id ? (
                   <FaCheck className="font-bold text-richblack-900" />
@@ -46,8 +46,8 @@ const RenderSteps = () => {
             {item.id !== steps.length && (
               <>
                 <div
-                  className={`h-[calc(34px/2)] w-[33%]  border-dashed border-b-2 ${
-                    step > item.id ? "border-cyan-300" : "border-richblack-500"
+                  className={`h-[calc(34px/2)] w-[33%]  border-dashed border-b-[1px] ${
+                    step > item.id ? "border-blue-50" : "border-richblack-500"
                   } `}
                 ></div>
               </>
@@ -65,7 +65,7 @@ const RenderSteps = () => {
             >
               <p
                 className={`text-sm ${
-                  step >= item.id ? "text-cyan-400" : "text-richblack-500"
+                  step >= item.id ? "text-teal-500" : "text-richblack-400"
                 }`}
               >
                 {item.title}
@@ -77,7 +77,7 @@ const RenderSteps = () => {
       {/* Render specific component based on current step */}
       {step === 1 && <CourseInformationForm />}
       {step === 2 && <CourseBuilderForm />}
-      {/* {step === 3 && <PublishCourse />} */}
+      {step === 3 && <PublishCourse />}
     </>
   );
 };

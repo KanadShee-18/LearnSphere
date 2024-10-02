@@ -13,6 +13,9 @@ const subSectionSchema = new mongoose.Schema({
   videoUrl: {
     type: String,
   },
+  publicId: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("SubSection", subSectionSchema);

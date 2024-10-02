@@ -290,11 +290,11 @@ const CourseInformationForm = () => {
           getValues={getValues}
         />
 
-        <div className="flex flex-row items-center ml-auto w-fit gap-x-3">
+        <div className="flex flex-col items-center ml-auto md:flex-row w-fit gap-x-3">
           {editCourse && (
             <button
               onClick={() => dispatch(setStep(2))}
-              className="flex items-center px-2 py-2 rounded-md bg-slate-700 text-slate-400"
+              className="flex items-center px-2 py-2 rounded-md hover:bg-slate-800 hover:text-slate-100 bg-slate-700 text-slate-400"
             >
               Continue Without Saving
             </button>

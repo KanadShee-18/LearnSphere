@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, matchPath } from "react-router-dom";
 import Logo from "../../assets/Logo/LL_logo.png";
 import { NavbarLinks } from "../../data/navbar-links";
@@ -10,8 +10,13 @@ import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/apis";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { IoMdArrowDropup } from "react-icons/io";
+import { ThemeContext } from "../../context/ThemeContextProvider";
+import { FaMoon } from "react-icons/fa6";
+import { FiSun } from "react-icons/fi";
 
 const Navbar = () => {
+  const { toggleTheme } = useContext(ThemeContext);
+  const { theme } = useSelector((state) => state.theme);
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
@@ -104,6 +109,22 @@ const Navbar = () => {
             })}
           </ul>
         </nav>
+
+        {/* Theme toggler */}
+        <div
+          onClick={toggleTheme}
+          className="relative flex items-center p-1 rounded-full w-14 h-7 dark:bg-slate-800 bg-slate-200"
+        >
+          <div
+            className={`w-6 h-6 dark:bg-slate-500 bg-slate-400 light:bg-white rounded-full flex items-center justify-center transform transition-all duration-500 ease-in-out ${
+              theme === "light" ? "translate-x-0" : "translate-x-6"
+            }`}
+          >
+            <button onClick={toggleTheme} className="text-xl">
+              {theme === "light" ? <FiSun /> : <FaMoon />}
+            </button>
+          </div>
+        </div>
 
         {/* Buttons (Login, Signup, Dashboard) */}
 

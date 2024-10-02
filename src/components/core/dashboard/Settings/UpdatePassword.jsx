@@ -46,7 +46,7 @@ const UpdatePassword = () => {
 
   return (
     <form onSubmit={handleOnSubmit} className="relative flex flex-col gap-y-6 ">
-      <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#253c53] bg-opacity-55 border-[1px] border-[#2c2c46]">
+      <div className="flex flex-col md:flex-row md:gap-x-5 gap-y-5 mt-8 justify-between w-10/12 max-w-[1000px] p-7 mx-auto rounded-lg text-cyan-700 font-medium bg-[#1d334b] bg-opacity-95 border-[1px] border-[#2c2c46]">
         <label className="relative flex flex-col gap-y-1 w-[45%]">
           <span className="text-richblack-100">
             Current Password <sup className="text-pink-200">*</sup>
@@ -63,7 +63,7 @@ const UpdatePassword = () => {
             placeholder="Enter current password"
             ref={oldPassword}
             name="changePassword"
-            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-slate-300 outline-4 outline-cyan-400 shadow-slate-400 "
+            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-gradient-to-r from-slate-700 to-slate-800 text-slate-300 outline-4 outline-cyan-400 shadow-slate-400 "
           />
         </label>
         <label className="relative flex flex-col gap-y-1 w-[45%]">
@@ -82,7 +82,7 @@ const UpdatePassword = () => {
             placeholder="Enter new password"
             ref={newPassword}
             name="newPassword"
-            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-slate-700 text-slate-400 outline-4 outline-cyan-400 shadow-slate-400 "
+            className="py-3 pl-2 rounded-md shadow-sm pr-7 bg-gradient-to-r from-slate-700 to-slate-800 text-slate-400 outline-4 outline-cyan-400 shadow-slate-400 "
           />
         </label>
       </div>

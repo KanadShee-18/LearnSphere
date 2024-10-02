@@ -1,6 +1,6 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
-const SubSection = require("../controllers/SubSection");
+const SubSection = require("../models/SubSection");
 
 // Create section handler function
 
@@ -58,7 +58,7 @@ exports.createSection = async (req, res) => {
 exports.updateSection = async (req, res) => {
   try {
     // Data fetch
-    const { sectionName, sectionId } = req.body;
+    const { sectionName, sectionId, courseId } = req.body;
 
     // validate data
     if (!sectionId || !sectionName) {
@@ -79,19 +79,25 @@ exports.updateSection = async (req, res) => {
       sectionId,
       { sectionName: sectionName },
       { new: true }
-    );
+    ).populate("subSection");
+
+    const course = await Course.findById(courseId).populate({
+      path: "courseContent",
+      populate: {
+        path: "subSection",
+      },
+    });
     // return res
     return res.status(200).json({
       success: true,
-      message: "Course section has been updated successfully.",
-      updatedData: {
-        data: {
-          sectionData: updateSectionDetails,
-        },
+      message: `Course section has been updated successfully. Current section is: ${updateSectionDetails}`,
+      data: {
+        updatedCourse: course,
       },
     });
   } catch (error) {
     res.status(500).json({
+      error: error.message,
       success: false,
       message: "Could not able to update section, please try again.",
     });

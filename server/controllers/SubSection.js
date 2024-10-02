@@ -1,6 +1,9 @@
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
-const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const {
+  uploadImageToCloudinary,
+  destroyVideoFromCloudinary,
+} = require("../utils/imageUploader");
 
 // Create SubSection:
 
@@ -11,7 +14,7 @@ exports.createSubSection = async (req, res) => {
     // fetch video from req.files
     const video = req.files.video;
     // validate
-    if (!sectionId || !title || !description) {
+    if (!sectionId || !title || !description || !video) {
       return res.status(400).json({
         success: false,
         message: "All fields are required!",
@@ -29,12 +32,15 @@ exports.createSubSection = async (req, res) => {
       video,
       process.env.CLOUDINARY_FOLDER_NAME
     );
+    console.log("Uploaded video details from cldnry: ", uploadVideoDetails);
+
     // create sub-section with fetched data and secure_url
     const newSubSection = await SubSection.create({
       title: title,
       timeDuration: `${uploadVideoDetails.duration}`,
       description: description,
       videoUrl: uploadVideoDetails.secure_url,
+      publicId: uploadVideoDetails.public_id,
     });
     // update section schema with the created sub-section _id.
     // Update the corresponding section with the newly created sub-section
@@ -62,17 +68,8 @@ exports.createSubSection = async (req, res) => {
 exports.updateSubSection = async (req, res) => {
   try {
     // Fetch data from req body
-    const { subSectionId, title, timeDuration, description } = req.body;
-    // get video req files
-    const newVideo = req.files.videoFile;
+    const { sectionId, subSectionId, title, description } = req.body;
 
-    // Validate
-    if (!subSectionId || !title) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required.",
-      });
-    }
     // Check if subsection present with the id
     const checkSubSection = await SubSection.findById(subSectionId);
     if (!checkSubSection) {
@@ -81,34 +78,46 @@ exports.updateSubSection = async (req, res) => {
         message: "No sub-section is available with this id.",
       });
     }
+
+    const publicId = checkSubSection.publicId;
+
+    const deletedImg = await destroyVideoFromCloudinary(publicId);
+    console.log(deletedImg);
+
+    // Validate
+    if (title !== undefined) {
+      checkSubSection.title = title;
+    }
+    if (description !== undefined) {
+      checkSubSection.description = description;
+    }
+
     // Upload new video to cloudiniary
-    const newVideoUploadDetails = await uploadImageToCloudinary(
-      newVideo,
-      process.env.CLOUDINARY_FOLDER_NAME
+    if (req.files && req.files.video !== undefined) {
+      const video = req.files.video;
+      const uploadDetails = await uploadImageToCloudinary(
+        video,
+        process.env.CLOUDINARY_FOLDER_NAME
+      );
+      console.log("Uploaded video details: ", uploadDetails);
+
+      checkSubSection.videoUrl = uploadDetails.secure_url;
+      checkSubSection.timeDuration = `${uploadDetails.duration}`;
+    }
+
+    await checkSubSection.save();
+
+    const updatedSection = await Section.findById(sectionId).populate(
+      "subSection"
     );
 
-    // Update sub-section details:
-    const updatedSubSectionDetails = await SubSection.findByIdAndUpdate(
-      subSectionId,
-      {
-        title: title,
-        timeDuration: timeDuration,
-        description: description,
-        videoUrl: newVideoUploadDetails.secure_url,
-      },
-      { new: true }
-    );
+    console.log("Updated subsection in section: ", updatedSection);
+
     // return success response
     return res.status(200).json({
       success: true,
       message: "Sub-section has been updated successfully.",
-      updatedDetails: {
-        data: [
-          {
-            sub_section_updated: updatedSubSectionDetails,
-          },
-        ],
-      },
+      data: updatedSection,
     });
   } catch (error) {
     res.status(500).json({
@@ -124,41 +133,44 @@ exports.updateSubSection = async (req, res) => {
 exports.deleteSubSection = async (req, res) => {
   try {
     // Fetch the subsection id from the params
-    const { subSectionId } = req.params;
-    // Check that subsection is present or not
-    const findSubSection = await SubSection.findById(subSectionId);
-    // Validate:
-    if (!findSubSection) {
-      return res.status(400).json({
-        success: false,
-        message: "No sub-section is available with this id.",
-      });
-    }
-    // Delete sub-section
-    const deletedSubSection = await SubSection.findByIdAndDelete(
-      subSectionId
-    ).exec();
-    // Remove the deleted subsection id from the section schema also
-    await Section.updateOne(
-      { subSection: subSectionId },
+    console.log("Request comes to backend to delete subsection...");
+
+    const { subSectionId, sectionId } = req.body;
+    await Section.findByIdAndUpdate(
+      { _id: sectionId },
       {
         $pull: {
           subSection: subSectionId,
         },
       }
     );
+    const subSection = await SubSection.findByIdAndDelete({
+      _id: subSectionId,
+    });
+    // Validate:
+    if (!subSection) {
+      return res.status(400).json({
+        success: false,
+        message: "No sub-section is available with this id.",
+      });
+    }
+
+    // Remove the deleted subsection id from the section schema also
+    const updatedSection = await Section.findById(sectionId).populate(
+      "subSection"
+    );
+
+    console.log("Updated Section after deleteing subsection: ", updatedSection);
+
     // return success response
     return res.status(200).json({
       success: true,
       message: "Sub-section has been deleted successfully.",
-      deletedSubSection: {
-        data: {
-          deleted_subSection: deletedSubSection,
-        },
-      },
+      data: updatedSection,
     });
   } catch (error) {
     return res.status(500).json({
+      error: error.message,
       success: false,
       messgae: "Some error occurred while deleting the sub-section.",
     });

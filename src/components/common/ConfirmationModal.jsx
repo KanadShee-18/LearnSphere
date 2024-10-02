@@ -3,9 +3,9 @@ import IconBtn from "./IconBtn";
 
 const ConfirmationModal = ({ modalData }) => {
   return (
-    <div className="z-[1000] inset-0 fixed !mt-0 grid place-items-center overflow-auto bg-slate-600 bg-opacity-80">
-      <div className="w-11/12 max-w-[350px] rounded-lg border-[1px] border-pink-300 bg-gradient-to-bl from-slate-800 to-richblack-800 p-5 shadow-md shadow-pink-200">
-        <p className="mb-5 text-2xl leading-6 text-richblack-200">
+    <div className="z-[1000] inset-0 fixed !mt-0 grid place-items-center overflow-auto bg-slate-600 bg-opacity-60 backdrop-blur-sm">
+      <div className="w-11/12 max-w-[350px] rounded-lg border-[1px] border-blue-400 bg-gradient-to-bl from-slate-700 via-slate-800 to-richblack-900 p-5 shadow-sm shadow-blue-200">
+        <p className="mb-5 text-xl leading-6 text-blue-100 font-poppins">
           {modalData.text1}
         </p>
         <p className="mb-5 text-sm font-medium leading-6 text-pink-100 font-inter">

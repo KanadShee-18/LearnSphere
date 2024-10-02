@@ -23,3 +23,14 @@ exports.destroyImageFromCloudinary = async (publicId) => {
     throw new Error(`Error deleting image from Cloudinary: ${error.message}`);
   }
 };
+
+exports.destroyVideoFromCloudinary = async (publicId) => {
+  try {
+    const result = await cloudinary.uploader.destroy(publicId, {
+      resource_type: "video",
+    });
+    return result;
+  } catch (error) {
+    throw new Error(`Error deleting image from Cloudinary: ${error.message}`);
+  }
+};

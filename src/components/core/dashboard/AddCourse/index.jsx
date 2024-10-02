@@ -13,14 +13,14 @@ const index = () => {
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#1b2536] max-w-[470px] mb-7 min-w-[200px]">
+        <div className="p-4 rounded-xl bg-[#233149] max-w-[470px] mb-7 min-w-[200px] shadow-md shadow-slate-600 ">
           <p className="flex items-center pt-5 ml-3 text-2xl text-cyan-500">
             <MdTipsAndUpdates className="mr-3 text-yellow-100 size-10" /> Course
             Upload Tips
           </p>
-          <ul className="flex flex-col mx-6 mt-5 mb-4 list-disc gap-y-3 text-slate-300">
+          <ul className="flex flex-col mx-6 mt-5 mb-4 text-xl list-disc gap-y-3 text-slate-400 font-eduSa">
             <li>Set the Course Price option or set it free.</li>
-            <li>Standard size for the course thumbnail is 1024 X 576.</li>
+            <li>Standard size for the course thumbnail is 1024 x 576.</li>
             <li>Video section controls the course overview video.</li>
             <li>Course Builder is where you create & organize a course.</li>
             <li>
@@ -34,6 +34,13 @@ const index = () => {
             <li>Make Announcements to notify any important</li>
             <li>Notes to all enrolled students at once.</li>
           </ul>
+          <p className="px-3 my-3 font-semibold text-blue-100">
+            If any problem occurrs while creating lecture, feel free to contact
+            with{" "}
+            <span className="text-purple-300 font-eduSa">
+              kanadshee18@gmail.com
+            </span>
+          </p>
         </div>
       </div>
     </>

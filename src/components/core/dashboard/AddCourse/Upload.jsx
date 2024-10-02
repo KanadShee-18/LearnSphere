@@ -11,6 +11,7 @@ const Upload = ({
   setValue,
   errors,
   video = false,
+  pdf = false,
   viewData = null,
   editData = null,
 }) => {
@@ -24,7 +25,14 @@ const Upload = ({
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result);
+      if (pdf) {
+        // Create a blob URL for PDF files
+        const blob = new Blob([reader.result], { type: file.type });
+        const blobUrl = URL.createObjectURL(blob);
+        setPreviewSource(blobUrl); // Use blob URL for iframe
+      } else {
+        setPreviewSource(reader.result); // For image or video preview
+      }
     };
   };
 
@@ -38,9 +46,14 @@ const Upload = ({
     }
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: !video
-      ? { "image/*": [".jpeg", ".jpg", ".png"] }
-      : { "video/*": [".mp4"] },
+    accept:
+      !video && !pdf
+        ? { "image/*": [".jpeg", ".jpg", ".png"] }
+        : video
+        ? { "video/*": [".mp4"] }
+        : pdf
+        ? { "application/pdf": [".pdf"] }
+        : {},
     onDrop,
   });
 
@@ -64,15 +77,21 @@ const Upload = ({
       >
         {previewSource ? (
           <div className="flex flex-col items-center w-full p-6">
-            {!video ? (
+            {!video && !pdf ? (
               <img
                 src={previewSource}
                 alt={`Img Preview`}
                 className="object-cover w-full h-full rounded-md"
               />
-            ) : (
+            ) : video ? (
               <Player aspectRatio="16:9" playsInline src={previewSource} />
-            )}
+            ) : pdf ? (
+              <iframe
+                src={previewSource}
+                title="PDF Preview"
+                className="w-full h-full rounded-md"
+              />
+            ) : null}
             {!viewData && (
               <button
                 type="button"
@@ -97,12 +116,14 @@ const Upload = ({
               <FiUploadCloud className="text-2xl text-cyan-600" />
             </div>
             <p className="text-sm mt-2 max-w-[200px] text-center text-richblack-200">
-              Drag and drop {!video ? "an image" : "a video"}, or click to{" "}
+              Drag and drop{" "}
+              {!video && !pdf ? "an image" : video ? "a video" : "a pdf"}, or
+              click to{" "}
               <span className="font-semibold text-cyan-500">Browse</span> a file
             </p>
             <ul className="flex justify-between mt-10 space-x-12 text-xs text-center list-disc text-slate-400">
-              <li>Aspect ratio: 16:9</li>
-              <li>Recommended size 1024x576</li>
+              {video && <li>Aspect ratio: 16:9</li>}
+              <li>{video ? "Recommended size 1024x576" : "PDF or Image"}</li>
             </ul>
           </div>
         )}
