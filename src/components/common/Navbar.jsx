@@ -110,25 +110,23 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        {/* Theme toggler */}
-        <div
-          onClick={toggleTheme}
-          className="relative flex items-center p-1 rounded-full w-14 h-7 dark:bg-slate-800 bg-slate-200"
-        >
-          <div
-            className={`w-6 h-6 dark:bg-slate-500 bg-slate-400 light:bg-white rounded-full flex items-center justify-center transform transition-all duration-500 ease-in-out ${
-              theme === "light" ? "translate-x-0" : "translate-x-6"
-            }`}
-          >
-            <button onClick={toggleTheme} className="text-xl">
-              {theme === "light" ? <FiSun /> : <FaMoon />}
-            </button>
-          </div>
-        </div>
-
         {/* Buttons (Login, Signup, Dashboard) */}
 
         <div className="flex items-center text-sm gap-x-4">
+          <div
+            onClick={toggleTheme}
+            className="relative flex items-center p-1 rounded-full w-14 h-7 dark:bg-slate-800 bg-slate-200"
+          >
+            <div
+              className={`w-6 h-6 dark:bg-slate-500 bg-slate-400 light:bg-white rounded-full flex items-center justify-center transform transition-all duration-500 ease-in-out ${
+                theme === "light" ? "translate-x-0" : "translate-x-6"
+              }`}
+            >
+              <button onClick={toggleTheme} className="text-xl">
+                {theme === "light" ? <FiSun /> : <FaMoon />}
+              </button>
+            </div>
+          </div>
           {user && user?.accountType !== "Instructor" && (
             <Link to={"/dashboard/cart"} className="relative text-slate-400">
               <AiOutlineShoppingCart className="size-5" />

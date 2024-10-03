@@ -304,3 +304,35 @@ exports.getCourseDetails = async (req, res) => {
     });
   }
 };
+
+// Get all courses made by an instructor
+
+exports.getInstructorCourses = async (req, res) => {
+  try {
+    // get the instructor id
+    const instructorId = req.user.id;
+    // const { instructorId } = req.body;
+
+    // Find all courses of that instructor and return
+
+    const instructorCourses = await Course.find({
+      instructor: instructorId,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "All courses of the instructor have been fetched successfully.",
+      data: {
+        totalCourses: instructorCourses.length,
+        instructorCourses: instructorCourses,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal error occurred while getting instructor courses.",
+      error: error.message,
+    });
+  }
+};

@@ -4,6 +4,7 @@ import { RxDropdownMenu } from "react-icons/rx";
 import { TbEdit } from "react-icons/tb";
 import { GrEdit } from "react-icons/gr";
 import { MdOutlineArrowLeft, MdArrowDropDown } from "react-icons/md";
+import { FaGripLinesVertical } from "react-icons/fa";
 import { IoTrash } from "react-icons/io5";
 import { BsFillTrash2Fill } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
@@ -74,13 +75,14 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                 </p>
               </div>
 
-              <div className="flex flex-row items-center gap-x-3">
+              <div className="flex flex-row items-center gap-x-2">
                 <button
                   onClick={() => setExpand(!expand)}
-                  className="text-2xl text-[#6ba8a3]"
+                  className="text-3xl text-[#6ba8a3]"
                 >
-                  {expand ? <MdArrowDropDown /> : <MdOutlineArrowLeft />}
+                  {expand ? <MdOutlineArrowLeft /> : <MdArrowDropDown />}
                 </button>
+                <FaGripLinesVertical className="text-[#6ba8a3]" />
                 <button
                   onClick={() => {
                     handleChangeEditSectionName(
