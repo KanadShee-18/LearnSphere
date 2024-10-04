@@ -212,3 +212,7 @@ body {
 .publishedCourse {
   box-shadow: -5px 5px 1px teal;
 }
+
+.courseCard {
+  box-shadow: 5px 5px 1px rgb(51, 160, 160);
+}

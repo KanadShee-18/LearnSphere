@@ -1,5 +1,7 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
+const Section = require("../models/Section");
+const SubSection = require("../models/SubSection");
 const User = require("../models/User");
 const {
   uploadImageToCloudinary,
@@ -332,6 +334,59 @@ exports.getInstructorCourses = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Internal error occurred while getting instructor courses.",
+      error: error.message,
+    });
+  }
+};
+
+// Delete the Course:
+
+exports.deleteCourse = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+
+    // Find the Course:
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found!",
+      });
+    }
+
+    // Unenroll students from the course
+    const studentsEnrolled = course.studentsEnrolled;
+    for (const studentId of studentsEnrolled) {
+      await User.findByIdAndUpdate(studentId, {
+        $pull: { courses: courseId },
+      });
+    }
+
+    // Delete section and subsections of the course
+    const courseSections = course.courseContent;
+
+    for (const sectionId of courseSections) {
+      const section = await Section.findById(sectionId);
+      if (section) {
+        const subSections = section.subSection;
+        for (const subSectionId of subSections) {
+          await SubSection.findByIdAndDelete(subSectionId);
+        }
+      }
+      await Section.findByIdAndDelete(sectionId);
+    }
+
+    // Now delete the course
+    await Course.findByIdAndDelete(courseId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Course Deleted Successfully!",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Some error occurred while deleting the course.",
       error: error.message,
     });
   }
