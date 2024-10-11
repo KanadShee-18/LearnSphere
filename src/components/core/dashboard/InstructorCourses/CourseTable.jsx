@@ -16,9 +16,11 @@ import {
 } from "../../../../services/operations/courseDetailsAPI";
 import { setCourse } from "../../../../slices/courseSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CourseTable = ({ courses, setCourses }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
@@ -29,11 +31,14 @@ const CourseTable = ({ courses, setCourses }) => {
     const result = await fetchInstructorCourses(token);
     if (result) {
       setCourses(result?.instructorCourses);
-      dispatch(setCourse(result?.instructorCourses)); // Ensure you're dispatching the action properly
+      // dispatch(setCourse(result?.instructorCourses)); // Ensure you're dispatching the action properly
     }
     setConfirmationModal(null);
     setLoading(false);
-    toast("Courses recently updated!", { position: "bottom-right" });
+    toast("Courses recently updated!", {
+      position: "bottom-right",
+      theme: "dark",
+    });
   };
 
   return (
@@ -44,17 +49,19 @@ const CourseTable = ({ courses, setCourses }) => {
         courses.map((course) => (
           <div
             key={course._id}
-            className="relative flex lg:max-w-[800px] mx-auto md:flex-row flex-col p-8 rounded-xl mb-10 border-[1px] bg-opacity-80 border-slate-600 courseCard 
-        bg-[#212e42] hover:cursor-pointer hover:bg-[#121f31] hover:scale-105 duration-300 transition-all"
+            className="relative flex lg:max-w-[800px] min-w-[250px] flex-col lg:flex-row gap-y-3 lg:gap-y-0 p-8 rounded-xl mb-10 border-[1px] bg-opacity-90 border-slate-600 courseCard 
+        bg-neutral-950 bg-gradient-to-br from-[#1a223b] to-[#181829] hover:cursor-pointer hover:bg-[#121f31] hover:scale-105 duration-300 transition-all"
           >
-            {/* Left Side - 70% */}
-            <div className="flex flex-col gap-3 lg:flex-row w-full lg:w-[70%]">
+            <div className="flex flex-col  gap-3 lg:w-[40%] w-full">
               <img
                 src={course.thumbnail}
                 alt="course_img"
-                className="w-[220px] shadow-sm shadow-slate-300 h-[150px] object-cover rounded-xl"
+                className="lg:w-[220px] w-full mx-auto shadow-sm shadow-slate-300 lg:h-[150px] h-[200px] object-cover rounded-xl"
               />
-              <div className="flex flex-col gap-y-2">
+            </div>
+
+            <div className="flex md:flex-row flex-col items-center lg:w-[60%] w-full gap-x-3  justify-center">
+              <div className="flex flex-col w-full mx-auto place-items-start lg:w-auto gap-y-2">
                 <p className="text-richblack-5">{course.courseName}</p>
                 <p className="text-[13px] font-medium text-slate-400 font-poppins">
                   {course.courseDescription.length > 50
@@ -65,9 +72,9 @@ const CourseTable = ({ courses, setCourses }) => {
                 <p className="text-sm text-blue-50">
                   Created:{formatDate(course.createdAt)}
                 </p>
-                <div className="flex flex-col items-center gap-3 md:flex-row">
+                <div className="flex flex-col items-center gap-3 mt-3 md:flex-row">
                   {course.status === COURSE_STATUS.DRAFT ? (
-                    <p className="flex w-fit items-center px-3 py-[2px] text-[15px] text-[#ce7d98] font-inter tracking-wider rounded-full bg-slate-900 font-medium gap-x-2">
+                    <p className="flex w-fit items-center px-3 py-[2px] text-[15px] text-[#ce7d98] font-inter tracking-wider rounded-full bg-slate-800 font-medium gap-x-2">
                       <IoTime className="size-5" />
                       Drafted
                     </p>
@@ -79,46 +86,45 @@ const CourseTable = ({ courses, setCourses }) => {
                   )}
                 </div>
               </div>
-            </div>
-            {/* Right Side - 30% */}
-            <div className="flex md:flex-col flex-row md:items-end items-center md:mt-0 mt-4 justify-start w-full lg:w-[30%] gap-y-4 lg:gap-x-3">
-              <div>
-                <p className="text-xl font-medium tracking-wide text-richblack-25">
-                  &#8377;{course.price}
-                </p>
-              </div>
-              <div className="mx-3 md:mx-0">
-                <h1 className="px-2 inline-block py-[2px] text-sm font-medium rounded-full bg-slate-700 text-slate-300">
-                  2hr 30mins
-                </h1>
-              </div>
-              <div className="flex">
-                <button
-                  className="p-3 text-teal-400 rounded-full hover:bg-slate-700"
-                  disabled={loading}
-                >
-                  <LuFileEdit className="text-xl" />
-                </button>
-                <button
-                  className="p-3 text-pink-100 rounded-full hover:bg-slate-700"
-                  disabled={loading}
-                  onClick={() =>
-                    setConfirmationModal({
-                      text1: "Are You Sure?",
-                      text2: "This whole course content will be deleted!",
-                      btn1Text: "Delete",
-                      btn2Text: "Cancel",
-                      btn1Handler: !loading
-                        ? () => handleDeleteCourse(course._id)
-                        : () => {},
-                      btn2Handler: !loading
-                        ? () => setConfirmationModal(null)
-                        : () => {},
-                    })
-                  }
-                >
-                  <HiTrash className="text-xl" />
-                </button>
+
+              <div className="flex md:flex-col flex-row items-center md:mt-0 mt-4 justify-center w-1/2 lg:w-[30%] gap-y-4 lg:gap-x-3">
+                <div>
+                  <p className="text-xl font-medium tracking-wide text-richblack-25">
+                    &#8377;{course.price.toLocaleString("en-IN")}
+                  </p>
+                </div>
+
+                <div className="flex">
+                  <button
+                    className="p-3 text-teal-400 rounded-full hover:bg-slate-700"
+                    disabled={loading}
+                    onClick={() => {
+                      navigate(`/dashboard/edit-course/${course._id}`);
+                    }}
+                  >
+                    <LuFileEdit className="text-xl" />
+                  </button>
+                  <button
+                    className="p-3 text-pink-100 rounded-full hover:bg-slate-700"
+                    disabled={loading}
+                    onClick={() =>
+                      setConfirmationModal({
+                        text1: "Are You Sure?",
+                        text2: "This whole course content will be deleted!",
+                        btn1Text: "Delete",
+                        btn2Text: "Cancel",
+                        btn1Handler: !loading
+                          ? () => handleDeleteCourse(course._id)
+                          : () => {},
+                        btn2Handler: !loading
+                          ? () => setConfirmationModal(null)
+                          : () => {},
+                      })
+                    }
+                  >
+                    <HiTrash className="text-xl" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

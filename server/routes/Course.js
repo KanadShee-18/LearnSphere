@@ -7,6 +7,7 @@ const {
   editCourse,
   getAllCourses,
   getCourseDetails,
+  getFullCourseDetails,
   getInstructorCourses,
   deleteCourse,
 } = require("../controllers/Course");
@@ -71,6 +72,7 @@ router.delete("/deleteCourse", deleteCourse);
 router.get("/getAllCourses", getAllCourses);
 // Getting details for a specific course:
 router.get("/getCourseDetails", getCourseDetails);
+router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 
 // Routes for Admin

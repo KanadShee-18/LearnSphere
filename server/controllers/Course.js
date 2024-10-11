@@ -1,12 +1,14 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
 const Section = require("../models/Section");
+const CourseProgress = require("../models/CourseProgress");
 const SubSection = require("../models/SubSection");
 const User = require("../models/User");
 const {
   uploadImageToCloudinary,
   destroyImageFromCloudinary,
 } = require("../utils/imageUploader");
+const { convertSecondsToDuration } = require("../utils/secToDuration");
 require("dotenv").config();
 
 // Create Course handler function:
@@ -388,6 +390,142 @@ exports.deleteCourse = async (req, res) => {
       success: false,
       message: "Some error occurred while deleting the course.",
       error: error.message,
+    });
+  }
+};
+
+// Get Full course details:
+
+// exports.getFullCourseDetails = async (req, res) => {
+//   try {
+//     const { courseId } = req.body;
+//     const userId = req.user.id;
+//     const courseDetails = await Course.findOne({
+//       _id: courseId,
+//     })
+//       .populate({
+//         path: "instructor",
+//         populate: {
+//           path: "additionalDetails",
+//         },
+//       })
+//       .populate("category")
+//       .populate("ratingAndReviews")
+//       .populate({
+//         path: "courseContent",
+//         populate: {
+//           path: "subSection",
+//         },
+//       })
+//       .exec();
+
+//     let courseProgressCount = await CourseProgress.findOne({
+//       courseId: courseId,
+//       userId: userId,
+//     });
+
+//     console.log("Course Progress Count: ", courseProgressCount);
+
+//     if (!courseDetails) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `Could not find course with id: ${courseId}.`,
+//       });
+//     }
+
+//     let totalDurationInSeconds = 0;
+//     courseDetails.courseContent.forEach((content) => {
+//       content.subSection.forEach((subSection) => {
+//         const timeDurationInSeconds = parseInt(subSection.timeDuration);
+//         totalDurationInSeconds += timeDurationInSeconds;
+//       });
+//     });
+
+//     const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
+//     return res.status(200).json({
+//       success: true,
+//       data: {
+//         courseDetails,
+//         totalDuration,
+//         completedVideos: courseProgressCount?.completedVideos
+//           ? courseProgressCount?.completedVideos
+//           : [],
+//       },
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       error: error.message,
+//       message:
+//         "Some internal problem occurred while getting whole course details.",
+//     });
+//   }
+// };
+
+exports.getFullCourseDetails = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const userId = req.user.id;
+    const courseDetails = await Course.findOne({
+      _id: courseId,
+    })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("category")
+      .populate("ratingAndReviews")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
+    let courseProgressCount = await CourseProgress.findOne({
+      courseID: courseId,
+      userId: userId,
+    });
+
+    console.log("courseProgressCount : ", courseProgressCount);
+
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `Could not find course with id: ${courseId}`,
+      });
+    }
+
+    let totalDurationInSeconds = 0;
+    courseDetails.courseContent.forEach((content) => {
+      content.subSection.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      });
+    });
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
+    console.log("Course Details: ", courseDetails);
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        courseDetails,
+        totalDuration,
+        completedVideos: courseProgressCount?.completedVideos
+          ? courseProgressCount?.completedVideos
+          : [],
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };
