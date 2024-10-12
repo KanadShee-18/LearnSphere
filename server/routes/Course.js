@@ -78,7 +78,7 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 // Routes for Admin
 router.post("/createcategory", auth, isAdmin, createCategory);
 router.get("/showallcategories", showAllCategories);
-router.post("/getcategorypagedetails", categoryPageDetails);
+router.post("/getCategoryPageDetails", categoryPageDetails);
 
 // Routes for ratings and reviews:
 router.post("/createRating", auth, isStudent, createRating);
