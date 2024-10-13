@@ -56,7 +56,7 @@ const CourseTable = ({ courses, setCourses }) => {
               <img
                 src={course.thumbnail}
                 alt="course_img"
-                className="lg:w-[220px] w-full mx-auto shadow-sm shadow-slate-300 lg:h-[150px] h-[200px] object-cover rounded-xl"
+                className="lg:w-[270px] w-full mx-auto shadow-sm shadow-slate-300 lg:h-[170px] h-[200px] object-cover rounded-xl"
               />
             </div>
 
