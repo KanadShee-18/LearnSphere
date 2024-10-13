@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import CourseCard from "./CourseCard";
 
 const CourseSlider = ({ Courses }) => {
@@ -18,15 +18,15 @@ const CourseSlider = ({ Courses }) => {
         <div className="relative">
           <button
             onClick={slideLeft}
-            className="absolute p-1 rounded-full -left-10 top-[45%] md:p-2 bg-slate-600 bg-opacity-45 text-teal-800 hover:text-teal-500 hover:bg-opacity-70"
+            className="absolute p-1 text-2xl rounded-full -left-10 top-[25%] bg-slate-600 bg-opacity-45 text-teal-800 hover:text-teal-500 hover:bg-opacity-70"
           >
-            <FaArrowLeft />
+            <MdArrowLeft />
           </button>
           <button
             onClick={slideRight}
-            className="absolute p-1 rounded-full -right-10 md:p-2 top-[45%] bg-slate-600 bg-opacity-45 text-teal-800 hover:text-teal-500 hover:bg-opacity-70"
+            className="absolute p-1 text-2xl rounded-full -right-10 top-[25%] bg-slate-600 bg-opacity-45 text-teal-800 hover:text-teal-500 hover:bg-opacity-70"
           >
-            <FaArrowRight />
+            <MdArrowRight />
           </button>
 
           <div
@@ -34,7 +34,7 @@ const CourseSlider = ({ Courses }) => {
             className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide"
           >
             {Courses?.map((course, i) => (
-              <CourseCard key={i} course={course} Height={"200px"} />
+              <CourseCard key={i} course={course} Height={"h-[200px]"} />
             ))}
           </div>
         </div>

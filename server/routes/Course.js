@@ -71,7 +71,7 @@ router.delete("/deleteCourse", deleteCourse);
 // Getting all courses:
 router.get("/getAllCourses", getAllCourses);
 // Getting details for a specific course:
-router.get("/getCourseDetails", getCourseDetails);
+router.post("/getCourseDetails", getCourseDetails);
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 

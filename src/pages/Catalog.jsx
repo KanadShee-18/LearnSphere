@@ -7,6 +7,7 @@ import { categories } from "../services/apis";
 import { getCatalogPageData } from "../services/operations/pageAndComponentData";
 import { useSelector } from "react-redux";
 import Spinner from "../components/common/Spinner";
+import CourseCard from "../components/core/Catalog/CourseCard";
 
 const Catalog = () => {
   const { loading } = useSelector((state) => state.profile);
@@ -46,10 +47,10 @@ const Catalog = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen mt-14">
         {/* Hero section or section: 0 */}
         <div className="box-content px-4 bg-richblack-800">
-          <div className="mx-auto flex min-h-[255px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent">
+          <div className="mx-auto flex min-h-[215px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent">
             <p className="text-sm text-richblack-300">
               {`Home / Catalog / `}
               <span className="text-teal-400">
@@ -96,6 +97,34 @@ const Catalog = () => {
           <CourseSlider
             Courses={catalogPageData?.data?.selectedCategory?.courses}
           />
+        </div>
+
+        {/* Section: 2 */}
+        <div className="box-content w-full px-4 py-12 mx-auto max-w-maxContentTab lg:max-w-maxContent">
+          <div className="text-2xl font-bold text-slate-300 lg:text-4xl">
+            Top Courses in {catalogPageData?.data?.differentCategory?.name}
+          </div>
+          <div className="py-8">
+            <CourseSlider
+              courses={catalogPageData?.data?.differentCategory?.courses}
+            />
+          </div>
+        </div>
+
+        {/* Section: 3 */}
+        <div className="box-content w-full px-4 py-12 mx-auto max-w-maxContentTab lg:max-w-maxContent">
+          <div className="text-2xl font-bold text-slate-300 lg:text-4xl">
+            Frequently Bought
+          </div>
+          <div className="py-8">
+            <div className="grid grid-cols-1 gap-6 place-items-center lg:grid-cols-2">
+              {catalogPageData?.data?.mostSellingCourses
+                ?.slice(0, 4)
+                .map((course, i) => (
+                  <CourseCard course={course} key={i} Height={"h-[270px]"} />
+                ))}
+            </div>
+          </div>
         </div>
       </div>
       {/* Footer */}

@@ -265,13 +265,65 @@ exports.getAllCourses = async (req, res) => {
 
 // Get course details:
 
+// exports.getCourseDetails = async (req, res) => {
+//   try {
+//     // Get course id:
+//     const { courseId } = req.body;
+
+//     // Fetch course details
+//     const courseDetails = await Course.find({ _id: courseId })
+//       .populate({
+//         path: "instructor",
+//         populate: {
+//           path: "additionalDetails",
+//         },
+//       })
+//       .populate("category")
+//       .populate("ratingAndReviews")
+//       .populate({
+//         path: "courseContent",
+//         populate: {
+//           path: "subSection",
+//           select: "-videoUrl",
+//         },
+//       })
+//       .exec();
+
+//     // validation
+//     if (!courseDetails) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `Could not find course with course id ${courseId}`,
+//       });
+//     }
+
+//     // send success response
+//     return res.status(200).json({
+//       success: true,
+//       message: "Course details fetched successfully.",
+//       courseDetails: {
+//         detailsOfCourse: {
+//           courseInDetail: courseDetails,
+//         },
+//       },
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "Error occurred while getting data of a course.",
+//       error: error.message,
+//     });
+//   }
+// };
+
 exports.getCourseDetails = async (req, res) => {
   try {
-    // Get course id:
-    const { courseId } = req.body;
+    console.log("Request comes to get course details.");
 
-    // Fetch course details
-    const courseDetails = await Course.find({ _id: courseId })
+    const { courseId } = req.body;
+    const courseDetails = await Course.findOne({
+      _id: courseId,
+    })
       .populate({
         path: "instructor",
         populate: {
@@ -284,33 +336,39 @@ exports.getCourseDetails = async (req, res) => {
         path: "courseContent",
         populate: {
           path: "subSection",
+          select: "-videoUrl",
         },
       })
       .exec();
 
-    // validation
     if (!courseDetails) {
       return res.status(400).json({
         success: false,
-        message: `Could not find course with course id ${courseId}`,
+        message: `Could not find course with id: ${courseId}`,
       });
     }
 
-    // send success response
+    let totalDurationInSeconds = 0;
+    courseDetails.courseContent.forEach((content) => {
+      content.subSection.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      });
+    });
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
     return res.status(200).json({
       success: true,
-      message: "Course details fetched successfully.",
-      courseDetails: {
-        detailsOfCourse: {
-          courseInDetail: courseDetails,
-        },
+      data: {
+        courseDetails,
+        totalDuration,
       },
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Error occurred while getting data of a course.",
-      error: error.message,
+      message: error.message,
     });
   }
 };

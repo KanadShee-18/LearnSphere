@@ -77,6 +77,7 @@ exports.categoryPageDetails = async (req, res) => {
         path: "courses",
         match: { status: "Published" },
         populate: "ratingAndReviews",
+        populate: "instructor",
       })
       .exec();
 
