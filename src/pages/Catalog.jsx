@@ -10,11 +10,12 @@ import Spinner from "../components/common/Spinner";
 import CourseCard from "../components/core/Catalog/CourseCard";
 
 const Catalog = () => {
-  const { loading } = useSelector((state) => state.profile);
+  const { loading: profileLoading } = useSelector((state) => state.profile);
   const { catalogName } = useParams();
   const [active, setActive] = useState(1);
   const [catalogPageData, setCatalogPageData] = useState(null);
   const [categoryId, setCategoryId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Fetch all categories
   useEffect(() => {
@@ -23,7 +24,7 @@ const Catalog = () => {
       const categoryData = res?.data?.categoryDetails?.categories;
       const category_id = categoryData?.filter(
         (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName
-      )[0]._id;
+      )[0]?._id;
       setCategoryId(category_id);
     };
     getAllCategories();
@@ -31,6 +32,7 @@ const Catalog = () => {
 
   useEffect(() => {
     const getCategoryDetails = async () => {
+      setLoading(true);
       try {
         const res = await getCatalogPageData(categoryId);
         console.log("Category response comes as: ", res);
@@ -38,12 +40,22 @@ const Catalog = () => {
         setCatalogPageData(res);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     if (categoryId) {
       getCategoryDetails();
     }
   }, [categoryId]);
+
+  if (loading || profileLoading) {
+    return (
+      <div className="w-full place-items-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <>

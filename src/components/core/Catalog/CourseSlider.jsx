@@ -13,25 +13,27 @@ const CourseSlider = ({ Courses }) => {
   };
 
   return (
-    <div className="px-6 mt-6">
+    <div className="mt-6 ">
       {Courses?.length ? (
         <div className="relative">
-          <button
-            onClick={slideLeft}
-            className="absolute p-1 text-2xl rounded-full -left-10 top-[25%] bg-slate-600 bg-opacity-45 text-teal-800 hover:text-teal-500 hover:bg-opacity-70"
-          >
-            <MdArrowLeft />
-          </button>
-          <button
-            onClick={slideRight}
-            className="absolute p-1 text-2xl rounded-full -right-10 top-[25%] bg-slate-600 bg-opacity-45 text-teal-800 hover:text-teal-500 hover:bg-opacity-70"
-          >
-            <MdArrowRight />
-          </button>
+          <div className="absolute right-0 z-30 flex gap-2 -top-10">
+            <button
+              onClick={slideLeft}
+              className="p-1 text-2xl text-teal-800 rounded-full bg-[#1e2736]  hover:text-teal-500 hover:bg-opacity-80"
+            >
+              <MdArrowLeft />
+            </button>
+            <button
+              onClick={slideRight}
+              className="p-1 text-2xl text-teal-800 rounded-full bg-[#1e2736] hover:text-teal-500 hover:bg-opacity-80"
+            >
+              <MdArrowRight />
+            </button>
+          </div>
 
           <div
             id="slider"
-            className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+            className="w-full h-full mt-12 overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide"
           >
             {Courses?.map((course, i) => (
               <CourseCard key={i} course={course} Height={"h-[200px]"} />

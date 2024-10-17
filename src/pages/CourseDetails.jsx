@@ -216,7 +216,10 @@ const CourseDetails = () => {
                   </span>
                 </div>
                 <div>
-                  <button className="text-teal-500" onClick={() => set}>
+                  <button
+                    className="text-teal-500"
+                    onClick={() => setIsActive([])}
+                  >
                     Collapse all sections
                   </button>
                 </div>
