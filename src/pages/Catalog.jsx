@@ -56,6 +56,7 @@ const Catalog = () => {
             </div>
         );
     }
+    console.log("Catalog Page data: ", catalogPageData);
 
     return (
         <>
@@ -110,6 +111,7 @@ const Catalog = () => {
                     </div>
 
                     <CourseSlider
+                        Id={"slider1"}
                         Courses={
                             catalogPageData?.data?.selectedCategory?.courses
                         }
@@ -122,9 +124,10 @@ const Catalog = () => {
                         Top Courses in{" "}
                         {catalogPageData?.data?.differentCategory?.name}
                     </div>
-                    <div className="py-8">
+                    <div className="py-2">
                         <CourseSlider
-                            courses={
+                            Id={"slider2"}
+                            Courses={
                                 catalogPageData?.data?.differentCategory
                                     ?.courses
                             }

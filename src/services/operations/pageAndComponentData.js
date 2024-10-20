@@ -17,6 +17,7 @@ export const getCatalogPageData = async (categoryId) => {
         }
 
         result = response?.data;
+        console.log("Catalog Page data comes as: ", result);
     } catch (error) {
         console.log("CATALOG PAGE DATA API ERROR.....", error);
         toast.error(error.response?.data.message);
