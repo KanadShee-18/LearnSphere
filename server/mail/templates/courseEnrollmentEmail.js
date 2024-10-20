@@ -1,5 +1,5 @@
-exports.courseEnrollmentEmail = (courseName, name) => {
-  return `<!DOCTYPE html>
+exports.courseEnrollmentEmail = (courseName, firstName, lastName) => {
+    return `<!DOCTYPE html>
     <html>
     
     <head>
@@ -71,7 +71,7 @@ exports.courseEnrollmentEmail = (courseName, name) => {
                     alt="LearnSphere Logo"></a>
             <div class="message">Course Registration Confirmation</div>
             <div class="body">
-                <p>Dear ${name},</p>
+                <p>Dear ${firstName} ${lastName},</p>
                 <p>You have successfully registered for the course <span class="highlight">"${courseName}"</span>. We
                     are excited to have you as a participant!</p>
                 <p>Please log in to your learning dashboard to access the course materials and start your learning journey.
