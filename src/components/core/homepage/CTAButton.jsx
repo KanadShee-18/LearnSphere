@@ -9,7 +9,7 @@ const CTAButton = ({ children, active, linkto }) => {
                 ${
                   active
                     ? "bg-gradient-to-b from-teal-300 to-blue-200 text-black"
-                    : "bg-gradient-to-b from-slate-700 to-slate-800 text-white"
+                    : "bg-[#212946] bg-opacity-55"
                 }
                     `}
       >

@@ -2,7 +2,6 @@ import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import HighlightText from "../components/core/Homepage/HighlightText";
-import banner1 from "../assets/Images/banner1.mp4";
 import CodeBlock from "../components/core/Homepage/CodeBlock";
 import TimeLineSection from "../components/core/Homepage/TimeLineSection";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
@@ -10,59 +9,57 @@ import InstructorSection from "../components/core/Homepage/InstructorSection";
 import Footer from "../components/common/Footer";
 import ExploreMore from "../components/core/Homepage/ExploreMore";
 import CTAButton from "../components/core/Homepage/CTAButton";
+import BannerVideo from "../components/core/Homepage/BannerVideo";
 
 const Homepage = () => {
   return (
-    <div className="mt-16">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0 h-[50vh]"></div>
+    <div className="">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#6a78a52e_1px,transparent_1px),linear-gradient(to_bottom,#6a78a52e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-10 h-[50vh]"></div>
+
+      <div className="absolute inset-0 z-0">
+        <BannerVideo />
+      </div>
 
       {/* Section: 1 */}
 
-      <div className="relative flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
-        <Link to={"/signup"}>
-          <div className="mx-auto mt-16 font-semibold transition-all duration-200 rounded-full shadow-sm group bg-slate-800 font-playwrite text-slate-300 shadow-slate-500 hover:scale-95">
-            <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
-              <p className="text-sm font-medium">Become an Instructor</p>{" "}
-              <FaArrowRightLong />
+      <div className="relative z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
+        <div className="relative flex flex-col items-center justify-center mt-16 w-full max-w-full mx-auto h-[100vh]">
+          <div className="mt-24 text-5xl font-semibold text-center text-slate-200 font-inter">
+            Unlock your potential and drive future success with
+            <HighlightText text={"Coding Skills"} />
+          </div>
+
+          <div className="mt-10 text-base font-medium text-center text-blue-25 font-poppins">
+            Study at your own speed, from anywhere in the world, with our online
+            coding courses. Have access to a plethora of tools, such as
+            interactive projects, tests, and individualized feedback from
+            instructors.
+          </div>
+
+          <div className="flex flex-row mt-8 gap-7 font-poppins">
+            <CTAButton
+              children={"Learn More"}
+              active={true}
+              linkto={"/signup"}
+            />
+            <CTAButton
+              children={"Book Demo Session"}
+              active={false}
+              linkto={"/signup"}
+            />
+          </div>
+          <div className="flex flex-row mt-16 text-3xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text">
+            <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
+          </div>
+
+          <Link to={"/signup"}>
+            <div className="mx-auto mt-16 font-semibold transition-all duration-200 bg-opacity-50 rounded-full shadow-sm group bg-slate-800 font-playwrite text-slate-300 shadow-slate-500 hover:scale-95">
+              <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
+                <p className="text-sm font-medium">Become an Instructor</p>{" "}
+                <FaArrowRightLong />
+              </div>
             </div>
-          </div>
-        </Link>
-
-        <div className="text-4xl font-semibold text-center text-green-100 font-inter mt-7">
-          Unlock your potential and drive future success with
-          <HighlightText text={"Coding Skills"} />
-        </div>
-
-        <div className="mt-5 text-sm font-semibold text-center text-richblack-200 font-poppins">
-          Study at your own speed, from anywhere in the world, with our online
-          coding courses. Have access to a plethora of tools, such as
-          interactive projects, tests, and individualized feedback from
-          instructors.
-        </div>
-
-        <div className="flex flex-row mt-8 gap-7 font-poppins">
-          <CTAButton children={"Learn More"} active={true} linkto={"/signup"} />
-          <CTAButton
-            children={"Book Demo Session"}
-            active={false}
-            linkto={"/signup"}
-          />
-        </div>
-
-        <div className="relative w-3/4 mx-auto my-24">
-          {/* Gradient Background */}
-          <div className="absolute z-0 videoGradient"></div>
-
-          {/* Video Container */}
-          <div className="relative z-10 videoContainer">
-            <video
-              src={banner1}
-              muted
-              loop
-              autoPlay
-              className="w-full videoFile"
-            ></video>
-          </div>
+          </Link>
         </div>
 
         {/* Code Section: 1 */}
@@ -126,7 +123,7 @@ const Homepage = () => {
       </div>
 
       {/* Section: 2 */}
-      <div className="bg-gradient-to-bl sm:mt-32 from-[#c7f5e2] via-[#f0f2f1] to-[#c6f5e2] text-slate-700 section2">
+      <div className="relative bg-gradient-to-bl z-20 sm:mt-32 from-[#c7f5e2] via-[#f0f2f1] to-[#c6f5e2] text-slate-700 section2">
         <div className="homepage_bg sm:h-[330px] h-[250px]">
           <div className="flex items-center justify-center w-11/12 h-full gap-5 mx-auto max-w-maxContent">
             <div className="flex flex-row gap-8 text-white font-inter">
