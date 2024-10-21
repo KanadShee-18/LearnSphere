@@ -29,158 +29,152 @@ import { ToastContainer, Slide } from "react-toastify";
 import CustomCloseToast from "./components/common/CustomCloseToast";
 import BackToLogin from "./pages/BackToLogin";
 import ThemeContextProvider from "./context/ThemeContextProvider";
+import ViewCourse from "./pages/ViewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 
 function App() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const { user } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.profile);
 
-    return (
-        <>
-            <ThemeContextProvider>
-                <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] bg-custom-linear font-inter selection:bg-cyan-700">
-                    {/* Background overlay */}
+  return (
+    <>
+      <ThemeContextProvider>
+        <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] bg-custom-linear font-inter selection:bg-cyan-700">
+          {/* Background overlay */}
 
-                    <ToastContainer
-                        position="bottom-right"
-                        autoClose={3000}
-                        pauseOnHover={false}
-                        bodyClassName="custom-toast-body"
-                        // theme="light"
-                        transition={Slide}
-                        hideProgressBar={true}
-                        closeOnClick={true}
-                        className={"mb-10"}
-                        closeButton={false}
-                    />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            pauseOnHover={false}
+            bodyClassName="custom-toast-body"
+            // theme="light"
+            transition={Slide}
+            hideProgressBar={true}
+            closeOnClick={true}
+            className={"mb-10"}
+            closeButton={false}
+          />
 
-                    <Navbar />
+          <Navbar />
 
-                    <Routes>
-                        <Route path="/" element={<Homepage />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route
-                            path="catalog/:catalogName"
-                            element={<Catalog />}
-                        />
-                        <Route
-                            path="courses/:courseId"
-                            element={<CourseDetails />}
-                        />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="catalog/:catalogName" element={<Catalog />} />
+            <Route path="courses/:courseId" element={<CourseDetails />} />
 
-                        <Route
-                            path="/signup"
-                            element={
-                                <OpenRoute>
-                                    <Signup />
-                                </OpenRoute>
-                            }
-                        />
+            <Route
+              path="/signup"
+              element={
+                <OpenRoute>
+                  <Signup />
+                </OpenRoute>
+              }
+            />
 
-                        <Route
-                            path="/login"
-                            element={
-                                <OpenRoute>
-                                    <Login />
-                                </OpenRoute>
-                            }
-                        />
+            <Route
+              path="/login"
+              element={
+                <OpenRoute>
+                  <Login />
+                </OpenRoute>
+              }
+            />
 
-                        <Route
-                            path="/revert-back"
-                            element={
-                                <OpenRoute>
-                                    <BackToLogin />
-                                </OpenRoute>
-                            }
-                        />
+            <Route
+              path="/revert-back"
+              element={
+                <OpenRoute>
+                  <BackToLogin />
+                </OpenRoute>
+              }
+            />
 
-                        <Route
-                            path="forgot-password"
-                            element={
-                                <OpenRoute>
-                                    <ForgotPassword />
-                                </OpenRoute>
-                            }
-                        />
+            <Route
+              path="forgot-password"
+              element={
+                <OpenRoute>
+                  <ForgotPassword />
+                </OpenRoute>
+              }
+            />
 
-                        <Route
-                            path="verify-email"
-                            element={
-                                <OpenRoute>
-                                    <VerifyEmail />
-                                </OpenRoute>
-                            }
-                        />
+            <Route
+              path="verify-email"
+              element={
+                <OpenRoute>
+                  <VerifyEmail />
+                </OpenRoute>
+              }
+            />
 
-                        <Route
-                            path="update-password/:id"
-                            element={
-                                <OpenRoute>
-                                    <UpdatePassword />
-                                </OpenRoute>
-                            }
-                        />
+            <Route
+              path="update-password/:id"
+              element={
+                <OpenRoute>
+                  <UpdatePassword />
+                </OpenRoute>
+              }
+            />
 
-                        <Route
-                            element={
-                                <PrivateRoute>
-                                    <Dashboard />
-                                </PrivateRoute>
-                            }
-                        >
-                            <Route
-                                path="dashboard/my-profile"
-                                element={<MyProfile />}
-                            />
-                            <Route
-                                path="dashboard/settings"
-                                element={<Settings />}
-                            />
+            <Route
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            >
+              <Route path="dashboard/my-profile" element={<MyProfile />} />
+              <Route path="dashboard/settings" element={<Settings />} />
 
-                            {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                                <>
-                                    <Route
-                                        path="dashboard/cart"
-                                        element={<Cart />}
-                                    />
-                                    <Route
-                                        path="dashboard/enrolled-courses"
-                                        element={<EnrolledCourses />}
-                                    />
-                                </>
-                            )}
+              {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                <>
+                  <Route path="dashboard/cart" element={<Cart />} />
+                  <Route
+                    path="dashboard/enrolled-courses"
+                    element={<EnrolledCourses />}
+                  />
+                </>
+              )}
 
-                            {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
-                                <>
-                                    <Route
-                                        path="dashboard/instructor"
-                                        element={<Instructor />}
-                                    />
-                                    <Route
-                                        path="dashboard/add-course"
-                                        element={<AddCourse />}
-                                    />
-                                    <Route
-                                        path="dashboard/my-courses"
-                                        element={<MyCourses />}
-                                    />
-                                    <Route
-                                        path="dashboard/edit-course/:courseId"
-                                        element={<EditCourse />}
-                                    />
-                                </>
-                            )}
-                        </Route>
+              {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+                <>
+                  <Route path="dashboard/instructor" element={<Instructor />} />
+                  <Route path="dashboard/add-course" element={<AddCourse />} />
+                  <Route path="dashboard/my-courses" element={<MyCourses />} />
+                  <Route
+                    path="dashboard/edit-course/:courseId"
+                    element={<EditCourse />}
+                  />
+                </>
+              )}
+            </Route>
+            <Route
+              element={
+                <PrivateRoute>
+                  <ViewCourse />
+                </PrivateRoute>
+              }
+            >
+              {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                <>
+                  <Route
+                    path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                    element={<VideoDetails />}
+                  />
+                </>
+              )}
+            </Route>
 
-                        <Route path="*" element={<Error />} />
-                    </Routes>
-                </div>
-            </ThemeContextProvider>
-        </>
-    );
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
+      </ThemeContextProvider>
+    </>
+  );
 }
 
 export default App;

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HighlightText from "../components/core/Homepage/HighlightText";
 import CodeBlock from "../components/core/Homepage/CodeBlock";
 import TimeLineSection from "../components/core/Homepage/TimeLineSection";
@@ -12,6 +12,7 @@ import CTAButton from "../components/core/Homepage/CTAButton";
 import BannerVideo from "../components/core/Homepage/BannerVideo";
 
 const Homepage = () => {
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#6a78a52e_1px,transparent_1px),linear-gradient(to_bottom,#6a78a52e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-10 h-[50vh]"></div>
@@ -24,18 +25,30 @@ const Homepage = () => {
 
       <div className="relative z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
         <div className="relative flex flex-col items-center justify-center mt-16 w-full max-w-full mx-auto h-[100vh]">
-          <div className="mt-24 text-5xl font-semibold text-center text-slate-200 font-inter">
+          <div className="mt-8 text-5xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter">
             Unlock your potential and drive future success with
             <HighlightText text={"Coding Skills"} />
           </div>
+          <Link to={"/signup"}>
+            <div className="mx-auto mt-14 font-semibold transition-all duration-200 bg-opacity-60 rounded-full shadow-sm group bg-[#223253] font-playwrite text-slate-300 shadow-slate-500 hover:scale-95">
+              <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
+                <p className="text-sm font-medium text-blue-25">
+                  Become an Instructor
+                </p>{" "}
+                <FaArrowRightLong />
+              </div>
+            </div>
+          </Link>
 
-          <div className="mt-10 text-base font-medium text-center text-blue-25 font-poppins">
+          <div className="mt-10 text-base font-medium tracking-wide text-center text-blue-25 font-inter">
             Study at your own speed, from anywhere in the world, with our online
             coding courses. Have access to a plethora of tools, such as
             interactive projects, tests, and individualized feedback from
             instructors.
           </div>
-
+          <div className="flex flex-row mt-16 text-3xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text">
+            <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
+          </div>
           <div className="flex flex-row mt-8 gap-7 font-poppins">
             <CTAButton
               children={"Learn More"}
@@ -48,18 +61,6 @@ const Homepage = () => {
               linkto={"/signup"}
             />
           </div>
-          <div className="flex flex-row mt-16 text-3xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text">
-            <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
-          </div>
-
-          <Link to={"/signup"}>
-            <div className="mx-auto mt-16 font-semibold transition-all duration-200 bg-opacity-50 rounded-full shadow-sm group bg-slate-800 font-playwrite text-slate-300 shadow-slate-500 hover:scale-95">
-              <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
-                <p className="text-sm font-medium">Become an Instructor</p>{" "}
-                <FaArrowRightLong />
-              </div>
-            </div>
-          </Link>
         </div>
 
         {/* Code Section: 1 */}
@@ -114,7 +115,7 @@ const Homepage = () => {
               linkto: "/login",
               active: false,
             }}
-            codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>LearnCoding</title> <linkrel="stylesheet"href="style.css">\n<head/>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav><a href="/one">One</a><a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>`}
+            codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>CodeMaster</title> <link rel=\"stylesheet\" href=\"main.css\">\n<head/>\n<body>\n<h1><a href=\"/\">Main Title</a></h1>\n<nav><a href=\"/first\">First</a><a href=\"/second\">Second</a>\n<a href=\"/third\">Third</a>\n</nav>`}
             codeColor={"text-caribbeangreen-50"}
             backgroundGradient={<div className="absolute codeblock2"></div>}
           />

@@ -43,7 +43,7 @@ const Template = ({ title, description1, description2, image, formType }) => {
               width={558}
               height={504}
               loading="lazy"
-              className="absolute z-10 right-4 -top-4 mainImg"
+              className="absolute z-10 right-2 -top-4 mainImg"
             />
           </div>
         </div>

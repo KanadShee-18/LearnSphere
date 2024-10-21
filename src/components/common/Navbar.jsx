@@ -23,7 +23,6 @@ const Navbar = () => {
   const { totalItems } = useSelector((state) => state.cart);
   const location = useLocation();
   const pathname = location.pathname;
-  console.log(pathname);
 
   const [subLinks, setSubLinks] = useState([]);
 
@@ -36,8 +35,6 @@ const Navbar = () => {
       console.log("Fetch to get categories list.");
     }
   };
-
-  // console.log("Sublinks are: ", subLinks);
 
   useEffect(() => {
     fetchSubLinks();

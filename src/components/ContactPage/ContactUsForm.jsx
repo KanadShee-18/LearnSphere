@@ -5,9 +5,11 @@ import { contactusEndpoint } from "../../services/apis";
 import CountryCode from "../../data/countrycode.json";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 const ContactUsForm = () => {
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
   const {
     register,
@@ -52,7 +54,10 @@ const ContactUsForm = () => {
   return (
     <form
       onSubmit={handleSubmit(submitContactForm)}
-      className="flex justify-center text-cyan-500 max-w-[460px] "
+      className={`flex justify-center text-cyan-500 max-w-[460px] ${
+        location.pathname === "/about" &&
+        "bg-[#36455f] bg-opacity-20 rounded-lg"
+      }`}
     >
       <div className="flex flex-col gap-5 p-4 rounded-xl w-fit">
         <div className="flex flex-col gap-5 sm:flex-row">

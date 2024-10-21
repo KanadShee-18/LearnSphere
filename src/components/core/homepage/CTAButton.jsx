@@ -8,8 +8,8 @@ const CTAButton = ({ children, active, linkto }) => {
         className={`text-center shadow-sm shadow-slate-200 transition-all duration-200 hover:scale-95 text-sm px-6 py-3 rounded-md font-semibold
                 ${
                   active
-                    ? "bg-gradient-to-b from-teal-300 to-blue-200 text-black"
-                    : "bg-[#212946] bg-opacity-55"
+                    ? "bg-gradient-to-b from-teal-300 to-blue-200 font-inter text-black"
+                    : "bg-[#212946] bg-opacity-55 font-inter"
                 }
                     `}
       >
