@@ -43,6 +43,9 @@ const {
   deleteRating,
 } = require("../controllers/RatingAndReview");
 
+// Course progress controller:
+const { updateCourseProgress } = require("../controllers/CourseProgress");
+
 // Middlewares importing from Auth
 const {
   auth,
@@ -74,6 +77,9 @@ router.get("/getAllCourses", getAllCourses);
 router.post("/getCourseDetails", getCourseDetails);
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
+
+// Update course progress route:
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 
 // Routes for Admin
 router.post("/createcategory", auth, isAdmin, createCategory);

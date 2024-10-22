@@ -10,12 +10,14 @@ import Footer from "../components/common/Footer";
 import ExploreMore from "../components/core/Homepage/ExploreMore";
 import CTAButton from "../components/core/Homepage/CTAButton";
 import BannerVideo from "../components/core/Homepage/BannerVideo";
+import { motion } from "framer-motion";
+import ReviewSlider from "../components/common/ReviewSlider";
 
 const Homepage = () => {
   const navigate = useNavigate();
   return (
     <div className="">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#6a78a52e_1px,transparent_1px),linear-gradient(to_bottom,#6a78a52e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-10 h-[50vh]"></div>
+      {/* <div className="absolute inset-0 bg-[linear-gradient(to_right,#6a78a52e_1px,transparent_1px),linear-gradient(to_bottom,#6a78a52e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-10 h-[50vh]"></div> */}
 
       <div className="absolute inset-0 z-0">
         <BannerVideo />
@@ -25,19 +27,29 @@ const Homepage = () => {
 
       <div className="relative z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
         <div className="relative flex flex-col items-center justify-center mt-16 w-full max-w-full mx-auto h-[100vh]">
-          <div className="mt-8 text-5xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter">
+          <motion.div
+            initial={{ opacity: 0, x: -200 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2 }}
+            className="mt-8 text-5xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter"
+          >
             Unlock your potential and drive future success with
             <HighlightText text={"Coding Skills"} />
-          </div>
+          </motion.div>
           <Link to={"/signup"}>
-            <div className="mx-auto mt-14 font-semibold transition-all duration-200 bg-opacity-60 rounded-full shadow-sm group bg-[#223253] font-playwrite text-slate-300 shadow-slate-500 hover:scale-95">
+            <motion.div
+              initial={{ opacity: 0, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5, delay: 1.2 }}
+              className="mx-auto mt-14 font-semibold transition-all duration-200 bg-opacity-60 rounded-full shadow-sm group bg-[#223253] font-playwrite text-slate-300 shadow-slate-500 hover:scale-95"
+            >
               <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
                 <p className="text-sm font-medium text-blue-25">
                   Become an Instructor
                 </p>{" "}
                 <FaArrowRightLong />
               </div>
-            </div>
+            </motion.div>
           </Link>
 
           <div className="mt-10 text-base font-medium tracking-wide text-center text-blue-25 font-inter">
@@ -169,9 +181,12 @@ const Homepage = () => {
         <div className="flex flex-col items-center justify-center w-11/12 h-full gap-5 mx-auto max-w-maxContent">
           <InstructorSection />
           {/* Reviews slider */}
-          <p className="mb-6 text-4xl text-slate-400 font-inter">
+          <div className="mb-6 bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text text-4xl font-semibold text-slate-400 font-inter">
             Reviews from other Learners
-          </p>
+          </div>
+          <>
+            <ReviewSlider />
+          </>
         </div>
       </div>
 

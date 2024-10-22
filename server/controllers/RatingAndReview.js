@@ -7,11 +7,12 @@ const Course = require("../models/Course");
 exports.createRating = async (req, res) => {
   try {
     // get userId
-    // const userId = req.user.id;
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     // fetch data from req body
     const { rating, review, courseId } = req.body;
+    console.log("Rating: ", rating);
+
     // check user has bought the course means he is enrolled or not
     const courseDetails = await Course.findOne({
       _id: courseId,
@@ -20,12 +21,6 @@ exports.createRating = async (req, res) => {
       },
     });
 
-    // const courseDetails = await Course.findOne({
-    //   _id: courseId,
-    //   studentsEnrolled: {
-    //     $in: [userId],
-    //   },
-    // });
     if (!courseDetails) {
       return res.status(404).json({
         success: false,
@@ -40,7 +35,7 @@ exports.createRating = async (req, res) => {
     if (alreadyReviewed) {
       return res.status(403).json({
         success: false,
-        message: "Course is already reviewed by the user.",
+        message: "Course has already been reviewed. Thank You!",
       });
     }
     // create rating and review
@@ -64,15 +59,9 @@ exports.createRating = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Rating has been created successfully.",
-      updatedData: {
-        data: [
-          {
-            ratingData: createdRatingAndReview,
-          },
-          {
-            courseData: updatedCourse,
-          },
-        ],
+      data: {
+        createdRatingAndReview,
+        updatedCourse,
       },
     });
   } catch (error) {

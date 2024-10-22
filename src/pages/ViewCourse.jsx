@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
+import CourseReviewModal from "../components/core/ViewCourse/CourseReviewModal";
 import { getFullDetailsOfCourse } from "../services/operations/courseDetailsAPI";
 import {
   setCompletedLectures,
@@ -33,10 +34,12 @@ const ViewCourse = () => {
 
   return (
     <>
-      <div>
+      <div className="relative flex min-h-[calc(100vh-3.5rem)]">
         <VideoDetailsSidebar setReviewModal={setReviewModal} />
-        <div>
-          <Outlet />
+        <div className="h-calc-[100vh-3.5rem] mt-14 flex-1 overflow-auto">
+          <div className="mx-3">
+            <Outlet />
+          </div>
         </div>
       </div>
       {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}

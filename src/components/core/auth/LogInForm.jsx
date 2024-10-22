@@ -43,6 +43,7 @@ const LogInForm = () => {
           required
           name="email"
           onChange={handleOnChange}
+          autoComplete="email"
           value={email}
           placeholder="Enter email address"
           className="w-full rounded-[8px] bg-slate-600 bg-opacity-65 p-3 hover:bg-opacity-75 outline-cyan-500 outline-2 text-cyan-300 active:bg-opacity-95"
@@ -56,6 +57,7 @@ const LogInForm = () => {
           type={showPassword ? "text" : "password"}
           required
           name="password"
+          autoComplete="current-password"
           onChange={handleOnChange}
           placeholder="Enter Password"
           value={password}

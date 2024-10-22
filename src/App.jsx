@@ -1,40 +1,251 @@
+// import "./App.css";
+// import { Route, Routes, useNavigate } from "react-router-dom";
+// import Homepage from "./pages/Homepage";
+// import Navbar from "./components/common/Navbar";
+// import { useDispatch, useSelector } from "react-redux";
+// import Catalog from "./pages/Catalog";
+// import CourseDetails from "./pages/CourseDetails";
+// import OpenRoute from "./components/core/auth/OpenRoute";
+// import Signup from "./pages/Signup";
+// import Login from "./pages/Login";
+// import VerifyEmail from "./pages/VerifyEmail";
+// import UpdatePassword from "./pages/UpdatePassword";
+// import Error from "./pages/Error";
+// import About from "./pages/About";
+// import Contact from "./pages/Contact";
+// import PrivateRoute from "./components/core/auth/PrivateRoute";
+// import Dashboard from "./pages/Dashboard";
+// import MyProfile from "./components/core/dashboard/MyProfile";
+// import Settings from "./components/core/dashboard/Settings/Settings";
+// import ForgotPassword from "./pages/ForgotPassword";
+// import Cart from "../src/components/core/dashboard/Cart";
+// import EnrolledCourses from "../src/components/core/dashboard/EnrolledCourses";
+// import Instructor from "./components/core/dashboard/InstructorDashboard/Instructor";
+// import AddCourse from "../src/components/core/dashboard/AddCourse";
+// import MyCourses from "../src/components/core/dashboard/MyCourses";
+// import EditCourse from "../src/components/core/dashboard/EditCourse";
+// import { ACCOUNT_TYPE } from "./utils/constants";
+// import { ToastContainer, Slide } from "react-toastify";
+// import CustomCloseToast from "./components/common/CustomCloseToast";
+// import BackToLogin from "./pages/BackToLogin";
+// import ThemeContextProvider from "./context/ThemeContextProvider";
+// import ViewCourse from "./pages/ViewCourse";
+// import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+
+// function App() {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   const { user } = useSelector((state) => state.profile);
+
+//   return (
+//     <>
+//       <ThemeContextProvider>
+//         <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] bg-custom-linear font-inter selection:bg-cyan-700">
+//           {/* Background overlay */}
+
+//           <ToastContainer
+//             position="bottom-right"
+//             autoClose={3000}
+//             pauseOnHover={false}
+//             bodyClassName="custom-toast-body"
+//             // theme="light"
+//             transition={Slide}
+//             hideProgressBar={true}
+//             closeOnClick={true}
+//             className={"mb-10"}
+//             closeButton={false}
+//           />
+
+//           <Navbar />
+
+//           <Routes>
+//             <Route path="/" element={<Homepage />} />
+//             <Route path="/about" element={<About />} />
+//             <Route path="/contact" element={<Contact />} />
+//             <Route path="catalog/:catalogName" element={<Catalog />} />
+//             <Route path="courses/:courseId" element={<CourseDetails />} />
+
+//             <Route
+//               path="/signup"
+//               element={
+//                 <OpenRoute>
+//                   <Signup />
+//                 </OpenRoute>
+//               }
+//             />
+
+//             <Route
+//               path="/login"
+//               element={
+//                 <OpenRoute>
+//                   <Login />
+//                 </OpenRoute>
+//               }
+//             />
+
+//             <Route
+//               path="/revert-back"
+//               element={
+//                 <OpenRoute>
+//                   <BackToLogin />
+//                 </OpenRoute>
+//               }
+//             />
+
+//             <Route
+//               path="forgot-password"
+//               element={
+//                 <OpenRoute>
+//                   <ForgotPassword />
+//                 </OpenRoute>
+//               }
+//             />
+
+//             <Route
+//               path="verify-email"
+//               element={
+//                 <OpenRoute>
+//                   <VerifyEmail />
+//                 </OpenRoute>
+//               }
+//             />
+
+//             <Route
+//               path="update-password/:id"
+//               element={
+//                 <OpenRoute>
+//                   <UpdatePassword />
+//                 </OpenRoute>
+//               }
+//             />
+
+//             <Route
+//               element={
+//                 <PrivateRoute>
+//                   <Dashboard />
+//                 </PrivateRoute>
+//               }
+//             >
+//               <Route path="dashboard/my-profile" element={<MyProfile />} />
+//               <Route path="dashboard/settings" element={<Settings />} />
+
+//               {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+//                 <>
+//                   <Route path="dashboard/cart" element={<Cart />} />
+//                   <Route
+//                     path="dashboard/enrolled-courses"
+//                     element={<EnrolledCourses />}
+//                   />
+//                 </>
+//               )}
+
+//               {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+//                 <>
+//                   <Route path="dashboard/instructor" element={<Instructor />} />
+//                   <Route path="dashboard/add-course" element={<AddCourse />} />
+//                   <Route path="dashboard/my-courses" element={<MyCourses />} />
+//                   <Route
+//                     path="dashboard/edit-course/:courseId"
+//                     element={<EditCourse />}
+//                   />
+//                 </>
+//               )}
+//             </Route>
+//             <Route
+//               element={
+//                 <PrivateRoute>
+//                   <ViewCourse />
+//                 </PrivateRoute>
+//               }
+//             >
+//               {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+//                 <>
+//                   <Route
+//                     path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+//                     element={<VideoDetails />}
+//                   />
+//                 </>
+//               )}
+//             </Route>
+
+//             <Route path="*" element={<Error />} />
+//           </Routes>
+//         </div>
+//       </ThemeContextProvider>
+//     </>
+//   );
+// }
+
+// export default App;
+
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Homepage from "./pages/Homepage";
+
 import Navbar from "./components/common/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import Catalog from "./pages/Catalog";
-import CourseDetails from "./pages/CourseDetails";
-import OpenRoute from "./components/core/auth/OpenRoute";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import VerifyEmail from "./pages/VerifyEmail";
-import UpdatePassword from "./pages/UpdatePassword";
-import Error from "./pages/Error";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import PrivateRoute from "./components/core/auth/PrivateRoute";
-import Dashboard from "./pages/Dashboard";
-import MyProfile from "./components/core/dashboard/MyProfile";
-import Settings from "./components/core/dashboard/Settings/Settings";
-import ForgotPassword from "./pages/ForgotPassword";
-import Cart from "../src/components/core/dashboard/Cart";
-import EnrolledCourses from "../src/components/core/dashboard/EnrolledCourses";
-import Instructor from "./components/core/dashboard/InstructorDashboard/Instructor";
-import AddCourse from "../src/components/core/dashboard/AddCourse";
-import MyCourses from "../src/components/core/dashboard/MyCourses";
-import EditCourse from "../src/components/core/dashboard/EditCourse";
-import { ACCOUNT_TYPE } from "./utils/constants";
 import { ToastContainer, Slide } from "react-toastify";
 import CustomCloseToast from "./components/common/CustomCloseToast";
-import BackToLogin from "./pages/BackToLogin";
 import ThemeContextProvider from "./context/ThemeContextProvider";
-import ViewCourse from "./pages/ViewCourse";
-import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+import "react-toastify/dist/ReactToastify.css";
+import { Suspense, lazy, useEffect } from "react";
+import Spinner from "./components/common/Spinner";
+
+// Lazy-loaded components
+// const Homepage = lazy(() => import("./pages/Homepage"));
+const Catalog = lazy(() => import("./pages/Catalog"));
+const CourseDetails = lazy(() => import("./pages/CourseDetails"));
+const OpenRoute = lazy(() => import("./components/core/auth/OpenRoute"));
+const Signup = lazy(() => import("./pages/Signup"));
+const Login = lazy(() => import("./pages/Login"));
+const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
+const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
+const Error = lazy(() => import("./pages/Error"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const PrivateRoute = lazy(() => import("./components/core/auth/PrivateRoute"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const MyProfile = lazy(() => import("./components/core/dashboard/MyProfile"));
+const Settings = lazy(() =>
+  import("./components/core/dashboard/Settings/Settings")
+);
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const Cart = lazy(() => import("../src/components/core/dashboard/Cart"));
+const EnrolledCourses = lazy(() =>
+  import("../src/components/core/dashboard/EnrolledCourses")
+);
+const Instructor = lazy(() =>
+  import("./components/core/dashboard/InstructorDashboard/Instructor")
+);
+const AddCourse = lazy(() =>
+  import("../src/components/core/dashboard/AddCourse")
+);
+const MyCourses = lazy(() =>
+  import("../src/components/core/dashboard/MyCourses")
+);
+const EditCourse = lazy(() =>
+  import("../src/components/core/dashboard/EditCourse")
+);
+const BackToLogin = lazy(() => import("./pages/BackToLogin"));
+const ViewCourse = lazy(() => import("./pages/ViewCourse"));
+const VideoDetails = lazy(() =>
+  import("./components/core/ViewCourse/VideoDetails")
+);
+import { ACCOUNT_TYPE } from "./utils/constants";
+import Offline from "./components/common/Offline";
+import OnlineStatus from "./utils/OnlineStatus";
+import Homepage from "./pages/Homepage";
 
 function App() {
+  // useEffect(() => {
+  //   document.addEventListener("contextmenu", (e) => {
+  //     e.preventDefault();
+  //   });
+  // }, []);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const online = OnlineStatus();
 
   const { user } = useSelector((state) => state.profile);
 
@@ -43,134 +254,154 @@ function App() {
       <ThemeContextProvider>
         <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] bg-custom-linear font-inter selection:bg-cyan-700">
           {/* Background overlay */}
+          <Navbar />
 
+          {!online && <Offline />}
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+          </Routes>
+
+          {/* Lazy-loaded routes */}
+          <Suspense
+            fallback={
+              <div className="grid h-[60vh] place-items-center">
+                <Spinner />
+              </div>
+            }
+          >
+            <Routes>
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="catalog/:catalogName" element={<Catalog />} />
+              <Route path="courses/:courseId" element={<CourseDetails />} />
+
+              <Route
+                path="/signup"
+                element={
+                  <OpenRoute>
+                    <Signup />
+                  </OpenRoute>
+                }
+              />
+
+              <Route
+                path="/login"
+                element={
+                  <OpenRoute>
+                    <Login />
+                  </OpenRoute>
+                }
+              />
+
+              <Route
+                path="/revert-back"
+                element={
+                  <OpenRoute>
+                    <BackToLogin />
+                  </OpenRoute>
+                }
+              />
+
+              <Route
+                path="forgot-password"
+                element={
+                  <OpenRoute>
+                    <ForgotPassword />
+                  </OpenRoute>
+                }
+              />
+
+              <Route
+                path="verify-email"
+                element={
+                  <OpenRoute>
+                    <VerifyEmail />
+                  </OpenRoute>
+                }
+              />
+
+              <Route
+                path="update-password/:id"
+                element={
+                  <OpenRoute>
+                    <UpdatePassword />
+                  </OpenRoute>
+                }
+              />
+
+              <Route
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              >
+                <Route path="dashboard/my-profile" element={<MyProfile />} />
+                <Route path="dashboard/settings" element={<Settings />} />
+
+                {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                  <>
+                    <Route path="dashboard/cart" element={<Cart />} />
+                    <Route
+                      path="dashboard/enrolled-courses"
+                      element={<EnrolledCourses />}
+                    />
+                  </>
+                )}
+
+                {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+                  <>
+                    <Route
+                      path="dashboard/instructor"
+                      element={<Instructor />}
+                    />
+                    <Route
+                      path="dashboard/add-course"
+                      element={<AddCourse />}
+                    />
+                    <Route
+                      path="dashboard/my-courses"
+                      element={<MyCourses />}
+                    />
+                    <Route
+                      path="dashboard/edit-course/:courseId"
+                      element={<EditCourse />}
+                    />
+                  </>
+                )}
+              </Route>
+              <Route
+                element={
+                  <PrivateRoute>
+                    <ViewCourse />
+                  </PrivateRoute>
+                }
+              >
+                {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                  <>
+                    <Route
+                      path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                      element={<VideoDetails />}
+                    />
+                  </>
+                )}
+              </Route>
+
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </Suspense>
           <ToastContainer
             position="bottom-right"
             autoClose={3000}
             pauseOnHover={false}
             bodyClassName="custom-toast-body"
-            // theme="light"
+            // theme="dark"
             transition={Slide}
             hideProgressBar={true}
             closeOnClick={true}
             className={"mb-10"}
             closeButton={false}
           />
-
-          <Navbar />
-
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="catalog/:catalogName" element={<Catalog />} />
-            <Route path="courses/:courseId" element={<CourseDetails />} />
-
-            <Route
-              path="/signup"
-              element={
-                <OpenRoute>
-                  <Signup />
-                </OpenRoute>
-              }
-            />
-
-            <Route
-              path="/login"
-              element={
-                <OpenRoute>
-                  <Login />
-                </OpenRoute>
-              }
-            />
-
-            <Route
-              path="/revert-back"
-              element={
-                <OpenRoute>
-                  <BackToLogin />
-                </OpenRoute>
-              }
-            />
-
-            <Route
-              path="forgot-password"
-              element={
-                <OpenRoute>
-                  <ForgotPassword />
-                </OpenRoute>
-              }
-            />
-
-            <Route
-              path="verify-email"
-              element={
-                <OpenRoute>
-                  <VerifyEmail />
-                </OpenRoute>
-              }
-            />
-
-            <Route
-              path="update-password/:id"
-              element={
-                <OpenRoute>
-                  <UpdatePassword />
-                </OpenRoute>
-              }
-            />
-
-            <Route
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            >
-              <Route path="dashboard/my-profile" element={<MyProfile />} />
-              <Route path="dashboard/settings" element={<Settings />} />
-
-              {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                <>
-                  <Route path="dashboard/cart" element={<Cart />} />
-                  <Route
-                    path="dashboard/enrolled-courses"
-                    element={<EnrolledCourses />}
-                  />
-                </>
-              )}
-
-              {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
-                <>
-                  <Route path="dashboard/instructor" element={<Instructor />} />
-                  <Route path="dashboard/add-course" element={<AddCourse />} />
-                  <Route path="dashboard/my-courses" element={<MyCourses />} />
-                  <Route
-                    path="dashboard/edit-course/:courseId"
-                    element={<EditCourse />}
-                  />
-                </>
-              )}
-            </Route>
-            <Route
-              element={
-                <PrivateRoute>
-                  <ViewCourse />
-                </PrivateRoute>
-              }
-            >
-              {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                <>
-                  <Route
-                    path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
-                    element={<VideoDetails />}
-                  />
-                </>
-              )}
-            </Route>
-
-            <Route path="*" element={<Error />} />
-          </Routes>
         </div>
       </ThemeContextProvider>
     </>

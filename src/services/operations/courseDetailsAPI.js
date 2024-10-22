@@ -343,7 +343,7 @@ export const markLectureAsComplete = async (data, token) => {
     result = true;
   } catch (error) {
     console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR............", error);
-    toast.error(error.message);
+    toast.error(error.response.data.message);
     result = false;
   }
 
@@ -366,7 +366,7 @@ export const createRating = async (data, token) => {
   } catch (error) {
     success = false;
     console.log("CREATE RATING API ERROR............", error);
-    toast.error(error.message);
+    toast.error(error?.response?.data?.message);
   }
 
   return success;

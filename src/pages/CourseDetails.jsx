@@ -78,7 +78,7 @@ const CourseDetails = () => {
 
   if (loading || !response) {
     return (
-      <div className="w-full place-content-center h-52">
+      <div className="w-full place-items-center h-[60vh]">
         <Spinner />
       </div>
     );
@@ -119,7 +119,7 @@ const CourseDetails = () => {
 
   if (paymentLoading) {
     return (
-      <div className="w-full place-content-center h-52">
+      <div className="w-full place-items-center h-[60vh]">
         <Spinner />
       </div>
     );

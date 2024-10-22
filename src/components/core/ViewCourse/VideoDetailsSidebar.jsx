@@ -4,12 +4,16 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { BsChevronDown } from "react-icons/bs";
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
+import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
 
-const VideoDetailsSidebar = () => {
+const VideoDetailsSidebar = ({ setReviewModal }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
+  const { token } = useSelector((state) => state.auth);
+
+  const [loading, setLoading] = useState(false);
   const [activeStatus, setActiveStatus] = useState("");
   const [videoBarActive, setVideoBarActive] = useState("");
   const { sectionId, subSectionId } = useParams();
@@ -41,6 +45,22 @@ const VideoDetailsSidebar = () => {
     };
     setActiveFlags();
   }, [courseSectionData, courseEntireData, location.pathname]);
+
+  // const handleCompletedLecture = async (courseId, subSectionId) => {
+  //   setLoading(true);
+  //   const res = await markLectureAsComplete(
+  //     {
+  //       courseId: courseId,
+  //       subSectionId: subSectionId,
+  //     },
+  //     token
+  //   );
+  //   if (res) {
+  //     dispatch(updateCompletedLectures(subSectionId));
+  //   }
+  //   setLoading(false);
+  // };
+
   console.log("Completed Lectures: ", completedLectures);
 
   return (
@@ -56,7 +76,10 @@ const VideoDetailsSidebar = () => {
             >
               <IoIosArrowBack />
             </div>
-            <button className="px-4 py-2 text-sm font-semibold transition-all duration-200 transform bg-teal-500 rounded-md shadow-md bg-opacity-85 text-slate-900 shadow-slate-900 hover:bg-teal-600 hover:text-slate-100 hover:scale-95">
+            <button
+              onClick={() => setReviewModal(true)}
+              className="px-4 py-2 text-sm font-semibold transition-all duration-200 transform bg-teal-500 rounded-md shadow-md bg-opacity-85 text-slate-900 shadow-slate-900 hover:bg-teal-600 hover:text-slate-100 hover:scale-95"
+            >
               + Review
             </button>
           </div>
@@ -78,7 +101,7 @@ const VideoDetailsSidebar = () => {
             >
               {/* Section */}
 
-              <div className="flex flex-row justify-between px-3 py-4 bg-[#2b384e] shadow-md shadow-slate-900 rounded-md hover:bg-opacity-85 mb-5">
+              <div className="flex flex-row justify-between px-3 py-4 bg-[#2b384e] shadow-md shadow-slate-900 rounded-md hover:bg-opacity-85 mb-3">
                 <div className="w-[75%] font-semibold text-slate-300 ">
                   {course?.sectionName}
                 </div>
@@ -100,7 +123,7 @@ const VideoDetailsSidebar = () => {
                     <div
                       className={`flex gap-3 my-2 mx-3 px-3 py-2 ${
                         videoBarActive === topic._id
-                          ? "bg-[#3a4d6d]  text-[#aebfe4] shadow-md shadow-slate-950"
+                          ? "bg-[#3a4d6d]  text-[#aebfe4] shadow-md shadow-slate-900"
                           : "hover:bg-[#4c6081] text-[#939dc9]"
                       } font-semibold rounded-md hover:text-teal-400 transition-all duration-300 hover:scale-95 `}
                       key={idx}
@@ -114,9 +137,7 @@ const VideoDetailsSidebar = () => {
                       <input
                         type="checkbox"
                         checked={completedLectures.includes(topic?._id)}
-                        onChange={() =>
-                          dispatch(updateCompletedLectures(topic?._id))
-                        }
+                        onChange={() => {}}
                       />
                       {topic?.title}
                     </div>
