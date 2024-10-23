@@ -26,22 +26,22 @@ require("./config/cloudinary").cloudinaryConnect();
 const port = process.env.PORT || 4000;
 
 // Middlewares
-app.use(express.json()); // Body parser for JSON
-app.use(cookieParser()); // Cookie parser middleware
+app.use(express.json());
+app.use(cookieParser());
 
 // CORS (Cross-Origin Resource Sharing) Settings
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow frontend origin
-    credentials: true, // Allow sending cookies from client
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 
 // File Upload Middleware
 app.use(
   fileUpload({
-    useTempFiles: true, // Use temporary files
-    tempFileDir: "/tmp", // Directory for temporary files
+    useTempFiles: true,
+    tempFileDir: "/tmp",
   })
 );
 

@@ -31,7 +31,7 @@ const Homepage = () => {
             initial={{ opacity: 0, x: -200 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2 }}
-            className="mt-8 text-5xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter"
+            className="mt-8 lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter"
           >
             Unlock your potential and drive future success with
             <HighlightText text={"Coding Skills"} />
@@ -52,13 +52,13 @@ const Homepage = () => {
             </motion.div>
           </Link>
 
-          <div className="mt-10 text-base font-medium tracking-wide text-center text-blue-25 font-inter">
+          <div className="mt-10 text-sm font-medium tracking-wide text-center md:text-base text-blue-25 font-inter">
             Study at your own speed, from anywhere in the world, with our online
             coding courses. Have access to a plethora of tools, such as
             interactive projects, tests, and individualized feedback from
             instructors.
           </div>
-          <div className="flex flex-row mt-16 text-3xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text">
+          <div className="flex flex-row mt-16 lg:text-3xl md:text-2xl text-xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text">
             <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
           </div>
           <div className="flex flex-row mt-8 gap-7 font-poppins">
@@ -80,7 +80,7 @@ const Homepage = () => {
           <CodeBlock
             position={"sm:flex-row flex-col"}
             heading={
-              <div className="text-4xl font-semibold font-inter">
+              <div className="text-2xl font-semibold text-center md:text-start md:text-4xl font-inter">
                 Empower your
                 <HighlightText text={"coding potential"} />
                 &nbsp;with our online courses
@@ -109,7 +109,7 @@ const Homepage = () => {
           <CodeBlock
             position={"sm:flex-row-reverse flex-col"}
             heading={
-              <div className="text-4xl font-semibold font-inter">
+              <div className="text-2xl font-semibold md:text-4xl font-inter">
                 Learn & start
                 <HighlightText text={"coding in seconds"} />
               </div>
@@ -154,19 +154,19 @@ const Homepage = () => {
         </div>
         <div className="flex flex-col items-center justify-between w-11/12 gap-8 py-20 mx-auto max-w-maxContent">
           <div className="flex flex-col gap-6 sm:flex-row">
-            <div className="text-4xl font-poppins s3ht">
+            <div className="text-2xl text-center md:text-4xl md:text-start font-poppins s3ht">
               <p className="font-semibold">
                 Get the skills you need for a{" "}
                 <HighlightText text={"job that is in demand"} />
               </p>
             </div>
             <div className="flex flex-col items-start gap-5 font-medium font-inter">
-              <p className="text-sm text-start">
+              <p className="text-sm text-center md:text-start">
                 The modern LearnSphere is the dictates its own terms. Today, to
                 be a competitive specialist requires more than professional
                 skills.
               </p>
-              <div className="w-[150px]">
+              <div className="w-full md:w-[150px]">
                 <CTAButton active={true} children={"Learn More"} />
               </div>
             </div>
@@ -181,7 +181,7 @@ const Homepage = () => {
         <div className="flex flex-col items-center justify-center w-11/12 h-full gap-5 mx-auto max-w-maxContent">
           <InstructorSection />
           {/* Reviews slider */}
-          <div className="mb-6 bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text text-4xl font-semibold text-slate-400 font-inter">
+          <div className="mb-6 bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text md:text-4xl text-center text-3xl font-semibold text-slate-400 font-inter">
             Reviews from other Learners
           </div>
           <>

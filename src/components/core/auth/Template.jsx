@@ -14,9 +14,9 @@ const Template = ({ title, description1, description2, image, formType }) => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="z-20 flex flex-col-reverse justify-between w-11/12 mx-auto max-w-maxContent md:flex-row md:gap-y-0 gap-y-12 md:gap-x-12">
+        <div className="z-20 flex flex-col-reverse justify-between w-11/12 mx-auto my-32 md:my-0 max-w-maxContent md:flex-row md:gap-y-0 gap-y-12 md:gap-x-12">
           <div className="mx-auto w-11/12 max-w-[450px] md:mx-0">
-            <h1 className="text-[#4adfd7] mb-5 font-semibold leading-8 text-3xl text-start">
+            <h1 className="text-[#4adfd7] mb-5 font-semibold leading-8 md:text-3xl text-2xl text-start">
               {title}
             </h1>
             <p className="font-medium">

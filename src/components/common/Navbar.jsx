@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, matchPath } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import Logo from "../../assets/Logo/LL_logo.png";
 import { NavbarLinks } from "../../data/navbar-links";
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaCartShopping } from "react-icons/fa6";
@@ -14,6 +13,8 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { ThemeContext } from "../../context/ThemeContextProvider";
 import { FaMoon } from "react-icons/fa6";
 import { FiSun } from "react-icons/fi";
+import { MdClose } from "react-icons/md";
+import { RiMenuUnfold2Fill } from "react-icons/ri";
 
 const Navbar = () => {
   const { toggleTheme } = useContext(ThemeContext);
@@ -25,11 +26,11 @@ const Navbar = () => {
   const pathname = location.pathname;
 
   const [subLinks, setSubLinks] = useState([]);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State to control navbar visibility
 
   const fetchSubLinks = async () => {
     try {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
-      // console.log("The result of all categories we get: ", result);
       setSubLinks(result?.data?.categoryDetails?.categories);
     } catch (error) {
       console.log("Fetch to get categories list.");
@@ -46,122 +47,128 @@ const Navbar = () => {
 
   return (
     <div
-      className={`flex fixed top-0 z-50 h-14 w-full px-4 sm:px-9 lg:px-32 mx-auto items-center justify-center border-b-[1px] border-slate-700 shadow-sm shadow-slate-900 bg-[#10101b] ${
-        pathname === "/" && "bg-opacity-80"
+      className={`flex fixed top-0 z-50 h-14 w-full px-4 sm:px-9 lg:px-32 mx-auto items-center justify-between border-b-[1px] border-slate-700 shadow-sm shadow-slate-900 bg-[#10101b] ${
+        pathname === "/" && "bg-opacity-80 backdrop-blur-sm"
       }`}
     >
-      <div className="flex items-center justify-between w-full mx-auto">
-        {/* Logo Image */}
-        <Link to={"/"}>
-          <img
-            src={Logo}
-            alt="LearnSphere"
-            className="w-[160px]"
-            loading="lazy"
-          />
-        </Link>
+      {/* Logo Image */}
+      <Link to={"/"}>
+        <img
+          src={Logo}
+          alt="LearnSphere"
+          className="w-[160px]"
+          loading="lazy"
+        />
+      </Link>
 
-        {/* nav links */}
+      {/* Toggle Button for Navbar */}
+      <button
+        className="absolute p-1 text-lg rounded-full right-2 top-16 text-slate-900 md:hidden bg-slate-400 bg-opacity-00 backdrop-blur-md" // Hide on medium and larger screens
+        onClick={() => setIsNavbarOpen((prev) => !prev)} // Toggle visibility
+      >
+        {isNavbarOpen ? <MdClose /> : <RiMenuUnfold2Fill />}
+      </button>
 
-        <nav>
-          <ul className="flex gap-x-6 text-richblack-50 text-[15px]">
-            {NavbarLinks.map((link, index) => {
-              return (
-                <li key={index} className="">
-                  {link.title === "Catalog" ? (
-                    <div className="relative flex items-center hover:cursor-pointer group">
-                      <p className="">{link.title}</p>
-                      <MdOutlineArrowDropDown className="size-6" />
+      {/* nav links */}
+      <nav className={`${isNavbarOpen ? "block" : "hidden"} md:block`}>
+        <ul className="absolute right-10 top-16 flex flex-col bg-[#a3b9ce] md:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] md:flex-row md:relative md:top-0 md:right-0 md:bg-none md:backdrop-blur-none md:gap-y-0">
+          {NavbarLinks.map((link, index) => {
+            return (
+              <li key={index} className="">
+                {link.title === "Catalog" ? (
+                  <div className="relative flex items-center hover:cursor-pointer group">
+                    <p className="text-sm md:hover:text-blue-50">
+                      {link.title}
+                    </p>
+                    <MdOutlineArrowDropDown className="size-6" />
 
-                      <div className="invisible group-hover:visible absolute top-0 translate-y-[-12%] rounded text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                        <IoMdArrowDropup className="size-20" />
-                      </div>
-
-                      <div className="invisible absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-7 flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
-                        {subLinks.length ? (
-                          subLinks.map((subLink, index) => (
-                            <Link
-                              to={`/catalog/${subLink.name
-                                .split(" ")
-                                .join("-")
-                                .toLowerCase()}`}
-                              key={index}
-                              className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start p-2 text-start font-medium font-poppins text-sm text-[#e3fdff] shadow-md shadow-[#435275]"
-                            >
-                              <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:translate-x-2 drop-shadow-xl">
-                                {subLink.name}
-                              </p>
-                            </Link>
-                          ))
-                        ) : (
-                          <div>No Category</div>
-                        )}
-                      </div>
+                    <div className="invisible group-hover:visible absolute top-0 translate-y-[-12%] rounded text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                      <IoMdArrowDropup className="size-20" />
                     </div>
-                  ) : (
-                    <Link to={link?.path}>
-                      <p
-                        className={`${
-                          matchRoute(link?.path)
-                            ? "text-cyan-500"
-                            : "text-slate-100"
-                        }`}
-                      >
-                        {link.title}
-                      </p>
-                    </Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
 
-        {/* Buttons (Login, Signup, Dashboard) */}
-
-        <div className="flex items-center text-sm gap-x-4">
-          <div
-            onClick={toggleTheme}
-            className="relative flex items-center p-1 rounded-full w-14 h-7 dark:bg-slate-800 bg-slate-200"
-          >
-            <div
-              className={`w-6 h-6 dark:bg-slate-500 bg-slate-400 light:bg-white rounded-full flex items-center justify-center transform transition-all duration-500 ease-in-out ${
-                theme === "light" ? "translate-x-0" : "translate-x-6"
-              }`}
-            >
-              <button onClick={toggleTheme} className="text-xl">
-                {theme === "light" ? <FiSun /> : <FaMoon />}
-              </button>
-            </div>
-          </div>
-          {user &&
-            user?.accountType !== "Instructor" &&
-            user?.accountType !== "Admin" && (
-              <Link to={"/dashboard/cart"} className="relative text-slate-400">
-                <FaCartShopping className="size-5" />
-                {totalItems > 0 && (
-                  <span className="absolute grid w-5 h-5 overflow-hidden text-xs font-bold text-center text-teal-400 rounded-full -bottom-2 -right-3 place-items-center bg-richblack-700">
-                    {totalItems}
-                  </span>
+                    <div className="invisible absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-7 flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
+                      {subLinks.length ? (
+                        subLinks.map((subLink, index) => (
+                          <Link
+                            to={`/catalog/${subLink.name
+                              .split(" ")
+                              .join("-")
+                              .toLowerCase()}`}
+                            key={index}
+                            className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start md:p-2 p-1 text-start font-medium font-poppins  md:text-sm text-xs text-[#e3fdff] shadow-md shadow-[#212838]"
+                          >
+                            <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:translate-x-2 drop-shadow-xl">
+                              {subLink.name}
+                            </p>
+                          </Link>
+                        ))
+                      ) : (
+                        <div>No Category</div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <Link to={link?.path} className="flex items-center h-full">
+                    <p
+                      className={`text-sm w-full md:w-auto md:hover:text-blue-50 ${
+                        matchRoute(link?.path)
+                          ? "md:text-cyan-500 text-[#2e66ff]"
+                          : "md:text-slate-100 text-slate-700"
+                      }`}
+                    >
+                      {link.title}
+                    </p>
+                  </Link>
                 )}
-              </Link>
-            )}
-          {token === null && (
-            <Link to={"/login"}>
-              <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 px-4 py-2 hover:bg-cyan-500 hover:text-slate-800 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-50 rounded-md">
-                Log in
-              </button>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Buttons (Login, Signup, Dashboard) */}
+      <div className="flex items-center text-sm gap-x-4">
+        {/* <div
+          onClick={toggleTheme}
+          className="relative flex items-center p-1 rounded-full w-14 h-7 dark:bg-slate-800 bg-slate-200"
+        >
+          <div
+            className={`w-6 h-6 dark:bg-slate-500 bg-slate-400 light:bg-white rounded-full flex items-center justify-center transform transition-all duration-500 ease-in-out ${
+              theme === "light" ? "translate-x-0" : "translate-x-6"
+            }`}
+          >
+            <button onClick={toggleTheme} className="text-xl">
+              {theme === "light" ? <FiSun /> : <FaMoon />}
+            </button>
+          </div>
+        </div> */}
+        {user &&
+          user?.accountType !== "Instructor" &&
+          user?.accountType !== "Admin" && (
+            <Link to={"/dashboard/cart"} className="relative text-slate-400">
+              <FaCartShopping className="size-5" />
+              {totalItems > 0 && (
+                <span className="absolute grid w-5 h-5 overflow-hidden text-xs font-bold text-center text-teal-400 rounded-full -bottom-2 -right-3 place-items-center bg-richblack-700">
+                  {totalItems}
+                </span>
+              )}
             </Link>
           )}
-          {token === null && (
-            <Link to={"/signup"}>
-              <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 px-4 py-2 hover:bg-cyan-500 hover:bg-opacity-85 hover:text-slate-800 active:bg-opacity-70 text-richblack-50 rounded-md">
-                Sign up
-              </button>
-            </Link>
-          )}
-          {token !== null && <ProfileDropdown />}
-        </div>
+        {token === null && (
+          <Link to={"/login"}>
+            <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 md:text-sm text-xs md:px-4 px-2 py-2 hover:bg-cyan-500 hover:text-slate-800 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-50 rounded-md">
+              Log in
+            </button>
+          </Link>
+        )}
+        {token === null && (
+          <Link to={"/signup"}>
+            <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 md:text-sm text-xs md:px-4 px-2 py-2 hover:bg-cyan-500 hover:bg-opacity-85 hover:text-slate-800 active:bg-opacity-70 text-richblack-50 rounded-md">
+              Sign up
+            </button>
+          </Link>
+        )}
+        {token !== null && <ProfileDropdown />}
       </div>
     </div>
   );

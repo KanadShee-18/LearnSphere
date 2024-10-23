@@ -6,14 +6,14 @@ const index = () => {
   return (
     <>
       <div className="flex w-full lg:flex-row flex-col-reverse items-center lg:items-start justify-between gap-x-6 max-w-[1200px] mx-auto p-7">
-        <div className="w-[70%]">
+        <div className="md:w-[70%] w-11/12">
           <h1 className="mb-3 text-3xl text-richblack-25">Add Course</h1>
           <div>
             <RenderSteps />
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#233149] max-w-[470px] mb-7 min-w-[200px] shadow-md shadow-slate-600 ">
+        <div className="p-4 rounded-xl bg-[#233149] max-w-[470px] mb-7 min-w-[200px] bg-opacity-65 backdrop-blur-md shadow-md shadow-slate-600 ">
           <p className="flex items-center pt-5 ml-3 text-2xl text-cyan-500">
             <MdTipsAndUpdates className="mr-3 text-yellow-100 size-10" /> Course
             Upload Tips

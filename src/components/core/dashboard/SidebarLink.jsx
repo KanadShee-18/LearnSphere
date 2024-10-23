@@ -20,9 +20,9 @@ const SidebarLink = ({ link, iconName }) => {
       
       ${
         isRouteMatch(link.path)
-          ? "bg-cyan-800 text-slate-200"
-          : "bg-opacity-0 text-slate-500"
-      } transition-all duration-200 w-full hover:bg-slate-700 hover:bg-opacity-50 hover:rounded-md
+          ? "bg-cyan-700 text-slate-200"
+          : "bg-opacity-0 text-slate-400 tracking-wide"
+      } transition-all duration-200 w-full hover:bg-slate-800 hover:bg-opacity-80 hover:text-blue-50 hover:rounded-md
       
       `}
     >

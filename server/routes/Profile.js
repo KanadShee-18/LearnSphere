@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // Auth:
-const { auth } = require("../middlewares/auth");
+const { auth, isInstructor } = require("../middlewares/auth");
 const { fileUploadAuth } = require("../middlewares/FileUploadAuth");
 
 // Profile handler function:
@@ -12,6 +12,7 @@ const {
   getUserAllDetails,
   getEnrolledCourses,
   updateDisplayPicture,
+  instructorDashboard,
 } = require("../controllers/Profile");
 
 // Profile routes:
@@ -20,5 +21,6 @@ router.get("/getUserDetails", getUserAllDetails);
 router.put("/updateProfile", auth, updateProfile);
 router.get("/getEnrolledCourses", auth, getEnrolledCourses);
 router.put("/updateDisplayPicture", auth, fileUploadAuth, updateDisplayPicture);
+router.get("/instructorDashboard", auth, isInstructor, instructorDashboard);
 
 module.exports = router;

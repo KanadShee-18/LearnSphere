@@ -128,10 +128,6 @@ body {
 
 /* Toast styles */
 
-.toast-container-custom {
-  margin-top: 70px;
-}
-
 .custom-toast {
   /* background-color: #1e293b !important; */
   background: rgb(8, 20, 37) !important;
@@ -149,6 +145,7 @@ body {
   font-weight: 500;
   background-color: #e2fff7 !important;
 }
+
 .Toastify__toast {
   background-color: #e2fff7 !important;
 }

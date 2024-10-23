@@ -30,17 +30,17 @@ const ExploreMore = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="text-4xl font-semibold text-center font-inter">
+      <div className="text-2xl font-semibold text-center md:text-4xl font-inter">
         Unlock the <HighlightText text={"Power of Code"} />
       </div>
-      <p className="font-medium text-center font-inter text-slate-400">
+      <p className="text-sm font-medium text-center md:text-base font-inter text-slate-400">
         Learn to build anything you can imagine.
       </p>
       <div className="parentTab flex w-fit flex-row font-inter rounded-full bg-[#132930] p-1 my-10 sm:mb-36 mb-16">
         {tabsUsed.map((element, index) => {
           return (
             <div
-              className={`text-base flex flex-row items-center gap-2 bg-opacity-65 ${
+              className={`md:text-base text-xs flex flex-row items-center gap-2 bg-opacity-65 ${
                 currentTab === element
                   ? "bg-slate-900 text-slate-200 font-semibold"
                   : "bg-[#14292e] text-slate-400 font-medium"

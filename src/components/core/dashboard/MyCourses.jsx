@@ -28,8 +28,10 @@ const MyCourses = () => {
 
   return (
     <div className="w-10/12 mx-auto mt-6 max-w-maxContent">
-      <div className="relative flex justify-between">
-        <h1 className="text-3xl text-slate-200">My Courses</h1>
+      <div className="relative flex justify-between md:mt-0 mt-14">
+        <h1 className="ml-4 text-2xl md:text-3xl md:ml-0 text-slate-200">
+          My Courses
+        </h1>
         <button
           onClick={() => navigate("/dashboard/add-course")}
           className="flex items-center px-3 py-2 font-semibold bg-teal-500 rounded text-slate-800 hover:bg-richblue-50 gap-x-2"

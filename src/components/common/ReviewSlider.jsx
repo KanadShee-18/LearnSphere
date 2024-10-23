@@ -52,12 +52,12 @@ const ReviewSlider = () => {
             },
           }}
           modules={[FreeMode, Autoplay]}
-          className="w-full"
+          className="w-full "
         >
           {reviews?.map((review, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex flex-col gap-3 p-3 text-sm rounded-lg bg-gradient-to-br from-[#1c233b] to-[#28344d] text-slate-200">
-                <div className="flex items-center gap-4">
+            <SwiperSlide key={index} className="h-[220px] md:h-auto">
+              <div className="flex flex-col md:gap-3 gap-1 p-3 text-sm rounded-lg bg-gradient-to-br from-[#1c233b] to-[#28344d] text-slate-200 h-full">
+                <div className="flex items-center gap-1 md:gap-4">
                   <img
                     src={
                       review?.user?.image
@@ -65,18 +65,18 @@ const ReviewSlider = () => {
                         : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.firstName} ${review?.user?.lastName}`
                     }
                     alt="User"
-                    className="object-cover rounded-full w-9 aspect-square"
+                    className="object-cover w-5 rounded-full md:w-9 aspect-square"
                   />
                   <div className="flex flex-col px-2 w-[80%]">
-                    <h1 className="overflow-hidden font-semibold text-slate-300 text-nowrap text-ellipsis">
+                    <h1 className="overflow-hidden text-[12px] font-semibold text-slate-300 text-nowrap text-ellipsis md:text-base">
                       {review?.user?.firstName} {review?.user?.lastName}
                     </h1>
-                    <h2 className="overflow-hidden text-nowrap text-ellipsis text-[12px] font-medium text-[#768ecf]">
+                    <h2 className="overflow-hidden text-nowrap text-ellipsis md:text-[12px] text-[10px] font-medium text-[#768ecf]">
                       {review?.course?.courseName}
                     </h2>
                   </div>
                 </div>
-                <p className="font-medium text-slate-400">
+                <p className="font-medium md:text-sm text-[10px]  text-slate-400">
                   {review?.review?.split(" ").length > truncateWords
                     ? `${review?.review
                         ?.split(" ")
@@ -85,7 +85,7 @@ const ReviewSlider = () => {
                     : `${review?.review}`}
                 </p>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-teal-500">
+                  <h3 className="text-xs font-semibold text-teal-500 md:text-base">
                     {review?.rating.toFixed(1)}
                   </h3>
                   <ReactStars

@@ -42,14 +42,14 @@ const CourseTable = ({ courses, setCourses }) => {
   };
 
   return (
-    <div className="w-10/12 mx-auto mb-36 max-w-maxContent mt-14">
+    <div className="w-11/12 mx-auto md:w-10/12 mb-36 max-w-maxContent mt-14">
       {courses.length === 0 ? (
         <p className="w-full text-center text-purple-400">No Courses Found</p>
       ) : (
         courses.map((course) => (
           <div
             key={course._id}
-            className="relative flex lg:max-w-[800px] min-w-[250px] flex-col lg:flex-row gap-y-3 lg:gap-y-0 p-8 rounded-xl mb-10 border-[1px] bg-opacity-90 border-slate-600 courseCard 
+            className="relative flex lg:max-w-[800px] w-full min-w-[250px] flex-col lg:flex-row gap-y-3 lg:gap-y-0 md:p-8 p-3 rounded-xl mb-10 border-[1px] bg-opacity-90 border-slate-600 courseCard 
         bg-neutral-950 bg-gradient-to-br from-[#1a223b] to-[#181829] hover:cursor-pointer hover:bg-[#121f31] hover:scale-105 duration-300 transition-all"
           >
             <div className="flex flex-col  gap-3 lg:w-[40%] w-full">
@@ -87,7 +87,7 @@ const CourseTable = ({ courses, setCourses }) => {
                 </div>
               </div>
 
-              <div className="flex md:flex-col flex-row items-center md:mt-0 mt-4 justify-center w-1/2 lg:w-[30%] gap-y-4 lg:gap-x-3">
+              <div className="flex md:flex-col flex-row items-center md:mt-0 mt-4 justify-center w-1/2 lg:w-[30%] gap-y-4 lg:gap-x-3 gap-x-2">
                 <div>
                   <p className="text-xl font-medium tracking-wide text-richblack-25">
                     &#8377;{course.price.toLocaleString("en-IN")}

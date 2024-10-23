@@ -17,14 +17,14 @@ const CodeBlock = ({
   // console.log(ctaBtn1.btnTxt);
 
   return (
-    <div className={`flex ${position} my-20 justify-between gap-10`}>
+    <div className={`flex ${position} sm:my-20 my-10 justify-between gap-10`}>
       {/* Section: 1 */}
-      <div className="flex flex-col justify-between w-1/2 gap-8 text-start">
+      <div className="flex flex-col justify-between w-full gap-8 md:w-1/2 text-start">
         {heading}
-        <div className="font-semibold text-richblack-200 font-inter">
+        <div className="text-sm font-semibold text-center md:text-start md:text-base text-richblack-200 font-inter">
           {subHeading}
         </div>
-        <div className="flex gap-7 mt-7">
+        <div className="flex justify-center gap-7 mt-7 sm:justify-start">
           <CTAButton active={ctaBtn1.active} linkto={ctaBtn1.linkto}>
             <div className="flex items-center gap-3 font-poppins">
               {ctaBtn1.btnTxt}

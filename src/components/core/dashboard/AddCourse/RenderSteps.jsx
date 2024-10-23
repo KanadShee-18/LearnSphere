@@ -64,7 +64,7 @@ const RenderSteps = () => {
               key={item.id}
             >
               <p
-                className={`text-sm ${
+                className={`text-sm hidden md:block ${
                   step >= item.id ? "text-teal-500" : "text-richblack-400"
                 }`}
               >

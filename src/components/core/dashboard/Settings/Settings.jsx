@@ -11,11 +11,11 @@ const Settings = () => {
   return (
     <div className="relative flex flex-col w-full mx-auto ">
       <img src={orbital} alt="orbital" className="absolute orbital" />
-      <h1 className="relative my-8 ml-4 text-xs text-slate-400">
+      <h1 className="relative my-8 ml-12 text-xs md:ml-4 text-slate-400">
         Home<span className="text-[#ace320]">{location.pathname}</span>
       </h1>
       <div className="relative w-10/12 max-w-[1000px] mx-auto flex flex-row justify-between items-center mb-8">
-        <h1 className="text-4xl font-medium text-start text-cyan-500 font-poppins">
+        <h1 className="text-2xl font-medium md:text-3xl lg:text-4xl text-start text-cyan-500 font-poppins">
           Edit Profile
         </h1>
         <Link
