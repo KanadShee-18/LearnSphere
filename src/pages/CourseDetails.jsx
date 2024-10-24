@@ -15,6 +15,7 @@ import ReactMarkdown from "react-markdown";
 import Footer from "../components/common/Footer";
 import CourseAccordianBar from "../components/core/Course/CourseAccordianBar";
 import { buyCourse } from "../services/operations/studentFeaturesAPI";
+import { toast } from "react-toastify";
 
 const CourseDetails = () => {
   const { user } = useSelector((state) => state.profile);
@@ -37,7 +38,8 @@ const CourseDetails = () => {
         const res = await fetchCourseDetails(courseId);
         setResponse(res);
       } catch (error) {
-        console.log("Could not fetch course details.");
+        // console.log("Could not fetch course details.");
+        toast.error("Could not fetch course details");
       }
     })();
   }, [courseId]);
@@ -46,10 +48,6 @@ const CourseDetails = () => {
 
   const [avgReviewCount, setAvgReviewCount] = useState(0);
   useEffect(() => {
-    console.log(
-      "Count passed: ",
-      response?.data?.courseDetails.ratingAndReviews
-    );
     const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews);
 
     setAvgReviewCount(count);

@@ -6,7 +6,7 @@ const InstructorCourses = ({ CourseDetails }) => {
     (a, b) => b.studentsEnrolled.length - a.studentsEnrolled.length
   );
   const threeCourses = shuffledCourses.slice(0, 3);
-  console.log(threeCourses);
+  // console.log(threeCourses);
 
   return (
     <div className=" flex flex-col gap-y-3 p-5 w-full bg-[#222d4b] rounded-lg">

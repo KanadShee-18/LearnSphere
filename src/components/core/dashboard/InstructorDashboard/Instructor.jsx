@@ -22,11 +22,11 @@ const Instructor = () => {
       setLoading(true);
       const insturctorDetails = await getInstructorData(token);
       const instructorAllCourses = await fetchInstructorCourses(token);
-      console.log("Instructor details coming as: ", insturctorDetails);
-      console.log(
-        "Instructor courses coming as: ",
-        instructorAllCourses?.instructorCourses
-      );
+      // console.log("Instructor details coming as: ", insturctorDetails);
+      // console.log(
+      //   "Instructor courses coming as: ",
+      //   instructorAllCourses?.instructorCourses
+      // );
       if (insturctorDetails?.length) {
         setInstructorData(insturctorDetails);
       }
@@ -47,9 +47,6 @@ const Instructor = () => {
     (acc, curr) => acc + curr.totalStudentsEnrolled,
     0
   );
-
-  console.log("Total Students and total amount: ", totalStudents);
-  console.log(totalAmount);
 
   return (
     <div className="w-10/12 mx-auto mt-4 mb-32 max-w-maxContent">

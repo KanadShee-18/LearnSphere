@@ -10,7 +10,7 @@ import {
 import Upload from "../Upload";
 import { setCourse } from "../../../../../slices/courseSlice";
 import Spinner from "../../../../common/Spinner";
-
+import { IoCloudUploadOutline } from "react-icons/io5";
 const SubSectionModal = ({
   modalData,
   setModalData,
@@ -26,10 +26,18 @@ const SubSectionModal = ({
     formState: { errors },
   } = useForm();
 
+  const transformDriveLink = (url) => {
+    const regex = /\/d\/(.*?)(\/|$)/;
+    const match = url.match(regex);
+    return match ? `https://drive.google.com/uc?id=${match[1]}` : url; // Fallback to original if regex fails
+  };
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
   const { course } = useSelector((state) => state.course);
+
+  const [uploadPdf, setUploadPdf] = useState(false);
 
   useEffect(() => {
     if (view || edit) {
@@ -100,6 +108,8 @@ const SubSectionModal = ({
     formData.append("video", data.lectureVideo);
 
     setLoading(true);
+    // console.log("Formdata passing for creating subsection: ", formData);
+
     const result = await createSubSection(formData, token);
     if (result) {
       const updatedCourseContent = course.courseContent.map((section) =>
@@ -116,7 +126,7 @@ const SubSectionModal = ({
     <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-slate-700 bg-opacity-45 backdrop-blur-sm">
       <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-blue-200 bg-gradient-to-br from-slate-800 via-[#1d2d44] to-slate-800">
         {/* Upper part heading and cross button */}
-        <div className="flex items-center justify-between p-5 rounded-t-lg bg-gradient-to-r from-[#4f6a7c] to-[#325770]">
+        <div className="flex relative items-center justify-between p-5 rounded-t-lg bg-gradient-to-r from-[#4f6a7c] to-[#325770]">
           <p className="text-xl font-semibold text-slate-200 font-poppins">
             {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
           </p>
@@ -126,6 +136,15 @@ const SubSectionModal = ({
           >
             <RxCross2 className="text-xl text-slate-100" />
           </button>
+          <div className="absolute text-sm right-4 text-[#7aaef1] top-24 ">
+            <button
+              onClick={() => setUploadPdf(!uploadPdf)}
+              className="flex items-center px-2 py-2 rounded-lg gap-x-2 hover:bg-[#325770] hover:text-blue-5"
+            >
+              <IoCloudUploadOutline className="text-lg" />
+              {uploadPdf ? "Video" : "PDF"}
+            </button>
+          </div>
         </div>
 
         {/* Modal form */}
@@ -141,7 +160,8 @@ const SubSectionModal = ({
             register={register}
             setValue={setValue}
             errors={errors}
-            video={true}
+            video={uploadPdf ? false : true}
+            pdf={true}
             viewData={view ? modalData.videoUrl : null}
             editData={edit ? modalData.videoUrl : null}
           />

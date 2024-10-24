@@ -16,14 +16,14 @@ const EnrolledCourses = () => {
     try {
       setLoading(true);
       const response = await getUserEnrolledCourses(token);
-      console.log(
-        "Enrolled courses response comes from backend as: ",
-        response
-      );
+      // console.log(
+      //   "Enrolled courses response comes from backend as: ",
+      //   response
+      // );
 
       setEnrolledCourses(response);
     } catch (error) {
-      console.log("Unable to set enrolled courses.");
+      // console.log("Unable to set enrolled courses.");
     } finally {
       setLoading(false); // Ensure loading is false after the request completes
     }

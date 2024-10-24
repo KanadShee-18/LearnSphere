@@ -21,6 +21,7 @@ const contactRoutes = require("./routes/Contact");
 // Database & Cloudinary Configurations
 require("./config/database").connect();
 require("./config/cloudinary").cloudinaryConnect();
+require("./config/drive").connectDrive();
 
 // Set Port
 const port = process.env.PORT || 4000;
@@ -40,8 +41,8 @@ app.use(
 // File Upload Middleware
 app.use(
   fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp",
+    useTempFiles: false,
+    // tempFileDir: "/tmp",
   })
 );
 

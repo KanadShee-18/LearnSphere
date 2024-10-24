@@ -1,8 +1,12 @@
+const { getAuthClient } = require("../config/drive");
 const Section = require("../models/Section");
+const fs = require("fs");
 const SubSection = require("../models/SubSection");
 const {
   uploadImageToCloudinary,
   destroyVideoFromCloudinary,
+  uploadPdfToDrive,
+  generatePublicUrlForPdf,
 } = require("../utils/imageUploader");
 
 // Create SubSection:
@@ -10,50 +14,92 @@ const {
 exports.createSubSection = async (req, res) => {
   try {
     // Fetch data from body
-    const { sectionId, title, timeDuration, description } = req.body;
-    // fetch video from req.files
-    const video = req.files.video;
-    // validate
-    if (!sectionId || !title || !description || !video) {
+    const { sectionId, title, description } = req.body;
+    // fetch video or PDF from req.files
+    const file = req.files.video || req.files.pdf; // Handle both video and PDF
+    const fileType = file.name.split(".").pop().toLowerCase(); // Get file extension
+
+    const uploadedFile = req.files; // 'file' should match your input name
+    console.log("Uploaded file name:", uploadedFile);
+
+    // Validate required fields
+    if (!sectionId || !title || !description || !file) {
       return res.status(400).json({
         success: false,
         message: "All fields are required!",
       });
     }
+
+    // Check if the section exists
     const findSection = await Section.findById(sectionId);
     if (!findSection) {
       return res.status(400).json({
         success: false,
-        message: "No sections is available with this id.",
+        message: "No section is available with this ID.",
       });
     }
-    // upload video to cloudinary and get the secure_url
-    const uploadVideoDetails = await uploadImageToCloudinary(
-      video,
-      process.env.CLOUDINARY_FOLDER_NAME
-    );
-    console.log("Uploaded video details from cldnry: ", uploadVideoDetails);
 
-    // create sub-section with fetched data and secure_url
+    let uploadDetails;
+    let fileUrl; // Change from videoUrl to fileUrl for clarity
+    let timeDuration = "N/A"; // Default value for PDFs
+
+    // Upload video or PDF based on file type
+    if (fileType === "mp4") {
+      // Upload video to Cloudinary
+      uploadDetails = await uploadImageToCloudinary(
+        file,
+        process.env.CLOUDINARY_FOLDER_NAME
+      );
+      fileUrl = uploadDetails.secure_url; // Video URL from Cloudinary
+      timeDuration = `${uploadDetails.duration}`; // Duration for video
+    } else if (fileType === "pdf") {
+      // Upload PDF to Google Drive
+      const authClient = getAuthClient();
+      console.log("File uploading to drive is: ", file);
+
+      const uploadResponse = await uploadPdfToDrive(
+        file,
+        process.env.GOOGLE_DRIVE_FOLDER,
+        authClient
+      );
+      console.log("Uploaded PDF details: ", uploadResponse);
+
+      const pdfViewLinks = await generatePublicUrlForPdf(
+        authClient,
+        uploadResponse.fileId
+      );
+      console.log("Generated link for web view: ", pdfViewLinks);
+
+      // Get the webViewLink for the PDF
+      fileUrl = pdfViewLinks.webViewLink;
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Unsupported file type. Only MP4 and PDF are allowed.",
+      });
+    }
+
+    // Create new sub-section with the video or PDF URL
     const newSubSection = await SubSection.create({
       title: title,
-      timeDuration: `${uploadVideoDetails.duration}`,
+      timeDuration: timeDuration, // Use video duration if applicable, "N/A" for PDFs
       description: description,
-      videoUrl: uploadVideoDetails.secure_url,
-      publicId: uploadVideoDetails.public_id,
+      videoUrl: fileUrl, // Save either video or PDF URL
+      publicId: uploadDetails?.public_id || null, // Only for video uploads, null for PDFs
     });
-    // update section schema with the created sub-section _id.
-    // Update the corresponding section with the newly created sub-section
+
+    // Update section with the new sub-section
     const updatedSection = await Section.findByIdAndUpdate(
       { _id: sectionId },
       { $push: { subSection: newSubSection._id } },
       { new: true }
     ).populate("subSection");
 
-    console.log("Updated sub section details: ", updatedSection);
-
     // Return the updated section in the response
-    return res.status(200).json({ success: true, data: updatedSection });
+    return res.status(200).json({
+      success: true,
+      data: updatedSection,
+    });
   } catch (error) {
     return res.status(500).json({
       error: error.message,
@@ -70,7 +116,7 @@ exports.updateSubSection = async (req, res) => {
     // Fetch data from req body
     const { sectionId, subSectionId, title, description } = req.body;
 
-    // Check if subsection present with the id
+    // Check if the sub-section is present with the given id
     const checkSubSection = await SubSection.findById(subSectionId);
     if (!checkSubSection) {
       return res.status(400).json({
@@ -79,12 +125,13 @@ exports.updateSubSection = async (req, res) => {
       });
     }
 
+    // If the sub-section has a previous video, delete it from Cloudinary (for MP4 files)
     const publicId = checkSubSection.publicId;
+    if (publicId) {
+      await destroyVideoFromCloudinary(publicId);
+    }
 
-    const deletedImg = await destroyVideoFromCloudinary(publicId);
-    console.log(deletedImg);
-
-    // Validate
+    // Validate and update fields
     if (title !== undefined) {
       checkSubSection.title = title;
     }
@@ -92,28 +139,51 @@ exports.updateSubSection = async (req, res) => {
       checkSubSection.description = description;
     }
 
-    // Upload new video to cloudiniary
-    if (req.files && req.files.video !== undefined) {
-      const video = req.files.video;
-      const uploadDetails = await uploadImageToCloudinary(
-        video,
-        process.env.CLOUDINARY_FOLDER_NAME
-      );
-      console.log("Uploaded video details: ", uploadDetails);
+    // If a new file is uploaded
+    if (req.files && req.files.video) {
+      const file = req.files.video;
+      const fileType = file.name.split(".").pop().toLowerCase(); // Get file extension
 
-      checkSubSection.videoUrl = uploadDetails.secure_url;
-      checkSubSection.timeDuration = `${uploadDetails.duration}`;
+      let uploadDetails;
+
+      // Check if the file is a video (mp4) or a PDF
+      if (fileType === "mp4") {
+        // Upload video to Cloudinary
+        uploadDetails = await uploadImageToCloudinary(
+          file,
+          process.env.CLOUDINARY_FOLDER_NAME
+        );
+        // Update videoUrl with the Cloudinary URL
+        checkSubSection.videoUrl = uploadDetails.secure_url;
+        checkSubSection.timeDuration = `${uploadDetails.duration}`;
+        checkSubSection.publicId = uploadDetails.public_id;
+      } else if (fileType === "pdf") {
+        // Upload PDF to Google Drive
+        const authClient = getAuthClient();
+        uploadDetails = await uploadPdfToDrive(
+          file,
+          process.env.GOOGLE_DRIVE_FOLDER,
+          authClient
+        );
+        // Update videoUrl with the Google Drive view link
+        checkSubSection.videoUrl = `https://drive.google.com/file/d/${uploadDetails.fileId}/view`;
+        checkSubSection.publicId = null; // No publicId for PDFs
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Only MP4 and PDF files are supported.",
+        });
+      }
     }
 
+    // Save the updated sub-section
     await checkSubSection.save();
 
+    // Fetch and return the updated section with populated sub-sections
     const updatedSection = await Section.findById(sectionId).populate(
       "subSection"
     );
 
-    console.log("Updated subsection in section: ", updatedSection);
-
-    // return success response
     return res.status(200).json({
       success: true,
       message: "Sub-section has been updated successfully.",
@@ -133,7 +203,7 @@ exports.updateSubSection = async (req, res) => {
 exports.deleteSubSection = async (req, res) => {
   try {
     // Fetch the subsection id from the params
-    console.log("Request comes to backend to delete subsection...");
+    // console.log("Request comes to backend to delete subsection...");
 
     const { subSectionId, sectionId } = req.body;
     await Section.findByIdAndUpdate(
@@ -160,7 +230,7 @@ exports.deleteSubSection = async (req, res) => {
       "subSection"
     );
 
-    console.log("Updated Section after deleteing subsection: ", updatedSection);
+    // console.log("Updated Section after deleteing subsection: ", updatedSection);
 
     // return success response
     return res.status(200).json({

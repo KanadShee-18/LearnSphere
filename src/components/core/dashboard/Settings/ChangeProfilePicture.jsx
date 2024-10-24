@@ -5,6 +5,7 @@ import IconBtn from "../../../common/IconBtn";
 import { useNavigate } from "react-router-dom";
 import { updateDisplayPicture } from "../../../../services/operations/SettingsAPI";
 import Spinner from "../../../common/Spinner";
+import { toast } from "react-toastify";
 
 const ChangeProfilePicture = () => {
   const { user } = useSelector((state) => state.profile);
@@ -43,12 +44,13 @@ const ChangeProfilePicture = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append("displayPicture", imageFile);
-      console.log("Form data:", formData);
+      // console.log("Form data:", formData);
       dispatch(updateDisplayPicture(token, formData)).then(() => {
         setLoading(false);
       });
     } catch (error) {
-      console.log("Error message while file uploading: ", error.message);
+      // console.log("Error message while file uploading: ", error.message);
+      toast.error("Error occurred while uploading image.");
     }
   };
 

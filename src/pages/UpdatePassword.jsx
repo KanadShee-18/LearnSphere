@@ -31,8 +31,6 @@ const UpdatePassword = () => {
     }));
   };
 
-  console.log("Error message in update: ", errMessage);
-
   const { password, confirmPassword } = formData;
 
   const handleOnSubmit = (e) => {

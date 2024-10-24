@@ -1,17 +1,23 @@
 import React from "react";
 import * as Icons from "react-icons/vsc";
 import { matchPath, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setEditCourse } from "../../../slices/courseSlice";
 
 const SidebarLink = ({ link, iconName }) => {
   const Icon = Icons[iconName];
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const isRouteMatch = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
 
-  // console.log("Link comes in sidebar: ", link);
+  const path = location.pathname.split("/").pop();
+  if (path === "add-course") {
+    dispatch(setEditCourse(false));
+  }
 
   return (
     <NavLink

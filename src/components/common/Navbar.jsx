@@ -15,6 +15,7 @@ import { FaMoon } from "react-icons/fa6";
 import { FiSun } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { RiMenuUnfold2Fill } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { toggleTheme } = useContext(ThemeContext);
@@ -33,7 +34,7 @@ const Navbar = () => {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
       setSubLinks(result?.data?.categoryDetails?.categories);
     } catch (error) {
-      console.log("Fetch to get categories list.");
+      toast.error("Error occurred fetching categories.");
     }
   };
 
@@ -77,10 +78,10 @@ const Navbar = () => {
               <li key={index} className="">
                 {link.title === "Catalog" ? (
                   <div className="relative flex items-center hover:cursor-pointer group">
-                    <p className="text-sm md:hover:text-blue-50">
+                    <p className="text-sm md:hover:text-blue-50 md:text-slate-100 text-slate-700">
                       {link.title}
                     </p>
-                    <MdOutlineArrowDropDown className="size-6" />
+                    <MdOutlineArrowDropDown className="size-6 md:text-slate-100 text-slate-700" />
 
                     <div className="invisible group-hover:visible absolute top-0 translate-y-[-12%] rounded text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                       <IoMdArrowDropup className="size-20" />

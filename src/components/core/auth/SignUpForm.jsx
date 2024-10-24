@@ -33,7 +33,7 @@ const SignUpForm = () => {
   const [errMessage, setErrMessage] = useState(null);
 
   const { firstName, lastName, email, password, confirmPassword } = formData;
-  console.log("Form data comes as: ", formData);
+  // console.log("Form data comes as: ", formData);
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({

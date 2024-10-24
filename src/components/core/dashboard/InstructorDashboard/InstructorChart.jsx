@@ -6,7 +6,7 @@ import { Pie } from "react-chartjs-2";
 Chart.register(...registerables);
 
 const InstructorChart = ({ courses }) => {
-  console.log("Courses comes in instrutor chart as: ", courses);
+  // console.log("Courses comes in instrutor chart as: ", courses);
 
   const [currentChart, setCurrentChart] = useState("Students");
 

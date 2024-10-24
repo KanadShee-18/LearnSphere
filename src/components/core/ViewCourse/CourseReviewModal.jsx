@@ -27,8 +27,6 @@ const CourseReviewModal = ({ setReviewModal }) => {
   };
 
   const onSubmit = async (data) => {
-    console.log("Data coming as: ", data);
-
     const newCreatedRating = await createRating(
       {
         courseId: courseEntireData._id,
@@ -38,8 +36,6 @@ const CourseReviewModal = ({ setReviewModal }) => {
       token
     );
     const errMsg = newCreatedRating?.data?.response?.message;
-    console.log(newCreatedRating?.data?.response?.message);
-    console.log("error message: ", errMsg);
 
     setReviewModal(false);
   };

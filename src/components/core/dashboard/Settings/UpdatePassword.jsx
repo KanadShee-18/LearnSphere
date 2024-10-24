@@ -26,7 +26,6 @@ const UpdatePassword = () => {
     };
 
     try {
-      console.log("Updating password...");
       setLoading(true);
 
       // Dispatch the async action to change the password
@@ -39,7 +38,6 @@ const UpdatePassword = () => {
       // Set loading to false
       setLoading(false);
     } catch (error) {
-      console.log("Error while updating password: ", error.message);
       setLoading(false);
     }
   };

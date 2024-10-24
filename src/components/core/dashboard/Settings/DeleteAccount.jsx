@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiTrash2 } from "react-icons/fi";
 import { deleteProfile } from "../../../../services/operations/SettingsAPI";
+import { toast } from "react-toastify";
 
 const DeleteAccount = () => {
   const { token } = useSelector((state) => state.auth);
@@ -14,7 +15,8 @@ const DeleteAccount = () => {
     try {
       dispatch(deleteProfile(token, navigate));
     } catch (error) {
-      console.log("Error while deleting account: ", error.message);
+      // console.log("Error while deleting account: ", error.message);
+      toast.error("Error occurred while deleting account.");
     }
   };
 

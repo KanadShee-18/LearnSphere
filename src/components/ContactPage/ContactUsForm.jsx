@@ -19,7 +19,7 @@ const ContactUsForm = () => {
   } = useForm();
 
   const submitContactForm = async (data) => {
-    console.log("Logging contact data: ", data);
+    // console.log("Logging contact data: ", data);
 
     try {
       setLoading(true);
@@ -29,11 +29,11 @@ const ContactUsForm = () => {
         data
       );
       //   const response = { status: "OK", message: "Data Recieved" };
-      console.log("Logging contact response", response);
+      // console.log("Logging contact response", response);
       setLoading(false);
       toast.info("We have received your message!");
     } catch (error) {
-      console.log("Contact error from error: ", error.message);
+      // console.log("Contact error from error: ", error.message);
       toast.error("Some error occurred. Please try again!");
       setLoading(false);
     }

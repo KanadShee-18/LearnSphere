@@ -59,8 +59,7 @@ exports.createCourse = async (req, res) => {
       status = "Draft";
     }
 
-    // Check if it is insturctor or not if yes then we have to put the instructor id to the course as we have mentioned that in model
-    const userId = req.user.id; // comes from payload
+    const userId = req.user.id;
     const instructorDetails = await User.findById(userId, {
       accountType: "Instructor",
     });
@@ -72,8 +71,7 @@ exports.createCourse = async (req, res) => {
       });
     }
 
-    // Check given Category is valid or not...
-    const categoryDetails = await Category.findById(category); // as we have received tag as id from course model
+    const categoryDetails = await Category.findById(category);
 
     if (!categoryDetails) {
       return res.status(404).json({

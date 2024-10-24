@@ -18,7 +18,7 @@ const ReviewSlider = () => {
         "GET",
         ratingsEndpoints.REVIEWS_DETAILS_API
       );
-      console.log("Reviews coming as: ", reviewData);
+      // console.log("Reviews coming as: ", reviewData);
       if (reviewData?.data?.success) {
         setReviews(reviewData?.data?.allRatings?.data);
       }
