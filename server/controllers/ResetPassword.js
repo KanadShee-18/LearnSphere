@@ -1,4 +1,4 @@
-const { passwordReset } = require("../mail/templates/PasswordReset");
+const { passwordReset } = require("../mail/templates/passwordReset");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 const User = require("../models/User");
 const { mailSender } = require("../utils/mailSender");
