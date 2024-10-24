@@ -145,6 +145,8 @@ exports.updateSubSection = async (req, res) => {
       const fileType = file.name.split(".").pop().toLowerCase(); // Get file extension
 
       let uploadDetails;
+      let fileUrl;
+      let timeDuration = "N/A";
 
       // Check if the file is a video (mp4) or a PDF
       if (fileType === "mp4") {
@@ -153,20 +155,33 @@ exports.updateSubSection = async (req, res) => {
           file,
           process.env.CLOUDINARY_FOLDER_NAME
         );
+        fileUrl = uploadDetails.secure_url;
+        timeDuration = `${uploadDetails.duration}`;
+
         // Update videoUrl with the Cloudinary URL
-        checkSubSection.videoUrl = uploadDetails.secure_url;
-        checkSubSection.timeDuration = `${uploadDetails.duration}`;
+        checkSubSection.videoUrl = fileUrl;
+        checkSubSection.timeDuration = timeDuration;
         checkSubSection.publicId = uploadDetails.public_id;
       } else if (fileType === "pdf") {
         // Upload PDF to Google Drive
         const authClient = getAuthClient();
-        uploadDetails = await uploadPdfToDrive(
+        const uploadResponse = await uploadPdfToDrive(
           file,
           process.env.GOOGLE_DRIVE_FOLDER,
           authClient
         );
+        console.log("Uploaded PDF details: ", uploadResponse);
+
+        const pdfViewLinks = await generatePublicUrlForPdf(
+          authClient,
+          uploadResponse.fileId
+        );
+        console.log("Generated link for web view: ", pdfViewLinks);
+
+        // Get the webViewLink for the PDF
+        fileUrl = pdfViewLinks.webViewLink;
         // Update videoUrl with the Google Drive view link
-        checkSubSection.videoUrl = `https://drive.google.com/file/d/${uploadDetails.fileId}/view`;
+        checkSubSection.videoUrl = fileUrl;
         checkSubSection.publicId = null; // No publicId for PDFs
       } else {
         return res.status(400).json({
