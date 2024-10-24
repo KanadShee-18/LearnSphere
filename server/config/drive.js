@@ -8,7 +8,7 @@ exports.connectDrive = async () => {
     jwtClient = new google.auth.JWT(
       process.env.CLIENT_MAIL,
       null,
-      process.env.PRIVATE_KEY.replace(/\\n/g, "\n"),
+      process.env.PRIVATE_KEY.split(String.raw`\n`).join("\n"),
       [process.env.SCOPE] // Ensure SCOPE is an array
     );
     await jwtClient.authorize();
