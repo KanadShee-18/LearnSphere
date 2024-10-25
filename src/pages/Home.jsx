@@ -34,6 +34,21 @@ const TimeLineSection = lazy(() =>
   import("../components/core/homeaccessories/TimeLineSection.jsx")
 );
 
+const container = (delay) => ({
+  hidden: {
+    x: -100,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      delay: delay,
+    },
+  },
+});
+
 const Home = () => {
   const navigate = useNavigate();
   return (
@@ -53,9 +68,9 @@ const Home = () => {
       <div className="relative z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
         <div className="relative flex flex-col items-center justify-center mt-16 w-full max-w-full mx-auto h-[100vh]">
           <motion.div
-            initial={{ opacity: 0, x: -200 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2 }}
+            variants={container(0.3)}
+            initial="hidden"
+            animate="visible"
             className="mt-8 lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter"
           >
             Unlock your potential and drive future success with
@@ -77,29 +92,45 @@ const Home = () => {
             </motion.div>
           </Link>
 
-          <div className="mt-10 text-sm font-medium tracking-wide text-center md:text-base text-blue-25 font-inter">
+          <motion.div
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="mt-10 text-sm font-medium tracking-wide text-center md:text-base text-blue-25 font-inter"
+          >
             Study at your own speed, from anywhere in the world, with our online
             coding courses. Have access to a plethora of tools, such as
             interactive projects, tests, and individualized feedback from
             instructors.
-          </div>
-          <div className="flex flex-row mt-16 lg:text-3xl md:text-2xl text-xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text">
+          </motion.div>
+          <motion.div
+            initial={{ x: 200, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1.3, delay: 1.5 }}
+            className="flex flex-row mt-16 lg:text-3xl md:text-2xl text-xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text"
+          >
             <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
-          </div>
-          <div className="flex flex-row mt-8 gap-7 font-poppins">
+          </motion.div>
+          <motion.div
+            initial={{ x: 400, y: 300, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            transition={{ duration: 1.5, delay: 2.0 }}
+            className="flex flex-row mt-8 gap-7 font-poppins"
+          >
             <Suspense fallback={<div>Loading...</div>}>
               <CTAButton
                 children={"Learn More"}
                 active={true}
                 linkto={"/signup"}
               />
+
               <CTAButton
                 children={"Book Demo Session"}
                 active={false}
                 linkto={"/signup"}
               />
             </Suspense>
-          </div>
+          </motion.div>
         </div>
 
         <div>
