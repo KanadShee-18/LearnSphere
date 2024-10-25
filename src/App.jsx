@@ -4,7 +4,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, Slide } from "react-toastify";
-import CustomCloseToast from "./components/common/CustomCloseToast";
 import ThemeContextProvider from "./context/ThemeContextProvider";
 import "react-toastify/dist/ReactToastify.css";
 import { Suspense, lazy, useEffect } from "react";
