@@ -1,8 +1,6 @@
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-
-import CodeBlock from "../components/core/Homepage/CodeBlock";
 import TimeLineSection from "../components/core/Homepage/TimeLineSection";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
 import InstructorSection from "../components/core/Homepage/InstructorSection";
@@ -13,6 +11,7 @@ import BannerVideo from "../components/core/Homepage/BannerVideo";
 import { motion } from "framer-motion";
 import ReviewSlider from "../components/common/ReviewSlider";
 import HighlightText from "../components/core/Homepage/HighlightText";
+import CodeBlock from "../components/core/Homepage/CodeBlock";
 
 const Homepage = () => {
   const navigate = useNavigate();
