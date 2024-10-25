@@ -52,7 +52,7 @@ const VideoDetails = lazy(() =>
 import { ACCOUNT_TYPE } from "./utils/constants";
 import Offline from "./components/common/Offline";
 import OnlineStatus from "./utils/OnlineStatus";
-import Homepage from "./pages/Homepage";
+import Home from "./pages/Home";
 
 function App() {
   // useEffect(() => {
@@ -85,7 +85,7 @@ function App() {
             }
           >
             <Routes>
-              <Route path="/" element={<Homepage />} />
+              <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="catalog/:catalogName" element={<Catalog />} />

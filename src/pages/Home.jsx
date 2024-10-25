@@ -236,7 +236,7 @@ import HighlightText from "../components/core/Homepage/HighlightText.jsx";
 import CodeBlock from "../components/core/Homepage/CodeBlock.jsx";
 import TimeLineSection from "../components/core/Homepage/TimeLineSection.jsx";
 
-const Homepage = () => {
+const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="">
@@ -410,4 +410,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Home;
