@@ -39,13 +39,16 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, origin); // Allow the origin
-      } else {
-        callback(new Error("Not allowed by CORS")); // Reject the origin
+      if (!origin) return callback(null, true); // Allow non-web clients like Postman
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = "CORS policy does not allow access from this origin.";
+        return callback(new Error(msg), false);
       }
+      return callback(null, true);
     },
-    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization", // Adjust to fit your needs
+    optionsSuccessStatus: 204, // For legacy browsers
   })
 );
 
