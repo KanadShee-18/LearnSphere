@@ -31,9 +31,20 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS (Cross-Origin Resource Sharing) Settings
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://learn-sphere-edui.vercel.app/",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, origin); // Allow the origin
+      } else {
+        callback(new Error("Not allowed by CORS")); // Reject the origin
+      }
+    },
     credentials: true,
   })
 );
