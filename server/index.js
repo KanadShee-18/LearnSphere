@@ -33,7 +33,7 @@ app.use(cookieParser());
 // CORS (Cross-Origin Resource Sharing) Settings
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://learn-sphere-edui.vercel.app/",
+  "https://learn-sphere-edui.vercel.app",
 ];
 
 app.use(
