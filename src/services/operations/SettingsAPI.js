@@ -24,10 +24,10 @@ export function updateDisplayPicture(token, formData) {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log(
-        "UPDATE_DISPLAY_PICTURE_API API RESPONSE............",
-        response
-      );
+      // console.log(
+      //   "UPDATE_DISPLAY_PICTURE_API API RESPONSE............",
+      //   response
+      // );
 
       if (!response.data.success) {
         toast.error(response.data.message);
@@ -43,23 +43,23 @@ export function updateDisplayPicture(token, formData) {
       dispatch(setUser({ ...user, image: userImage }));
 
       localStorage.setItem("user", JSON.stringify(user));
-      console.log("Updated Profile Data: ", response.data.data.profileData);
+      //console.log("Updated Profile Data: ", response.data.data.profileData);
     } catch (error) {
-      console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error);
+      //console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error);
       toast.error("Could Not Update Display Picture");
     }
   };
 }
 
 export function updateProfile(token, formData) {
-  console.log("Token is: ", token);
+  //console.log("Token is: ", token);
 
   return async (dispatch) => {
     try {
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
         Authorization: `Bearer ${token}`,
       });
-      console.log("UPDATE_PROFILE_API API RESPONSE............", response);
+      //console.log("UPDATE_PROFILE_API API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -72,7 +72,7 @@ export function updateProfile(token, formData) {
       );
       toast.success("Profile Updated Successfully");
     } catch (error) {
-      console.log("UPDATE_PROFILE_API API ERROR............", error);
+      //console.log("UPDATE_PROFILE_API API ERROR............", error);
       toast.error("Could Not Update Profile");
     }
   };
@@ -89,14 +89,14 @@ export async function changePassword(token, passwordData) {
         "Content-Type": "application/json",
       }
     );
-    console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
+    //console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
 
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
     toast.success("Password Changed Successfully");
   } catch (error) {
-    console.log("CHANGE_PASSWORD_API API ERROR............", error);
+    //console.log("CHANGE_PASSWORD_API API ERROR............", error);
     toast.error(error.response.data.message);
   }
 }
@@ -107,7 +107,7 @@ export function deleteProfile(token, navigate) {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
         Authorization: `Bearer ${token}`,
       });
-      console.log("DELETE_PROFILE_API API RESPONSE............", response);
+      //console.log("DELETE_PROFILE_API API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -117,7 +117,7 @@ export function deleteProfile(token, navigate) {
       );
       dispatch(logout(navigate));
     } catch (error) {
-      console.log("DELETE_PROFILE_API API ERROR............", error);
+      //console.log("DELETE_PROFILE_API API ERROR............", error);
       toast.error("Could Not Delete Profile");
     }
   };

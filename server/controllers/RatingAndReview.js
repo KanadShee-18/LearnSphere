@@ -263,12 +263,13 @@ exports.getAllRatings = async (req, res) => {
 exports.getAllRatingsForCourse = async (req, res) => {
   try {
     // Get course id:
-    const { courseId } = req.body;
+    const { courseId } = req.params;
 
     // validate
     const courseDetails = await Course.findById(courseId).populate({
       path: "ratingAndReviews",
       select: "user rating review",
+      populate: "user",
     });
     if (!courseDetails) {
       return res.status(404).json({

@@ -45,7 +45,17 @@ const SubSectionModal = ({
       setValue("lectureDesc", modalData.description);
       setValue("lectureVideo", modalData.videoUrl);
     }
-  }, []);
+    checkUrl({ videoUrl: modalData.videoUrl });
+  }, [view, edit, modalData, setValue]);
+
+  // Check modal data video url:
+  const checkUrl = (data) => {
+    if (data.videoUrl && data.videoUrl.includes("https://drive.google.com")) {
+      setUploadPdf(true);
+    } else {
+      setUploadPdf(false);
+    }
+  };
 
   // Check if form is updated or not
   const isFormUpdated = () => {
@@ -176,7 +186,7 @@ const SubSectionModal = ({
               id="lectureTitle"
               placeholder="Enter the Lecture Title"
               {...register("lectureTitle", { required: true })}
-              className="w-full px-4 py-3 text-sm rounded-lg outline-none bg-slate-600 bg-opacity-70 focus:border-blue-300 focus:border-[1px] text-slate-200"
+              className="w-full px-4 py-3 text-sm rounded-lg outline-none bg-slate-600 bg-opacity-70 focus:border-blue-300 placeholder:text-slate-400 focus:border-[1px] text-blue-25"
             />
             {errors.lectureTitle && (
               <span className="text-sm tracking-wide text-blue-100">
@@ -196,7 +206,7 @@ const SubSectionModal = ({
               id="lectureDesc"
               placeholder="Enter the Lecture Description"
               {...register("lectureDesc", { required: true })}
-              className="w-full min-h-[130px] px-4 py-3 text-sm rounded-lg outline-none bg-slate-600 bg-opacity-70 focus:border-blue-300 focus:border-[1px] text-slate-300"
+              className="w-full min-h-[130px] max-h-[150px] px-4 py-3 text-sm rounded-lg outline-none bg-slate-600 placeholder:text-slate-400 text-blue-25 bg-opacity-70 focus:border-blue-300 focus:border-[1px] "
             />
             {errors.lectureDesc && (
               <span className="text-sm tracking-wide text-blue-100">

@@ -14,6 +14,7 @@ const Catalog = () => {
   const { loading: profileLoading } = useSelector((state) => state.profile);
   const { catalogName } = useParams();
   const [active, setActive] = useState(1);
+  const [initialCourses, setInitialCourses] = useState([]);
   const [catalogPageData, setCatalogPageData] = useState(null);
   const [categoryId, setCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,9 @@ const Catalog = () => {
         const res = await getCatalogPageData(categoryId);
 
         setCatalogPageData(res);
+        if (!initialCourses.length) {
+          setInitialCourses(res?.data?.selectedCategory?.courses || []);
+        }
       } catch (error) {
         toast.error("Error occurred while fetching courses.");
       } finally {
@@ -48,6 +52,39 @@ const Catalog = () => {
       getCategoryDetails();
     }
   }, [categoryId]);
+
+  const handleActiveChange = (option) => {
+    if (option === 2) {
+      const sortedCourses = [
+        ...catalogPageData.data.selectedCategory.courses,
+      ].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+      setCatalogPageData((prevData) => ({
+        ...prevData,
+        data: {
+          ...prevData.data,
+          selectedCategory: {
+            ...prevData.data.selectedCategory,
+            courses: sortedCourses,
+          },
+        },
+      }));
+    } else if (option === 1) {
+      setCatalogPageData((prevData) => ({
+        ...prevData,
+        data: {
+          ...prevData.data,
+          selectedCategory: {
+            ...prevData.data.selectedCategory,
+            courses: initialCourses,
+          },
+        },
+      }));
+    }
+  };
 
   if (loading || profileLoading) {
     return (
@@ -63,16 +100,16 @@ const Catalog = () => {
         {/* Hero section or section: 0 */}
         <div className="box-content px-4 bg-richblack-800">
           <div className="mx-auto flex min-h-[215px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent">
-            <p className="text-sm text-richblack-300">
+            <p className="text-xs md:text-sm text-richblack-300">
               {`Home / Catalog / `}
               <span className="text-teal-400">
                 {catalogPageData?.data?.selectedCategory?.name}
               </span>
             </p>
-            <p className="text-3xl text-richblack-5">
+            <p className="text-2xl md:text-3xl text-richblack-5">
               {catalogPageData?.data?.selectedCategory?.name}
             </p>
-            <p className="max-w-[860px] text-richblack-200">
+            <p className="max-w-[860px] md:text-base text-sm text-richblack-200">
               {catalogPageData?.data?.selectedCategory?.description}
             </p>
           </div>
@@ -80,7 +117,7 @@ const Catalog = () => {
 
         {/* Section: 1 */}
         <div className="box-content w-full px-4 py-12 mx-auto max-w-maxContentTab lg:max-w-maxContent">
-          <div className="text-2xl font-bold text-slate-300 lg:text-4xl">
+          <div className="text-xl font-bold md:text-2xl text-slate-300 lg:text-4xl">
             Courses To Get You Started
           </div>
           <div className="flex my-4 text-sm border-b border-b-richblack-600">
@@ -90,7 +127,10 @@ const Catalog = () => {
                   ? "border-b border-b-teal-300 text-teal-400"
                   : "text-richblack-50"
               }`}
-              onClick={() => setActive(1)}
+              onClick={() => {
+                setActive(1);
+                handleActiveChange(1);
+              }}
             >
               Most Popular
             </p>
@@ -100,7 +140,10 @@ const Catalog = () => {
                   ? "border-b border-b-teal-300 text-teal-400"
                   : "text-richblack-50"
               }`}
-              onClick={() => setActive(2)}
+              onClick={() => {
+                setActive(2);
+                handleActiveChange(2);
+              }}
             >
               Latest
             </p>
@@ -114,7 +157,7 @@ const Catalog = () => {
 
         {/* Section: 2 */}
         <div className="box-content w-full px-4 py-12 mx-auto max-w-maxContentTab lg:max-w-maxContent">
-          <div className="text-2xl font-bold text-slate-300 lg:text-4xl">
+          <div className="text-xl font-bold md:text-2xl text-slate-300 lg:text-4xl">
             Top Courses in {catalogPageData?.data?.differentCategory?.name}
           </div>
           <div className="py-2">
@@ -127,7 +170,7 @@ const Catalog = () => {
 
         {/* Section: 3 */}
         <div className="box-content w-full px-4 py-12 mx-auto max-w-maxContentTab lg:max-w-maxContent">
-          <div className="text-2xl font-bold text-slate-300 lg:text-4xl">
+          <div className="text-xl font-bold md:text-2xl text-slate-300 lg:text-4xl">
             Frequently Bought
           </div>
           <div className="py-8">
@@ -135,7 +178,12 @@ const Catalog = () => {
               {catalogPageData?.data?.mostSellingCourses
                 ?.slice(0, 4)
                 .map((course, i) => (
-                  <CourseCard course={course} key={i} Height={"h-[270px]"} />
+                  <CourseCard
+                    course={course}
+                    Width={"w-10/12"}
+                    key={i}
+                    Height={"h-[270px]"}
+                  />
                 ))}
             </div>
           </div>

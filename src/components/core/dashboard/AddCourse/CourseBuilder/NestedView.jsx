@@ -25,7 +25,8 @@ const NestedView = ({ handleChangeEditSectionName }) => {
   const [addSubSection, setAddSubSection] = useState(null);
   const [viewSubSection, setViewSubSection] = useState(null);
   const [editSubSection, setEditSubSection] = useState(null);
-  const [expand, setExpand] = useState(true);
+
+  const [expand, setExpand] = useState({});
 
   const [confirmationModal, setConfirmationModal] = useState(null);
 
@@ -62,7 +63,10 @@ const NestedView = ({ handleChangeEditSectionName }) => {
     <>
       <div className="p-5 mt-9 bg-[#2e3f57] rounded-lg">
         {course?.courseContent?.map((section) => (
-          <details key={section._id} open={expand ? true : undefined}>
+          <details
+            key={section._id}
+            open={expand[section._id] ? true : undefined}
+          >
             <div className="justify-center w-full">
               {loading && <Spinner />}
             </div>
@@ -77,13 +81,26 @@ const NestedView = ({ handleChangeEditSectionName }) => {
 
               <div className="flex flex-row items-center gap-x-2">
                 <button
-                  onClick={() => setExpand(!expand)}
-                  className="text-3xl text-[#6ba8a3]"
+                  onClick={() =>
+                    setExpand((prev) => ({
+                      ...prev,
+                      [section._id]: !prev[section._id],
+                    }))
+                  }
+                  className="text-3xl relative group text-[#6ba8a3]"
                 >
-                  {expand ? <MdOutlineArrowLeft /> : <MdArrowDropDown />}
+                  <p className="absolute hidden p-1 text-xs rounded-md -top-5 text-slate-100 bg-slate-600 group-hover:block">
+                    {expand[section._id] ? "Expand" : "Collapse"}
+                  </p>
+                  {expand[section._id] ? (
+                    <MdOutlineArrowLeft />
+                  ) : (
+                    <MdArrowDropDown />
+                  )}
                 </button>
                 <FaGripLinesVertical className="text-[#6ba8a3]" />
                 <button
+                  className="relative group"
                   onClick={() => {
                     handleChangeEditSectionName(
                       section._id,
@@ -91,9 +108,13 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                     );
                   }}
                 >
+                  <p className="absolute hidden p-1 text-[10px] rounded-md -top-6 text-slate-100 bg-slate-600 text-nowrap group-hover:block">
+                    Edit Section Name
+                  </p>
                   <TbEdit className="text-xl text-[#6ba8a3]" />
                 </button>
                 <button
+                  className="relative group"
                   onClick={() =>
                     setConfirmationModal({
                       text1: "Delete this Section?",
@@ -106,6 +127,9 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                     })
                   }
                 >
+                  <p className="absolute hidden p-1 text-[11px] tracking-wide rounded-md -top-6 text-pink-200 bg-slate-900 text-nowrap group-hover:block">
+                    Delete Section
+                  </p>
                   <IoTrash className="text-lg text-[#6ba8a3] hover:text-[#ff087b]" />
                 </button>
               </div>

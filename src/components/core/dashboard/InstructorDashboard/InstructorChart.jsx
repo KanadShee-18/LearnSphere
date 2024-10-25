@@ -94,7 +94,7 @@ const InstructorChart = ({ courses }) => {
 
       <div className="min-h-[300px] flex-1 !text-slate-400">
         <Pie
-          className="p-2 shadow-md shadow-slate-900"
+          className="p-2 shadow-md transition-all duration-300 hover:scale-[.98] shadow-slate-900"
           data={
             currentChart === "Student"
               ? chartDataForStudents

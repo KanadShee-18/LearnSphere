@@ -16,7 +16,7 @@ const {
 
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
-    console.log("In send otp email comes as: ", email);
+    // console.log("In send otp email comes as: ", email);
 
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
@@ -25,9 +25,9 @@ export function sendOtp(email, navigate) {
         email,
         checkUserPresent: true,
       });
-      console.log("SENDOTP API RESPONSE............", response);
+      // console.log("SENDOTP API RESPONSE............", response);
 
-      console.log(response.data.success);
+      // console.log(response.data.success);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -36,7 +36,7 @@ export function sendOtp(email, navigate) {
       toast.success("OTP Sent Successfully");
       navigate("/verify-email");
     } catch (error) {
-      console.log("SENDOTP API ERROR............", error);
+      // console.log("SENDOTP API ERROR............", error);
       toast.error("Could Not Send OTP");
     }
     dispatch(setLoading(false));
@@ -68,7 +68,7 @@ export function signUp(
         otp,
       });
 
-      console.log("SIGNUP API RESPONSE............", response);
+      // console.log("SIGNUP API RESPONSE............", response);
 
       if (!response.data.success) {
         toast.error(response.data.message);
@@ -77,7 +77,7 @@ export function signUp(
       toast.success("Signup Successful");
       navigate("/login");
     } catch (error) {
-      console.log("SIGNUP API ERROR............", error);
+      // console.log("SIGNUP API ERROR............", error);
       toast.error("Signup Failed");
       navigate("/signup");
     }
@@ -95,7 +95,7 @@ export function login(email, password, navigate) {
         password,
       });
 
-      console.log("LOGIN API RESPONSE............", response);
+      // console.log("LOGIN API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -106,7 +106,7 @@ export function login(email, password, navigate) {
         ?.dataUser?.data;
       const user = await response?.data?.loggedUser?.dataUser?.data;
 
-      console.log("Auth User set as: ", user);
+      // console.log("Auth User set as: ", user);
 
       toast.success("Login Successful");
       dispatch(setToken(token));
@@ -120,10 +120,10 @@ export function login(email, password, navigate) {
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/dashboard/my-profile");
     } catch (error) {
-      console.log("LOGIN API ERROR............", error);
+      // console.log("LOGIN API ERROR............", error);
       const errorMessage = error.response?.data?.message || "Login failed";
-      console.log("Setting error message:", errorMessage);
-      console.log("Error message after setting:", errorMessage);
+      // console.log("Setting error message:", errorMessage);
+      // console.log("Error message after setting:", errorMessage);
       toast.error(errorMessage);
     }
     dispatch(setLoading(false));
@@ -131,7 +131,7 @@ export function login(email, password, navigate) {
 }
 
 export function logout(navigate) {
-  console.log("Logout action triggered!");
+  // console.log("Logout action triggered!");
 
   return (dispatch) => {
     dispatch(setToken(null));
@@ -145,7 +145,7 @@ export function logout(navigate) {
 }
 
 export function getPasswordResetToken(email, setEmailSent) {
-  console.log("Email comes as: ", email);
+  // console.log("Email comes as: ", email);
 
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -154,7 +154,7 @@ export function getPasswordResetToken(email, setEmailSent) {
         email,
       });
 
-      console.log("Reset password token response: ", response);
+      // console.log("Reset password token response: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -164,7 +164,7 @@ export function getPasswordResetToken(email, setEmailSent) {
 
       setEmailSent(true);
     } catch (error) {
-      console.log("RESET PASSWORD TOKEN ERROR");
+      // console.log("RESET PASSWORD TOKEN ERROR");
       toast.error("Failed to send email for resetting the password.");
     }
     dispatch(setLoading(false));
@@ -187,9 +187,9 @@ export function resetPassword(
         token,
       });
 
-      console.log("RESET PASSWORD RESPONSE: ", response);
+      // console.log("RESET PASSWORD RESPONSE: ", response);
 
-      console.log(response.data.message);
+      // console.log(response.data.message);
 
       if (!response.data.success) {
         setErrMessage(response.data.message);
@@ -200,7 +200,7 @@ export function resetPassword(
       toast.success("Password reset successfully.");
       navigate("/revert-back");
     } catch (error) {
-      console.log("RESET PASSWORD ERROR: ", error);
+      // console.log("RESET PASSWORD ERROR: ", error);
       toast.error("Failed to reset password.");
     }
     dispatch(setLoading(false));

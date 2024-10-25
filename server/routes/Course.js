@@ -90,7 +90,7 @@ router.post("/getCategoryPageDetails", categoryPageDetails);
 router.post("/createRating", auth, isStudent, createRating);
 router.get("/getAverageRating", getAverageRating);
 router.get("/getAllRatingsAndReviews", getAllRatings);
-router.get("/getCourseReviews", getAllRatingsForCourse);
+router.get("/getCourseReviews/:courseId", getAllRatingsForCourse);
 router.get("/getCourseReviews", getAllRatingsForCourse);
 router.post("/modifyRating", auth, isStudent, modifyRating);
 router.post("/destroyRating", auth, isStudent, deleteRating);

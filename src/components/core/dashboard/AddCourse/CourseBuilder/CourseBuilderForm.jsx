@@ -161,17 +161,17 @@ const CourseBuilderForm = () => {
         <div className="flex justify-end my-3 gap-x-3">
           <button
             onClick={goBack}
-            className="flex  bg-[#2b4861] rounded-md hover:bg-[#273d50] text-slate-200 text-sm items-center px-3 py-2 gap-x-1"
+            className="flex  bg-[#2b4861] group rounded-md hover:bg-[#273d50] text-slate-200 text-sm items-center px-3 gap-x-1 py-2"
           >
-            <IoIosArrowBack />
+            <IoIosArrowBack className="hidden group-hover:block" />
             Back
           </button>
           <button
             onClick={goNext}
-            className="flex font-medium bg-[#2d92a0] rounded-md hover:bg-[#2d4270] hover:text-slate-300 text-slate-900 text-sm items-center px-3 py-2 gap-x-1"
+            className="flex group font-medium bg-[#2d92a0] rounded-md hover:bg-[#2d4270] hover:text-slate-300 text-slate-900 text-sm items-center px-3 gap-x-1 py-2"
           >
             Next
-            <IoIosArrowForward />
+            <IoIosArrowForward className="hidden group-hover:block" />
           </button>
         </div>
       </div>

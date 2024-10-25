@@ -80,8 +80,6 @@ exports.categoryPageDetails = async (req, res) => {
       })
       .exec();
 
-    // console.log("Selected Category comes as: ", selectedCategory);
-
     if (!selectedCategory) {
       // console.log("Category not found!");
 

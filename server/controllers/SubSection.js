@@ -7,6 +7,7 @@ const {
   destroyVideoFromCloudinary,
   uploadPdfToDrive,
   generatePublicUrlForPdf,
+  deletePdfFileFromDrive,
 } = require("../utils/imageUploader");
 
 // Create SubSection:
@@ -42,6 +43,7 @@ exports.createSubSection = async (req, res) => {
     let uploadDetails;
     let fileUrl; // Change from videoUrl to fileUrl for clarity
     let timeDuration = "N/A"; // Default value for PDFs
+    let pdfFileId;
 
     // Upload video or PDF based on file type
     if (fileType === "mp4") {
@@ -62,6 +64,7 @@ exports.createSubSection = async (req, res) => {
         process.env.GOOGLE_DRIVE_FOLDER,
         authClient
       );
+      pdfFileId = uploadResponse.fileId;
       console.log("Uploaded PDF details: ", uploadResponse);
 
       const pdfViewLinks = await generatePublicUrlForPdf(
@@ -85,7 +88,7 @@ exports.createSubSection = async (req, res) => {
       timeDuration: timeDuration, // Use video duration if applicable, "N/A" for PDFs
       description: description,
       videoUrl: fileUrl, // Save either video or PDF URL
-      publicId: uploadDetails?.public_id || null, // Only for video uploads, null for PDFs
+      publicId: uploadDetails?.public_id || pdfFileId, // Only for video uploads, null for PDFs
     });
 
     // Update section with the new sub-section
@@ -94,6 +97,8 @@ exports.createSubSection = async (req, res) => {
       { $push: { subSection: newSubSection._id } },
       { new: true }
     ).populate("subSection");
+
+    console.log("Updated Section is: ", updatedSection);
 
     // Return the updated section in the response
     return res.status(200).json({
@@ -126,11 +131,22 @@ exports.updateSubSection = async (req, res) => {
     }
 
     // If the sub-section has a previous video, delete it from Cloudinary (for MP4 files)
-    const publicId = checkSubSection.publicId;
-    if (publicId) {
-      await destroyVideoFromCloudinary(publicId);
+    if (checkSubSection.timeDuration === "N/A") {
+      if (checkSubSection.publicId) {
+        const drivePdfId = checkSubSection.publicId;
+        const authClient = getAuthClient();
+        const deletedPDF = await deletePdfFileFromDrive(authClient, drivePdfId);
+        console.log("Deleted PDF: ", deletedPDF);
+      }
+    } else {
+      if (checkSubSection.publicId) {
+        const publicId = checkSubSection.publicId;
+        if (publicId) {
+          const deletedVideo = await destroyVideoFromCloudinary(publicId);
+          console.log("Deleted Video from cloudinary: ", deletedVideo);
+        }
+      }
     }
-
     // Validate and update fields
     if (title !== undefined) {
       checkSubSection.title = title;
@@ -229,6 +245,32 @@ exports.deleteSubSection = async (req, res) => {
         },
       }
     );
+
+    const checkSubSection = await SubSection.findById(subSectionId);
+    if (!checkSubSection) {
+      return res.status(400).json({
+        success: false,
+        message: "No sub-section is available with this id.",
+      });
+    }
+
+    if (checkSubSection.timeDuration === "N/A") {
+      if (checkSubSection.publicId) {
+        const drivePdfId = checkSubSection.publicId;
+        const authClient = getAuthClient();
+        const deletedPDF = await deletePdfFileFromDrive(authClient, drivePdfId);
+        console.log("Deleted PDF: ", deletedPDF);
+      }
+    } else {
+      if (checkSubSection.publicId) {
+        const publicId = checkSubSection.publicId;
+        if (publicId) {
+          const deletedVideo = await destroyVideoFromCloudinary(publicId);
+          console.log("Deleted Video from cloudinary: ", deletedVideo);
+        }
+      }
+    }
+
     const subSection = await SubSection.findByIdAndDelete({
       _id: subSectionId,
     });

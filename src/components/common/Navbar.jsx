@@ -48,9 +48,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`flex fixed top-0 z-50 h-14 w-full px-4 sm:px-9 lg:px-32 mx-auto items-center justify-between border-b-[1px] border-slate-700 shadow-sm shadow-slate-900 bg-[#10101b] ${
-        pathname === "/" && "bg-opacity-80 backdrop-blur-sm"
-      }`}
+      className={`flex fixed top-0 z-[100] h-14 w-full px-4 sm:px-9 lg:px-32 mx-auto items-center justify-between border-b-[1px] border-slate-700 shadow-sm shadow-slate-900 bg-[#10101b]  bg-opacity-80 backdrop-blur-sm`}
     >
       {/* Logo Image */}
       <Link to={"/"}>

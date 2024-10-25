@@ -96,7 +96,7 @@ const Upload = ({
         className={`${
           isDragActive ? "bg-richblack-600" : "bg-slate-800"
         } flex min-h-[250px] cursor-pointer items-center rounded-md border-2 border-dotted border-slate-600`}
-        {...getRootProps()} // Spread root props for dropzone
+        {...getRootProps()}
       >
         <input {...getInputProps()} ref={inputRef} />
         {previewSource ? (
@@ -113,7 +113,7 @@ const Upload = ({
               <iframe
                 src={previewSource}
                 title="PDF Preview"
-                className="w-full h-full rounded-md aspect-square"
+                className="w-full h-full rounded-md aspect-[3/4]"
               />
             ) : null}
             {!viewData && (
@@ -135,15 +135,21 @@ const Upload = ({
             <div className="grid rounded-full aspect-square w-14 place-items-center bg-pure-greys-800">
               <FiUploadCloud className="text-2xl text-cyan-600" />
             </div>
-            <p className="text-sm mt-2 max-w-[200px] text-center text-richblack-200">
+            <p className="text-sm mt-2 max-w-[200px] text-center text-[#8a97d8]">
               Drag and drop{" "}
               {!video && !pdf ? "an image" : video ? "a video" : "a pdf"}, or
               click to{" "}
               <span className="font-semibold text-cyan-500">Browse</span> a file
             </p>
-            <ul className="flex justify-between mt-10 space-x-12 text-xs text-center list-disc text-slate-400">
-              {video && <li>Aspect ratio: 16:9</li>}
-              <li>{video ? "Recommended size 1024x576" : "PDF or Image"}</li>
+            <ul className="flex flex-col justify-between mt-10 space-x-0 space-y-2 text-xs text-center list-disc md:space-x-12 md:flex-row md:space-y-0 text-slate-400">
+              {video && (
+                <li className="list-none tracking-wide text-[#8a97d8]">
+                  Aspect ratio: 16:9
+                </li>
+              )}
+              <li className="list-none tracking-wide text-[#8a97d8]">
+                {video ? "Recommended size 1024x576" : "UPLOAD PDF"}
+              </li>
             </ul>
           </div>
         )}
