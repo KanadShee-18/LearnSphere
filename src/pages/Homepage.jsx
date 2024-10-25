@@ -2,16 +2,16 @@ import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import TimeLineSection from "../components/core/Homepage/TimeLineSection";
-import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
-import InstructorSection from "../components/core/Homepage/InstructorSection";
-import Footer from "../components/common/Footer";
-import ExploreMore from "../components/core/Homepage/ExploreMore";
-import CTAButton from "../components/core/Homepage/CTAButton";
-import BannerVideo from "../components/core/Homepage/BannerVideo";
-import ReviewSlider from "../components/common/ReviewSlider";
-import HighlightText from "../components/core/Homepage/HighlightText";
-import CodeBlock from "../components/core/Homepage/CodeBlock";
+import TimeLineSection from "../components/core/Homepage/TimeLineSection.jsx";
+import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection.jsx";
+import InstructorSection from "../components/core/Homepage/InstructorSection.jsx";
+import Footer from "../components/common/Footer.jsx";
+import ExploreMore from "../components/core/Homepage/ExploreMore.jsx";
+import CTAButton from "../components/core/Homepage/CTAButton.jsx";
+import BannerVideo from "../components/core/Homepage/BannerVideo.jsx";
+import ReviewSlider from "../components/common/ReviewSlider.jsx";
+import HighlightText from "../components/core/Homepage/HighlightText.jsx";
+import CodeBlock from "../components/core/Homepage/CodeBlock.jsx";
 
 const Homepage = () => {
   const navigate = useNavigate();
