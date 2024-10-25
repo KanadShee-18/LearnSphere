@@ -34,7 +34,7 @@ const Navbar = () => {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
       setSubLinks(result?.data?.categoryDetails?.categories);
     } catch (error) {
-      toast.error("Error occurred fetching categories.");
+      // toast.error("Error occurred fetching categories.");
     }
   };
 
