@@ -3,7 +3,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 // import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection.jsx";
-import InstructorSection from "../components/core/Homepage/InstructorSection.jsx";
+// import InstructorSection from "../components/core/Homepage/InstructorSection.jsx";
 import Footer from "../components/common/Footer.jsx";
 import ExploreMore from "../components/core/Homepage/ExploreMore.jsx";
 import CTAButton from "../components/core/Homepage/CTAButton.jsx";
@@ -18,6 +18,9 @@ const TimeLineSection = lazy(() =>
 );
 const LearningLanguageSection = lazy(() =>
   import("../components/core/Homepage/LearningLanguageSection.jsx")
+);
+const InstructorSection = lazy(() =>
+  import("../components/core/Homepage/InstructorSection.jsx")
 );
 const ReviewSlider = lazy(() =>
   import("../components/common/ReviewSlider.jsx")
@@ -193,7 +196,10 @@ const Homepage = () => {
 
       <div className="section3 bAT">
         <div className="flex flex-col items-center justify-center w-11/12 h-full gap-5 mx-auto max-w-maxContent">
-          <InstructorSection />
+          {/* <InstructorSection /> */}
+          <Suspense fallback={<div>Loading timeline...</div>}>
+            <InstructorSection />
+          </Suspense>
           {/* Reviews slider */}
           <div className="mb-6 bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text md:text-4xl text-center text-3xl font-semibold text-slate-400 font-inter">
             Reviews from other Learners
