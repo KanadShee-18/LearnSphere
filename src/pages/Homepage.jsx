@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection.jsx";
+// import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection.jsx";
 import InstructorSection from "../components/core/Homepage/InstructorSection.jsx";
 import Footer from "../components/common/Footer.jsx";
 import ExploreMore from "../components/core/Homepage/ExploreMore.jsx";
@@ -15,6 +15,9 @@ import CodeBlock from "../components/core/Homepage/CodeBlock.jsx";
 
 const TimeLineSection = lazy(() =>
   import("../components/core/Homepage/TimeLineSection.jsx")
+);
+const LearningLanguageSection = lazy(() =>
+  import("../components/core/Homepage/LearningLanguageSection.jsx")
 );
 const ReviewSlider = lazy(() =>
   import("../components/common/ReviewSlider.jsx")
@@ -181,7 +184,9 @@ const Homepage = () => {
           <Suspense fallback={<div>Loading timeline...</div>}>
             <TimeLineSection />
           </Suspense>
-          <LearningLanguageSection />
+          <Suspense fallback={<div>Loading timeline...</div>}>
+            <LearningLanguageSection />
+          </Suspense>
         </div>
       </div>
       {/* Section: 3 */}
