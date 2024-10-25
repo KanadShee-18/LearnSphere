@@ -7,7 +7,7 @@ import ContactFormSection from "../components/core/AboutPage/ContactFormSection"
 import LearningGrid from "../components/core/AboutPage/LearningGrid";
 import Quote from "../components/core/AboutPage/Quote";
 import StatsComponenet from "../components/core/AboutPage/Stats";
-import HighlightText from "../components/core/Homepage/HighlightText";
+import HighlightText from "../components/core/homeaccessories/HighlightText";
 import Footer from "../components/common/Footer";
 import Vision from "../components/core/AboutPage/Vision";
 
