@@ -1,17 +1,24 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import TimeLineSection from "../components/core/Homepage/TimeLineSection.jsx";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection.jsx";
 import InstructorSection from "../components/core/Homepage/InstructorSection.jsx";
 import Footer from "../components/common/Footer.jsx";
 import ExploreMore from "../components/core/Homepage/ExploreMore.jsx";
 import CTAButton from "../components/core/Homepage/CTAButton.jsx";
 import BannerVideo from "../components/core/Homepage/BannerVideo.jsx";
-import ReviewSlider from "../components/common/ReviewSlider.jsx";
+// import ReviewSlider from "../components/common/ReviewSlider.jsx";
 import HighlightText from "../components/core/Homepage/HighlightText.jsx";
 import CodeBlock from "../components/core/Homepage/CodeBlock.jsx";
+// import TimeLineSection from "../components/core/Homepage/TimeLineSection.jsx"
+
+const TimeLineSection = lazy(() =>
+  import("../components/core/Homepage/TimeLineSection.jsx")
+);
+const ReviewSlider = lazy(() =>
+  import("../components/common/ReviewSlider.jsx")
+);
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -171,7 +178,9 @@ const Homepage = () => {
               </div>
             </div>
           </div>
-          <TimeLineSection />
+          <Suspense fallback={<div>Loading timeline...</div>}>
+            <TimeLineSection />
+          </Suspense>
           <LearningLanguageSection />
         </div>
       </div>
@@ -185,7 +194,9 @@ const Homepage = () => {
             Reviews from other Learners
           </div>
           <>
-            <ReviewSlider />
+            <Suspense fallback={<div>Loading reviews...</div>}>
+              <ReviewSlider />
+            </Suspense>
           </>
         </div>
       </div>
