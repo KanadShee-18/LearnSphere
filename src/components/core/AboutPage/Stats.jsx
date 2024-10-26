@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const Stats = [
   { count: "5K", label: "Active Students" },
@@ -9,9 +10,19 @@ const Stats = [
 
 const StatsComponenet = () => {
   return (
-    <div className="my-24 bg-gradient-to-r from-[#19202c] via-[#202d42] to-[#131c2c]">
+    <motion.div
+      initial={{ x: "-100%", opacity: 0 }}
+      whileInView={{ x: "0%", opacity: 1 }}
+      transition={{ duration: 1, ease: "easeIn" }}
+      className="my-24 bg-gradient-to-r from-[#19202c] via-[#202d42] to-[#131c2c]"
+    >
       {/* Stats */}
-      <div className="flex flex-col justify-between w-11/12 gap-10 mx-auto text-white max-w-maxContent ">
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        whileInView={{ x: "0%", opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeIn", delay: 0.5 }}
+        className="flex flex-col justify-between w-11/12 gap-10 mx-auto text-white max-w-maxContent "
+      >
         <div className="grid grid-cols-2 text-center md:grid-cols-4">
           {Stats.map((data, index) => {
             return (
@@ -26,8 +37,8 @@ const StatsComponenet = () => {
             );
           })}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

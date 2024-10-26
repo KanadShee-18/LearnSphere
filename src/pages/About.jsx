@@ -20,7 +20,9 @@ const About = () => {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.6], [1, 0.8]);
+  const scale = useTransform(scrollYProgress, [0, 0.6, 0.8], [1, 0.6, 0.3]);
+  const translateX = useTransform(scrollYProgress, [0, 0.7], ["0%", "50%"]);
+  const translateY = useTransform(scrollYProgress, [0, 0.7], ["0%", "-100%"]);
 
   return (
     <div className="mt-0 text-white md:mt-14 selection:bg-cyan-800">
@@ -30,10 +32,10 @@ const About = () => {
         ref={targetRef}
         className="relative h-screen"
       >
-        <section className=" pt-32 pb-48 bg-[#161d29] flex items-center justify-center">
+        <section className=" py-48 bg-[#161d29] flex items-center justify-center">
           <motion.div
-            style={{ scale }}
-            className="fixed flex flex-col items-center justify-center gap-y-3 max-w-maxContent"
+            style={{ scale, translateX, translateY }}
+            className="fixed flex flex-col items-center justify-center mt-10 md:mt-0 gap-y-3 max-w-maxContent"
           >
             <header className="flex flex-col items-center justify-center text-2xl md:text-4xl text-slate-200">
               <h1 className="font-semibold text-center">
@@ -47,35 +49,31 @@ const About = () => {
                 and nurturing a vibrant learning community.
               </p>
             </header>
-            <div className="absolute md:top-[140%] top-[150%] flex mx-auto gap-x-5">
-              <img
-                src={BannerImage1}
-                alt="Banner1"
-                className="w-[100px] aspect-square md:aspect-auto sm:w-[200px] lg:w-[384px]"
-              />
-              <img
-                src={BannerImage2}
-                alt="Banner2"
-                className="w-[100px] aspect-square md:aspect-auto sm:w-[200px] lg:w-[384px]"
-              />
-              <img
-                src={BannerImage3}
-                alt="Banner3"
-                className="w-[100px] aspect-square md:aspect-auto sm:w-[200px] lg:w-[384px]"
-              />
+            <div className="absolute md:top-[140%] gap-y-10 top-[150%] flex flex-col mx-auto">
+              <div className="flex flex-row mx-auto gap-x-5">
+                <img
+                  src={BannerImage1}
+                  alt="Banner1"
+                  className="w-[100px] aspect-square md:aspect-auto sm:w-[200px] lg:w-[384px]"
+                />
+                <img
+                  src={BannerImage2}
+                  alt="Banner2"
+                  className="w-[100px] aspect-square md:aspect-auto sm:w-[200px] lg:w-[384px]"
+                />
+                <img
+                  src={BannerImage3}
+                  alt="Banner3"
+                  className="w-[100px] aspect-square md:aspect-auto sm:w-[200px] lg:w-[384px]"
+                />
+              </div>
+              <Quote />
             </div>
           </motion.div>
         </section>
-
-        {/* Section: 2 */}
-        <motion.section
-          style={{ scale }}
-          className="mt-[22%] lg:mt-[16%] w-full mx-auto fixed flex items-center justify-center "
-        >
-          <Quote />
-        </motion.section>
       </motion.div>
-      {/* Section: 3 */}
+
+      {/* Section: 2/3 */}
 
       <Vision />
       {/* Section: 4 */}

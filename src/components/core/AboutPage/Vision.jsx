@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useRef } from "react";
 import RedHighlight from "../AboutPage/ResHighlight";
 import FoundingStory from "../../../assets/Images/FoundingStory.png";
 import orbital from "../../../assets/Images/orbital.png";
+import { useScroll, useTransform, motion } from "framer-motion";
 
 const Vision = () => {
+  const targetRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end end"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8], [0, 0.7, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.2, 0.5, 1]);
+
   return (
-    <section className="relative mt-24">
+    <motion.section
+      style={{ opacity, scale }}
+      ref={targetRef}
+      className="relative mt-24"
+    >
       <img src={orbital} alt="orbital" className="absolute orbital" />
       <div className="relative flex flex-col items-center justify-between mx-auto max-w-maxContent md:flex-row md:gap-x-3">
         <div className="flex flex-col w-full md:w-[45%] px-3 md:px-8">
@@ -71,7 +86,7 @@ const Vision = () => {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
