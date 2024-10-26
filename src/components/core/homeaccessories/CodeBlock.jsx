@@ -19,7 +19,7 @@ const CodeBlock = ({
   return (
     <div className={`flex ${position} sm:my-20 my-10 justify-between gap-10`}>
       {/* Section: 1 */}
-      <div className="flex flex-col justify-between w-full gap-8 md:w-1/2 text-start">
+      <div className="flex flex-col justify-between w-full gap-8 text-center md:w-1/2 md:text-start">
         {heading}
         <div className="text-sm font-semibold text-center md:text-start md:text-base text-richblack-200 font-inter">
           {subHeading}
@@ -56,6 +56,8 @@ const CodeBlock = ({
           <p>9</p>
           <p>10</p>
           <p>11</p>
+          <p className="block md:hidden">12</p>
+          <p className="block md:hidden">13</p>
         </div>
         <div
           className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} px-2`}
