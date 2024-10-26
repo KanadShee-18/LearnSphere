@@ -32,10 +32,15 @@ const About = () => {
   return (
     <div className="mt-0 text-white md:mt-14 scroll-smooth selection:bg-cyan-800">
       {/* Section 1 */}
-      <motion.div ref={targetRef} className="relative h-screen">
+      <motion.div
+        ref={targetRef}
+        transition={{ type: "spring", stiffness: 60, damping: 25 }}
+        className="relative h-screen"
+      >
         <section className=" bg-[#161d29] h-[40vh] flex items-center justify-center">
           <motion.div
             style={{ opacity, scale }}
+            transition={{ type: "spring", stiffness: 60, damping: 25 }}
             className="fixed flex flex-col items-center justify-center gap-y-3 max-w-maxContent"
           >
             <header className="flex flex-col items-center justify-center mx-5 text-xl mt-14 md:mt-0 md:text-4xl text-slate-200">

@@ -13,7 +13,13 @@ const StatsComponenet = () => {
     <motion.div
       initial={{ x: "-100%", opacity: 0 }}
       whileInView={{ x: "0%", opacity: 1 }}
-      transition={{ duration: 1, ease: "easeIn" }}
+      transition={{
+        duration: 1,
+        ease: "easeIn",
+        type: "spring",
+        stiffness: 60,
+        damping: 25,
+      }}
       className="my-24 bg-gradient-to-r from-[#19202c] via-[#202d42] to-[#131c2c]"
     >
       {/* Stats */}

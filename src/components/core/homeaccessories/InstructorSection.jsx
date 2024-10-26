@@ -16,7 +16,12 @@ const InstructorSection = () => {
       <motion.div
         initial={{ x: "100%", opacity: 0 }}
         whileInView={{ x: "0%", opacity: 1 }}
-        transition={{ duration: 0.7 }}
+        transition={{
+          duration: 0.7,
+          type: "spring",
+          stiffness: 60,
+          damping: 25,
+        }}
         className="relative sm:w-2/5 w-[3/5] my-10 h-full sm:items-start items-center sm:my-auto flex flex-col sm:justify-center justify-start text-start"
       >
         <p className="text-4xl text-white font-inter">

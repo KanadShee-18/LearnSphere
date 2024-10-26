@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useRef } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, spring, useScroll, useTransform } from "framer-motion";
 import Spinner from "../components/common/Spinner.jsx";
 
 // Lazy load components
@@ -92,7 +92,7 @@ const Home = () => {
   });
 
   return (
-    <div className="">
+    <div className="scroll-smooth">
       <div className="fixed inset-0 z-0">
         <Suspense
           fallback={
@@ -109,6 +109,11 @@ const Home = () => {
         <motion.div
           ref={targetRef1}
           style={{ scale, opacity }}
+          transition={{
+            type: "spring",
+            stiffness: 60,
+            damping: 25,
+          }}
           className="sticky top-0 z-30 flex flex-col items-center justify-center w-full h-screen max-w-full mx-auto mt-16"
         >
           <motion.div
@@ -124,7 +129,13 @@ const Home = () => {
             <motion.div
               initial={{ opacity: 0, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, delay: 1.2 }}
+              transition={{
+                duration: 1.5,
+                delay: 1.2,
+                type: "spring",
+                stiffness: 60,
+                damping: 25,
+              }}
               className="mx-auto mt-14 font-semibold transition-all duration-200 bg-opacity-60 rounded-full shadow-sm group bg-[#223253] font-playwrite text-slate-300 shadow-slate-500 hover:scale-95"
             >
               <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
@@ -139,7 +150,13 @@ const Home = () => {
           <motion.div
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2 }}
+            transition={{
+              duration: 1,
+              delay: 1.2,
+              type: "spring",
+              stiffness: 60,
+              damping: 25,
+            }}
             className="mt-10 text-sm font-medium tracking-wide text-center md:text-base text-blue-25 font-inter"
           >
             Study at your own speed, from anywhere in the world, with our online
@@ -150,7 +167,13 @@ const Home = () => {
           <motion.div
             initial={{ x: 200, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1.3, delay: 1.5 }}
+            transition={{
+              duration: 1.3,
+              delay: 1.5,
+              type: "spring",
+              stiffness: 60,
+              damping: 25,
+            }}
             className="flex flex-row mt-16 lg:text-3xl md:text-2xl text-xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text"
           >
             <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
@@ -158,7 +181,13 @@ const Home = () => {
           <motion.div
             initial={{ x: 400, y: 300, opacity: 0 }}
             animate={{ x: 0, y: 0, opacity: 1 }}
-            transition={{ duration: 1.5, delay: 2.0 }}
+            transition={{
+              duration: 1.5,
+              delay: 2.0,
+              type: "spring",
+              stiffness: 60,
+              damping: 25,
+            }}
             className="flex flex-row mt-8 gap-7 font-poppins"
           >
             <Suspense fallback={<div>Loading...</div>}>
@@ -177,8 +206,8 @@ const Home = () => {
           </motion.div>
         </motion.div>
         <motion.div
-          ref={targetRef2}
-          style={{ scale: scaleTransition, x: translateX, y: translateY }}
+          // ref={targetRef2}
+          // style={{ scale: scaleTransition, x: translateX, y: translateY }}
           className="flex flex-col w-full h-fit mb-36 md:mb-0"
         >
           <div>
@@ -277,7 +306,12 @@ const Home = () => {
             <motion.div
               initial={{ x: -200, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+              transition={{
+                duration: 0.7,
+                type: "spring",
+                stiffness: 60,
+                damping: 25,
+              }}
               className="text-2xl text-center md:text-4xl md:text-start font-poppins s3ht"
             >
               <p className="font-semibold">
@@ -288,7 +322,12 @@ const Home = () => {
             <motion.div
               initial={{ x: 200, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+              transition={{
+                duration: 0.7,
+                type: "spring",
+                stiffness: 60,
+                damping: 25,
+              }}
               className="flex flex-col items-start gap-5 font-medium font-inter"
             >
               <p className="text-sm text-center md:text-start">
