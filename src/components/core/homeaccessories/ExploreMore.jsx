@@ -29,7 +29,7 @@ const ExploreMore = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center mt-16 md:mt-10">
       <div className="text-2xl font-semibold text-center md:text-4xl font-inter">
         Unlock the <HighlightText text={"Power of Code"} />
       </div>

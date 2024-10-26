@@ -51,20 +51,45 @@ const container = (delay) => ({
 
 const Home = () => {
   const navigate = useNavigate();
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
+  const targetRef1 = useRef(null);
+  const targetRef2 = useRef(null);
+
+  // Set up separate scroll hooks with different offsets
+  const { scrollYProgress: scrollYProgress1 } = useScroll({
+    target: targetRef1,
     offset: ["end end", "end start"],
   });
+  const { scrollYProgress: scrollYProgress2 } = useScroll({
+    target: targetRef2,
+    offset: ["start end", "end start"],
+  });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 0.6, 0.1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 0.5, 0.3]);
-  const scaleLearning = useTransform(
-    scrollYProgress,
-    [0, 0.5, 0.8],
-    [0.3, 0.9, 1]
-  );
-  const translateX = useTransform(scrollYProgress, [0, 0.5], ["100%", "0%"]);
+  const opacity = useTransform(scrollYProgress1, [0, 0.5, 0.8], [1, 0.6, 0.1], {
+    type: "spring",
+    stiffness: 50,
+    damping: 20,
+  });
+  const scale = useTransform(scrollYProgress1, [0, 0.5, 0.8], [1, 0.5, 0.3], {
+    type: "spring",
+    stiffness: 50,
+    damping: 20,
+  });
+
+  const scaleTransition = useTransform(scrollYProgress2, [0, 0.2], [0.3, 1], {
+    type: "spring",
+    stiffness: 50,
+    damping: 20,
+  });
+  const translateX = useTransform(scrollYProgress2, [0, 0.3], ["70%", "0%"], {
+    type: "spring",
+    stiffness: 50,
+    damping: 20,
+  });
+  const translateY = useTransform(scrollYProgress2, [0, 0.2], ["10%", "0%"], {
+    type: "spring",
+    stiffness: 50,
+    damping: 20,
+  });
 
   return (
     <div className="">
@@ -80,9 +105,9 @@ const Home = () => {
         </Suspense>
       </div>
 
-      <div className="relative top-0 z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
+      <div className="relative z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white scroll-smooth section1 max-w-maxContent">
         <motion.div
-          ref={targetRef}
+          ref={targetRef1}
           style={{ scale, opacity }}
           className="sticky top-0 z-30 flex flex-col items-center justify-center w-full h-screen max-w-full mx-auto mt-16"
         >
@@ -151,10 +176,10 @@ const Home = () => {
             </Suspense>
           </motion.div>
         </motion.div>
-
         <motion.div
-          style={{ x: translateX, scale: scaleLearning }}
-          className="h-screen"
+          ref={targetRef2}
+          style={{ scale: scaleTransition, x: translateX, y: translateY }}
+          className="flex flex-col w-full h-fit mb-36 md:mb-0"
         >
           <div>
             <Suspense
