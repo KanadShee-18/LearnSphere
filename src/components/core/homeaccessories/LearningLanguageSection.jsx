@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HighlightText from "./HighlightText";
 import kyp_img from "../../../assets/Images/Know_your_progress.png";
 import cwo_img from "../../../assets/Images/Compare_with_others.png";
 import pyl_img from "../../../assets/Images/Plan_your_lessons.png";
 import CTAButton from "./CTAButton";
+import { motion } from "framer-motion";
 
 const LearningLanguageSection = () => {
+  const [animate, setAnimate] = useState(false);
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
   return (
     <div className="mt-14">
       <div className="flex flex-col gap-5">
@@ -19,17 +24,59 @@ const LearningLanguageSection = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center mt-5 md:flex-row">
-          <img
+          <motion.img
+            animate={
+              animate
+                ? {
+                    scale: [1, 0.5, 0.5, 1, 1],
+                    rotate: [0, 0, 180, 180, 0],
+                    borderRadius: ["0%", "0%", "0%", "0%", "0%"],
+                  }
+                : {}
+            }
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+            }}
             className="object-contain md:-mr-36 w-[250px] sm:w-[300px] md:w-[350px] lg:w-[400px]  cursor-pointer"
             src={kyp_img}
             alt="kyp_img"
           />
-          <img
+          <motion.img
+            animate={
+              animate
+                ? {
+                    scale: [1, 0.5, 0.5, 1, 1],
+                    rotate: [0, 0, 180, 180, 0],
+                    borderRadius: ["0%", "0%", "0%", "0%", "0%"],
+                  }
+                : {}
+            }
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+            }}
             className="object-contain w-[280px] -mt-24 md:mt-0 sm:w-[330px] md:w-[380px] lg:w-[440px] cursor-pointer "
             src={cwo_img}
             alt="cwo_img"
           />
-          <img
+          <motion.img
+            animate={
+              animate
+                ? {
+                    scale: [1, 0.5, 0.5, 1, 1],
+                    rotate: [0, 0, 180, 180, 0],
+                    borderRadius: ["0%", "0%", "0%", "0%", "0%"],
+                  }
+                : {}
+            }
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+            }}
             className="object-contain -mt-28 md:mt-0 md:-ml-40 w-[300px] sm:w-[350px] md:w-[400px] lg:w-[450px] cursor-pointer "
             src={pyl_img}
             alt="pyl_img"

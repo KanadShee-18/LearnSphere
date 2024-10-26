@@ -3,6 +3,7 @@ import HighlightText from "./HighlightText";
 import CTAButton from "./CTAButton";
 import { FaArrowRight } from "react-icons/fa6";
 import ins_img from "../../../assets/Images/Instructor.jpg";
+import { motion } from "framer-motion";
 
 const InstructorSection = () => {
   return (
@@ -12,7 +13,12 @@ const InstructorSection = () => {
         alt="instructor"
         className="sm:w-1/2 w-4/5 lg:w-[500px] relative instructorImg"
       />
-      <div className="relative sm:w-2/5 w-[3/5] my-10 h-full sm:items-start items-center sm:my-auto flex flex-col sm:justify-center justify-start text-start">
+      <motion.div
+        initial={{ x: "100%", opacity: 0 }}
+        whileInView={{ x: "0%", opacity: 1 }}
+        transition={{ duration: 0.7 }}
+        className="relative sm:w-2/5 w-[3/5] my-10 h-full sm:items-start items-center sm:my-auto flex flex-col sm:justify-center justify-start text-start"
+      >
         <p className="text-4xl text-white font-inter">
           Become an <br />
           <HighlightText text={" Instructor"} />
@@ -27,7 +33,7 @@ const InstructorSection = () => {
             <FaArrowRight />
           </div>
         </CTAButton>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -127,19 +127,19 @@ const About = () => {
             style={{ opacity, scale }}
             className="fixed flex flex-col items-center justify-center gap-y-3 max-w-maxContent"
           >
-            <header className="flex flex-col items-center justify-center text-2xl md:text-4xl text-slate-200">
+            <header className="flex flex-col items-center justify-center mx-5 text-xl mt-14 md:mt-0 md:text-4xl text-slate-200">
               <h1 className="font-semibold text-center">
                 Driving Innovation in Online Education for a
               </h1>{" "}
               <HighlightText text={"Brighter Future"} />
-              <p className="mt-3 text-sm text-slate-400 font-medium max-w-[80%] text-center">
+              <p className="mt-3 text-xs text-slate-400 font-medium max-w-[80%] text-center">
                 LearnSphere is at the forefront of driving innovation in online
                 education. We're passionate about creating a brighter future by
                 offering cutting-edge courses, leveraging emerging technologies,
                 and nurturing a vibrant learning community.
               </p>
             </header>
-            <div className="absolute md:top-[140%] gap-y-10 top-[150%] flex flex-col mx-auto">
+            <div className="absolute md:top-[140%] gap-y-10 top-[108%] flex flex-col mx-auto">
               <div className="flex flex-row mx-auto gap-x-5">
                 <img
                   src={BannerImage1}

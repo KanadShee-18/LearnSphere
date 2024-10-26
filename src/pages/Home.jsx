@@ -1,7 +1,7 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useRef } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Spinner from "../components/common/Spinner.jsx";
 
 // Lazy load components
@@ -51,9 +51,24 @@ const container = (delay) => ({
 
 const Home = () => {
   const navigate = useNavigate();
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["end end", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 0.6, 0.1]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 0.5, 0.3]);
+  const scaleLearning = useTransform(
+    scrollYProgress,
+    [0, 0.5, 0.8],
+    [0.3, 0.9, 1]
+  );
+  const translateX = useTransform(scrollYProgress, [0, 0.5], ["100%", "0%"]);
+
   return (
     <div className="">
-      <div className="absolute inset-0 z-0">
+      <div className="fixed inset-0 z-0">
         <Suspense
           fallback={
             <div className="grid w-full h-full place-items-center">
@@ -65,8 +80,12 @@ const Home = () => {
         </Suspense>
       </div>
 
-      <div className="relative z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
-        <div className="relative flex flex-col items-center justify-center mt-16 w-full max-w-full mx-auto h-[100vh]">
+      <div className="relative top-0 z-30 flex flex-col items-center justify-between w-11/12 mx-auto text-white section1 max-w-maxContent">
+        <motion.div
+          ref={targetRef}
+          style={{ scale, opacity }}
+          className="sticky top-0 z-30 flex flex-col items-center justify-center w-full h-screen max-w-full mx-auto mt-16"
+        >
           <motion.div
             variants={container(0.3)}
             initial="hidden"
@@ -131,69 +150,79 @@ const Home = () => {
               />
             </Suspense>
           </motion.div>
-        </div>
+        </motion.div>
 
-        <div>
-          <Suspense fallback={<div>Loading Code Block...</div>}>
-            <CodeBlock
-              position={"sm:flex-row flex-col"}
-              heading={
-                <div className="text-2xl font-semibold text-center md:text-start md:text-4xl font-inter">
-                  Empower your
-                  <HighlightText text={"coding potential"} />
-                  &nbsp;with our online courses
+        <motion.div
+          style={{ x: translateX, scale: scaleLearning }}
+          className="h-screen"
+        >
+          <div>
+            <Suspense
+              fallback={
+                <div>
+                  <Spinner />
                 </div>
               }
-              subHeading={
-                "Our instructors are seasoned professionals with years of coding expertise who are enthusiastic about imparting their knowledge to you through our courses."
-              }
-              ctaBtn1={{
-                btnTxt: "Try it Yourself",
-                linkto: "/signup",
-                active: true,
-              }}
-              ctaBtn2={{
-                btnTxt: "Learn More",
-                linkto: "/login",
-                active: false,
-              }}
-              codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>LearnCoding</title> <link rel="stylesheet" href="style.css">\n<head/>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav><a href="/one">One</a><a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>`}
-              codeColor={"text-caribbeangreen-50"}
-              backgroundGradient={<div className="absolute codeblock1"></div>}
-            />
-          </Suspense>
-        </div>
+            >
+              <CodeBlock
+                position={"sm:flex-row flex-col"}
+                heading={
+                  <div className="text-2xl font-semibold text-center md:text-start md:text-4xl font-inter">
+                    Empower your
+                    <HighlightText text={"coding potential"} />
+                    &nbsp;with our online courses
+                  </div>
+                }
+                subHeading={
+                  "Our instructors are seasoned professionals with years of coding expertise who are enthusiastic about imparting their knowledge to you through our courses."
+                }
+                ctaBtn1={{
+                  btnTxt: "Try it Yourself",
+                  linkto: "/signup",
+                  active: true,
+                }}
+                ctaBtn2={{
+                  btnTxt: "Learn More",
+                  linkto: "/login",
+                  active: false,
+                }}
+                codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>LearnCoding</title> <link rel="stylesheet" href="style.css">\n<head/>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav><a href="/one">One</a><a href="/two">Two</a>\n<a href="/three">Three</a>\n</nav>`}
+                codeColor={"text-caribbeangreen-50"}
+                backgroundGradient={<div className="absolute codeblock1"></div>}
+              />
+            </Suspense>
+          </div>
 
-        <div>
-          <Suspense fallback={<div>Loading Code Block...</div>}>
-            <CodeBlock
-              position={"sm:flex-row-reverse flex-col"}
-              heading={
-                <div className="text-2xl font-semibold md:text-4xl font-inter">
-                  Learn & start
-                  <HighlightText text={"coding in seconds"} />
-                </div>
-              }
-              subHeading={
-                "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
-              }
-              ctaBtn1={{
-                btnTxt: "Continue Lesson",
-                linkto: "/login",
-                active: true,
-              }}
-              ctaBtn2={{
-                btnTxt: "Learn More",
-                linkto: "/login",
-                active: false,
-              }}
-              codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>CodeMaster</title> <link rel="stylesheet" href="main.css">\n<head/>\n<body>\n<h1><a href="/">Main Title</a></h1>\n<nav><a href="/first">First</a><a href="/second">Second</a>\n<a href="/third">Third</a>\n</nav>`}
-              codeColor={"text-caribbeangreen-50"}
-              backgroundGradient={<div className="absolute codeblock2"></div>}
-            />
-          </Suspense>
-        </div>
-
+          <div>
+            <Suspense fallback={<div>Loading Code Block...</div>}>
+              <CodeBlock
+                position={"sm:flex-row-reverse flex-col"}
+                heading={
+                  <div className="text-2xl font-semibold md:text-4xl font-inter">
+                    Learn & start
+                    <HighlightText text={"coding in seconds"} />
+                  </div>
+                }
+                subHeading={
+                  "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
+                }
+                ctaBtn1={{
+                  btnTxt: "Continue Lesson",
+                  linkto: "/login",
+                  active: true,
+                }}
+                ctaBtn2={{
+                  btnTxt: "Learn More",
+                  linkto: "/login",
+                  active: false,
+                }}
+                codeBlock={`<!DOCTYPE html>\n<html>\n<head> <title>CodeMaster</title> <link rel="stylesheet" href="main.css">\n<head/>\n<body>\n<h1><a href="/">Main Title</a></h1>\n<nav><a href="/first">First</a><a href="/second">Second</a>\n<a href="/third">Third</a>\n</nav>`}
+                codeColor={"text-caribbeangreen-50"}
+                backgroundGradient={<div className="absolute codeblock2"></div>}
+              />
+            </Suspense>
+          </div>
+        </motion.div>
         <Suspense fallback={<div>Loading Explore More...</div>}>
           <ExploreMore />
         </Suspense>
@@ -220,13 +249,23 @@ const Home = () => {
 
         <div className="flex flex-col items-center justify-between w-11/12 gap-8 py-20 mx-auto max-w-maxContent">
           <div className="flex flex-col gap-6 sm:flex-row">
-            <div className="text-2xl text-center md:text-4xl md:text-start font-poppins s3ht">
+            <motion.div
+              initial={{ x: -200, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+              className="text-2xl text-center md:text-4xl md:text-start font-poppins s3ht"
+            >
               <p className="font-semibold">
                 Get the skills you need for a{" "}
                 <HighlightText text={"job that is in demand"} />
               </p>
-            </div>
-            <div className="flex flex-col items-start gap-5 font-medium font-inter">
+            </motion.div>
+            <motion.div
+              initial={{ x: 200, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col items-start gap-5 font-medium font-inter"
+            >
               <p className="text-sm text-center md:text-start">
                 The modern LearnSphere dictates its own terms. Today, to be a
                 competitive specialist requires more than professional skills.
@@ -236,13 +275,25 @@ const Home = () => {
                   <CTAButton active={true} children={"Learn More"} />
                 </Suspense>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          <Suspense fallback={<div>Loading Timeline...</div>}>
+          <Suspense
+            fallback={
+              <div>
+                <Spinner />
+              </div>
+            }
+          >
             <TimeLineSection />
           </Suspense>
-          <Suspense fallback={<div>Loading Language Section...</div>}>
+          <Suspense
+            fallback={
+              <div>
+                <Spinner />
+              </div>
+            }
+          >
             <LearningLanguageSection />
           </Suspense>
         </div>
@@ -250,19 +301,37 @@ const Home = () => {
 
       <div className="section3 bAT">
         <div className="flex flex-col items-center justify-center w-11/12 h-full gap-5 mx-auto max-w-maxContent">
-          <Suspense fallback={<div>Loading Instructor Section...</div>}>
+          <Suspense
+            fallback={
+              <div>
+                <Spinner />
+              </div>
+            }
+          >
             <InstructorSection />
           </Suspense>
           <div className="mb-6 bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text md:text-4xl text-center text-3xl font-semibold text-slate-400 font-inter">
             Reviews from other Learners
           </div>
-          <Suspense fallback={<div>Loading Review Slider...</div>}>
+          <Suspense
+            fallback={
+              <div>
+                <Spinner />
+              </div>
+            }
+          >
             <ReviewSlider />
           </Suspense>
         </div>
       </div>
 
-      <Suspense fallback={<div>Loading Footer...</div>}>
+      <Suspense
+        fallback={
+          <div>
+            <Spinner />
+          </div>
+        }
+      >
         <Footer />
       </Suspense>
     </div>

@@ -9,6 +9,7 @@ import ProfileDropdown from "../core/auth/ProfileDropdown";
 import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/apis";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { motion } from "framer-motion";
 import { IoMdArrowDropup } from "react-icons/io";
 import { ThemeContext } from "../../context/ThemeContextProvider";
 import { FaMoon } from "react-icons/fa6";
@@ -55,14 +56,14 @@ const Navbar = () => {
         <img
           src={Logo}
           alt="LearnSphere"
-          className="w-[160px]"
+          className="md:w-[160px] w-[120px]"
           loading="lazy"
         />
       </Link>
 
       {/* Toggle Button for Navbar */}
       <button
-        className="absolute p-1 text-lg rounded-full right-2 top-16 text-slate-900 md:hidden bg-slate-400 bg-opacity-00 backdrop-blur-md" // Hide on medium and larger screens
+        className={`absolute p-1 z-30 text-lg rounded-full right-2 top-16 text-slate-900 md:hidden bg-[#a7caeb] shadow-md shadow-slate-950 bg-opacity-00 backdrop-blur-md`} // Hide on medium and larger screens
         onClick={() => setIsNavbarOpen((prev) => !prev)} // Toggle visibility
       >
         {isNavbarOpen ? <MdClose /> : <RiMenuUnfold2Fill />}
@@ -70,7 +71,7 @@ const Navbar = () => {
 
       {/* nav links */}
       <nav className={`${isNavbarOpen ? "block" : "hidden"} md:block`}>
-        <ul className="absolute right-10 top-16 flex flex-col bg-[#a3b9ce] md:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] md:flex-row md:relative md:top-0 md:right-0 md:bg-none md:backdrop-blur-none md:gap-y-0">
+        <ul className="absolute right-2 top-16 z-20 flex flex-col bg-[#a3b9ce] md:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] md:flex-row md:relative md:top-0 md:right-0 md:bg-none md:backdrop-blur-none md:gap-y-0">
           {NavbarLinks.map((link, index) => {
             return (
               <li key={index} className="">

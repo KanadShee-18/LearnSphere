@@ -4,6 +4,7 @@ import Logo2 from "../../../assets/TimeLineLogo/Logo2.svg";
 import Logo3 from "../../../assets/TimeLineLogo/Logo3.svg";
 import Logo4 from "../../../assets/TimeLineLogo/Logo4.svg";
 import TimeLineImage from "../../../assets/Images/TimelineImage.png";
+import { motion } from "framer-motion";
 const timeLine = [
   {
     logo: Logo1,
@@ -31,7 +32,12 @@ const TimeLineSection = () => {
   return (
     <div>
       <div className="flex flex-col items-center py-20 md:flex-row md:justify-between gap-7">
-        <div className="leftBox flex flex-col gap-9 lg:gap-14 md:w-[45%] w-[90%] text-slate-700 font-inter ">
+        <motion.div
+          initial={{ x: "100%", opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          className="leftBox flex flex-col gap-9 lg:gap-14 md:w-[45%] w-[90%] text-slate-700 font-inter "
+        >
           {timeLine.map((el, index) => {
             return (
               <div className="relative flex flex-row gap-8" key={index}>
@@ -50,8 +56,13 @@ const TimeLineSection = () => {
               </div>
             );
           })}
-        </div>
-        <div className="rightBox relative md:w-[50%] w-[90%]">
+        </motion.div>
+        <motion.div
+          initial={{ x: "-100%", opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          className="rightBox relative md:w-[50%] w-[90%]"
+        >
           <div className="absolute w-full h-4/5 rounded-2xl bg-gradient-to-br from-[#2be2ae] via-[#34cbb4] to-[#f8f8ff] blur-xl -left-4 -top-4 timelineBlock"></div>
 
           <img
@@ -80,7 +91,7 @@ const TimeLineSection = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

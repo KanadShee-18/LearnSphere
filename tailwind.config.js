@@ -15,7 +15,7 @@ export default {
         eduSa: ["Edu SA Beginner", "cursive"],
         mono: ["Roboto Mono", "monospace"],
         playwrite: ["Playwrite DE Grund", "cursive"],
-        poppins: ["Poppins", "sans-serif"],
+        poppins: ["Poppins", "Inter", "sans-serif"],
       },
       colors: {
         white: "#fff",
