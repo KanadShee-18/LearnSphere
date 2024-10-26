@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GetAvgRating from "../../../utils/avgRating";
 import RatingStars from "../../common/RatingStars";
+import { motion } from "framer-motion";
 
 const CourseCard = ({ course, Height, Width }) => {
   const [avgRatingCount, setAvgRatingCount] = useState(0);
@@ -16,7 +17,18 @@ const CourseCard = ({ course, Height, Width }) => {
       to={`/courses/${course._id}`}
       className="inline-block mx-1 transition-all duration-200 transform md:mx-4 hover:scale-95"
     >
-      <div className={`${Width && "mx-auto"}`}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{
+          duration: 2,
+          delay: 0.3,
+          type: "spring",
+          stiffness: 60,
+          damping: 25,
+        }}
+        className={`${Width && "mx-auto"}`}
+      >
         <div
           className={`rounded-lg
             ${Width ? `${Width}` : "w-[150px]"}
@@ -47,7 +59,7 @@ const CourseCard = ({ course, Height, Width }) => {
             Rs. {course?.price.toLocaleString("en-IN")}
           </p>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 };

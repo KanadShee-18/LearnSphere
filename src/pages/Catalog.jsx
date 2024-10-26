@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import Spinner from "../components/common/Spinner";
 import CourseCard from "../components/core/Catalog/CourseCard";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const Catalog = () => {
   const { loading: profileLoading } = useSelector((state) => state.profile);
@@ -88,7 +89,7 @@ const Catalog = () => {
 
   if (loading || profileLoading) {
     return (
-      <div className="w-full place-items-center">
+      <div className="w-full grid h-[70vh] place-items-center">
         <Spinner />
       </div>
     );
@@ -99,7 +100,18 @@ const Catalog = () => {
       <div className="flex flex-col min-h-screen mt-14">
         {/* Hero section or section: 0 */}
         <div className="box-content px-4 bg-richblack-800">
-          <div className="mx-auto flex min-h-[215px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent">
+          <motion.div
+            initial={{ x: 70, y: -70, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            transition={{
+              duration: 1,
+              delay: 0.4,
+              type: "spring",
+              stiffness: 60,
+              damping: 25,
+            }}
+            className="mx-auto flex min-h-[215px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent"
+          >
             <p className="text-xs md:text-sm text-richblack-300">
               {`Home / Catalog / `}
               <span className="text-teal-400">
@@ -112,15 +124,36 @@ const Catalog = () => {
             <p className="max-w-[860px] md:text-base text-sm text-richblack-200">
               {catalogPageData?.data?.selectedCategory?.description}
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Section: 1 */}
         <div className="box-content w-full px-4 py-12 mx-auto max-w-maxContentTab lg:max-w-maxContent">
-          <div className="text-xl font-bold md:text-2xl text-slate-300 lg:text-4xl">
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              duration: 1,
+              type: "spring",
+              stiffness: 60,
+              damping: 25,
+            }}
+            className="text-xl font-bold md:text-2xl text-slate-300 lg:text-4xl"
+          >
             Courses To Get You Started
-          </div>
-          <div className="flex my-4 text-sm border-b border-b-richblack-600">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1,
+              delay: 0.5,
+              type: "spring",
+              stiffness: 60,
+              damping: 25,
+            }}
+            className="flex my-4 text-sm border-b border-b-richblack-600"
+          >
             <p
               className={`px-4 py-2 cursor-pointer ${
                 active === 1
@@ -147,7 +180,7 @@ const Catalog = () => {
             >
               Latest
             </p>
-          </div>
+          </motion.div>
 
           <CourseSlider
             Id={"slider1"}

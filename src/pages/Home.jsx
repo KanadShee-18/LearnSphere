@@ -75,21 +75,16 @@ const Home = () => {
     damping: 20,
   });
 
-  const scaleTransition = useTransform(scrollYProgress2, [0, 0.2], [0.3, 1], {
-    type: "spring",
-    stiffness: 50,
-    damping: 20,
-  });
-  const translateX = useTransform(scrollYProgress2, [0, 0.3], ["70%", "0%"], {
-    type: "spring",
-    stiffness: 50,
-    damping: 20,
-  });
-  const translateY = useTransform(scrollYProgress2, [0, 0.2], ["10%", "0%"], {
-    type: "spring",
-    stiffness: 50,
-    damping: 20,
-  });
+  const scaleFixed = useTransform(
+    scrollYProgress1,
+    [0, 0.5, 0.8],
+    [1, 0.5, 0.3],
+    {
+      type: "spring",
+      stiffness: 50,
+      damping: 20,
+    }
+  );
 
   return (
     <div className="scroll-smooth">
@@ -114,95 +109,100 @@ const Home = () => {
             stiffness: 60,
             damping: 25,
           }}
-          className="sticky top-0 z-30 flex flex-col items-center justify-center w-full h-screen max-w-full mx-auto mt-16"
+          className="relative top-0 z-30 flex flex-col items-center justify-center w-full h-screen max-w-full mx-auto mt-16"
         >
           <motion.div
-            variants={container(0.3)}
-            initial="hidden"
-            animate="visible"
-            className="mt-8 lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter"
+            style={{ scale: scaleFixed }}
+            className="fixed flex flex-col items-center"
           >
-            Unlock your potential and drive future success with
-            <HighlightText text={"Coding Skills"} />
-          </motion.div>
-          <Link to={"/signup"}>
             <motion.div
-              initial={{ opacity: 0, y: 0 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={container(0.3)}
+              initial="hidden"
+              animate="visible"
+              className="mt-8 lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-semibold drop-shadow-2xl text-center text-[#c1edff] font-inter"
+            >
+              Unlock your potential and drive future success with
+              <HighlightText text={"Coding Skills"} />
+            </motion.div>
+            <Link to={"/signup"}>
+              <motion.div
+                initial={{ opacity: 0, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 1.5,
+                  delay: 1.2,
+                  type: "spring",
+                  stiffness: 60,
+                  damping: 25,
+                }}
+                className="mx-auto mt-14 w-fit font-semibold transition-all duration-200 bg-opacity-60 rounded-full shadow-sm group bg-[#223253] font-playwrite text-slate-300 shadow-slate-500 hover:scale-95"
+              >
+                <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
+                  <p className="text-sm font-medium text-blue-25">
+                    Become an Instructor
+                  </p>{" "}
+                  <FaArrowRightLong />
+                </div>
+              </motion.div>
+            </Link>
+
+            <motion.div
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
-                duration: 1.5,
+                duration: 1,
                 delay: 1.2,
                 type: "spring",
                 stiffness: 60,
                 damping: 25,
               }}
-              className="mx-auto mt-14 font-semibold transition-all duration-200 bg-opacity-60 rounded-full shadow-sm group bg-[#223253] font-playwrite text-slate-300 shadow-slate-500 hover:scale-95"
+              className="mt-10 text-sm font-medium tracking-wide text-center md:text-base text-blue-25 font-inter"
             >
-              <div className="flex flex-row items-center justify-center px-4 py-3 transition-all duration-300 rounded-full gap-x-3 group-hover:bg-slate-900 group-active:bg-slate-600">
-                <p className="text-sm font-medium text-blue-25">
-                  Become an Instructor
-                </p>{" "}
-                <FaArrowRightLong />
-              </div>
+              Study at your own speed, from anywhere in the world, with our
+              online coding courses. Have access to a plethora of tools, such as
+              interactive projects, tests, and individualized feedback from
+              instructors.
             </motion.div>
-          </Link>
+            <motion.div
+              initial={{ x: 200, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                duration: 1.3,
+                delay: 1.5,
+                type: "spring",
+                stiffness: 60,
+                damping: 25,
+              }}
+              className="flex flex-row mt-16 lg:text-3xl md:text-2xl text-xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text"
+            >
+              <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
+            </motion.div>
+            <motion.div
+              initial={{ x: 400, y: 300, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: 1 }}
+              transition={{
+                duration: 1.5,
+                delay: 2.0,
+                type: "spring",
+                stiffness: 60,
+                damping: 25,
+              }}
+              className="flex flex-row mt-8 gap-7 font-poppins"
+            >
+              <Suspense fallback={<div>Loading...</div>}>
+                <CTAButton
+                  children={"Learn More"}
+                  active={true}
+                  linkto={"/signup"}
+                />
 
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 1,
-              delay: 1.2,
-              type: "spring",
-              stiffness: 60,
-              damping: 25,
-            }}
-            className="mt-10 text-sm font-medium tracking-wide text-center md:text-base text-blue-25 font-inter"
-          >
-            Study at your own speed, from anywhere in the world, with our online
-            coding courses. Have access to a plethora of tools, such as
-            interactive projects, tests, and individualized feedback from
-            instructors.
-          </motion.div>
-          <motion.div
-            initial={{ x: 200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              duration: 1.3,
-              delay: 1.5,
-              type: "spring",
-              stiffness: 60,
-              damping: 25,
-            }}
-            className="flex flex-row mt-16 lg:text-3xl md:text-2xl text-xl font-semibold gap-x-5 font-poppins bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text"
-          >
-            <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
-          </motion.div>
-          <motion.div
-            initial={{ x: 400, y: 300, opacity: 0 }}
-            animate={{ x: 0, y: 0, opacity: 1 }}
-            transition={{
-              duration: 1.5,
-              delay: 2.0,
-              type: "spring",
-              stiffness: 60,
-              damping: 25,
-            }}
-            className="flex flex-row mt-8 gap-7 font-poppins"
-          >
-            <Suspense fallback={<div>Loading...</div>}>
-              <CTAButton
-                children={"Learn More"}
-                active={true}
-                linkto={"/signup"}
-              />
-
-              <CTAButton
-                children={"Book Demo Session"}
-                active={false}
-                linkto={"/signup"}
-              />
-            </Suspense>
+                <CTAButton
+                  children={"Book Demo Session"}
+                  active={false}
+                  linkto={"/signup"}
+                />
+              </Suspense>
+            </motion.div>
           </motion.div>
         </motion.div>
         <motion.div

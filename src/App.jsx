@@ -1,6 +1,7 @@
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
+import Catalog from "./pages/Catalog";
 import Navbar from "./components/common/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, Slide } from "react-toastify";
@@ -10,8 +11,6 @@ import { Suspense, lazy, useEffect } from "react";
 import Spinner from "./components/common/Spinner";
 
 // Lazy-loaded components
-// const Homepage = lazy(() => import("./pages/Homepage"));
-const Catalog = lazy(() => import("./pages/Catalog"));
 const CourseDetails = lazy(() => import("./pages/CourseDetails"));
 const OpenRoute = lazy(() => import("./components/core/auth/OpenRoute"));
 const Signup = lazy(() => import("./pages/Signup"));
