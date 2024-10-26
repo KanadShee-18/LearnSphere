@@ -16,6 +16,7 @@ import Footer from "../components/common/Footer";
 import CourseAccordianBar from "../components/core/Course/CourseAccordianBar";
 import { buyCourse } from "../services/operations/studentFeaturesAPI";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const CourseDetails = () => {
   const { user } = useSelector((state) => state.profile);
@@ -117,7 +118,7 @@ const CourseDetails = () => {
 
   if (paymentLoading) {
     return (
-      <div className="w-full place-items-center h-[60vh]">
+      <div className="w-full grid place-items-center h-[60vh]">
         <Spinner />
       </div>
     );
@@ -137,7 +138,18 @@ const CourseDetails = () => {
                 className="w-full aspect-auto"
               />
             </div>
-            <div className="z-30 flex flex-col justify-center gap-4 py-5 my-5 text-lg text-slate-400">
+            <motion.div
+              initial={{ x: -70, y: -50, opacity: 0 }}
+              whileInView={{ opacity: 1, y: 0, x: 0 }}
+              transition={{
+                duration: 1,
+                delay: 0.3,
+                type: "spring",
+                stiffness: 60,
+                damping: 25,
+              }}
+              className="z-30 flex flex-col justify-center gap-4 py-5 my-5 text-lg text-slate-400"
+            >
               <div>
                 <p className="text-4xl font-bold text-richblack-5 sm:text-[42px]">
                   {courseName}
@@ -170,7 +182,7 @@ const CourseDetails = () => {
                   <HiOutlineGlobeAlt className="text-xl" /> English
                 </p>
               </div>
-            </div>
+            </motion.div>
             <div className="flex flex-col w-full gap-4 py-4 border-y border-y-slate-600 lg:hidden">
               <p className="pb-4 space-x-3 text-3xl font-semibold text-richblack-25">
                 Rs. {price}
@@ -199,7 +211,18 @@ const CourseDetails = () => {
         </div>
       </div>
       <div className="mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]">
-        <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]">
+        <motion.div
+          initial={{ opacity: 0, y: 300 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 2,
+            delay: 0.3,
+            type: "spring",
+            stiffness: 60,
+            damping: 25,
+          }}
+          className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]"
+        >
           {/* What will you learn */}
           <div className="p-8 my-8 border rounded border-slate-700 bg-slate-800">
             <p className="text-[28px] font-semibold text-slate-300">
@@ -269,7 +292,7 @@ const CourseDetails = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <Footer />
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
