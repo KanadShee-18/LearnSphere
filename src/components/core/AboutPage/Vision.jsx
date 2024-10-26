@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import RedHighlight from "../AboutPage/ResHighlight";
 import FoundingStory from "../../../assets/Images/FoundingStory.png";
 import orbital from "../../../assets/Images/orbital.png";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, motion, easeInOut } from "framer-motion";
 
 const Vision = () => {
   const targetRef = useRef(null);
@@ -13,10 +13,17 @@ const Vision = () => {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8], [0, 0.7, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.2, 0.5, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.2, 1]);
+  // const translateX = useTransform(
+  //   scrollYProgress,
+  //   [0, 0.3, 0.7],
+  //   ["0%", "-30%", "0%"]
+  // );
+  // const translateY = useTransform(scrollYProgress, [0, 0.7], ["0%", "-100%"]);
 
   return (
     <motion.section
+      transition={{ ease: easeInOut }}
       style={{ opacity, scale }}
       ref={targetRef}
       className="relative mt-24"
@@ -28,14 +35,14 @@ const Vision = () => {
             <RedHighlight text={"Our Founding Story"} />
           </h1>
           <div className="flex flex-col font-medium text-transparent bg-gradient-to-br from-cyan-600 via-slate-500 to-teal-600 bg-clip-text gap-y-4">
-            <p className="text-sm text-justify md:text-base font-poppins">
+            <p className="text-sm text-justify md:text-base font-inter">
               Our e-learning platform was born out of a shared vision and
               passion for transforming education. It all began with a group of
               educators, technologists, and lifelong learners who recognized the
               need for accessible, flexible, and high-quality learning
               opportunities in a rapidly evolving digital world.
             </p>
-            <p className="text-sm text-justify md:text-base font-poppins">
+            <p className="text-sm text-justify md:text-base font-inter">
               As experienced educators ourselves, we witnessed firsthand the
               limitations and challenges of traditional education systems. We
               believed that education should not be confined to the walls of a
@@ -60,7 +67,7 @@ const Vision = () => {
             Our Vission
           </h1>
           <div className="flex flex-col font-medium text-transparent bg-gradient-to-br from-cyan-600 via-slate-500 to-teal-600 bg-clip-text gap-y-4">
-            <p className="text-sm text-justify md:text-base font-poppins">
+            <p className="text-sm text-justify md:text-base font-inter">
               With this vision in mind, we set out on a journey to create an e-
               learning platform that would revolutionize the way people learn.
               Our team of dedicated experts worked tirelessly to develop a
@@ -75,7 +82,7 @@ const Vision = () => {
             Our Mission
           </h1>
           <div className="flex flex-col font-medium text-transparent bg-gradient-to-br from-pink-400 via-yellow-400 to-orange-600 bg-clip-text gap-y-4">
-            <p className="text-sm text-justify md:text-base font-poppins">
+            <p className="text-sm text-justify md:text-base font-inter">
               Our mission goes beyond just delivering courses online. We wanted
               to create a vibrant community of learners, where individuals can
               connect, collaborate, and learn from one another. We believe that

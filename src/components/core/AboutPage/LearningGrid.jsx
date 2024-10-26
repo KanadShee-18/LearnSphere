@@ -1,7 +1,7 @@
 import React from "react";
 import HighlightText from "../homeaccessories/HighlightText";
 import CTAButton from "../homeaccessories/CTAButton";
-
+import { motion } from "framer-motion";
 const LearningGridArray = [
   {
     order: -1,
