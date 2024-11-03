@@ -4,27 +4,19 @@
 
 ## Introduction
 
----
-
 LearnSphere is an EdTech platform designed to provide an accessible and interactive learning experience, making education both engaging and widely available. The platform also enables instructors to share their expertise with learners globally, connecting students and educators in a collaborative environment.
 
 This document outlines the technical details of the platform, covering system architecture, API design, setup, usage instructions, and possible future improvements.
 
 ## System Architecture
 
----
-
 The LearnSphere platform follows a client-server architecture, consisting of three main components: the front end, the back end, and the database. The front end functions as the client, while the back end and database serve as the server components, facilitating data exchange and operations.
 
 ## Front End
 
----
-
 The front end is developed using ReactJS, allowing for the creation of dynamic and responsive interfaces that enhance the learning experience. Communication with the back end is achieved through RESTful API calls.
 
 ### Pages for Students
-
----
 
 - **Homepage**: Provides a brief overview of the platform, with links to the course catalog and user profile.
 - **Course List**: Displays available courses, along with descriptions and ratings.
@@ -36,16 +28,12 @@ The front end is developed using ReactJS, allowing for the creation of dynamic a
 
 ### Pages for Instructors
 
----
-
 - **Dashboard**: Summarizes the instructor's courses, including ratings and feedback.
 - **Insights**: Provides metrics like course views and engagement statistics.
 - **Course Management**: Enables course creation, updates, deletions, and pricing adjustments.
 - **Profile Management**: Allows instructors to view and edit their profile details.
 
 ### Front-end Tools and Libraries
-
----
 
 The front end is developed using a set of tools and libraries, including:
 
@@ -55,13 +43,9 @@ The front end is developed using a set of tools and libraries, including:
 
 ## Back End
 
----
-
 The back end is built with Node.js and Express.js, providing APIs that the front end can access. These APIs handle essential functions, including user authentication, course creation, and content management, as well as processing and storing data.
 
 ### Back-end Features
-
----
 
 - **User Authentication and Authorization**: Students and instructors can sign up and log in with email and password, with OTP verification for added security. Password reset functionality is also provided.
 - **Course Management**: Instructors can manage their courses, while students can view and review courses.
@@ -70,8 +54,6 @@ The back end is built with Node.js and Express.js, providing APIs that the front
 - **Markdown Support**: Course content is stored in Markdown format for easier rendering on the front end.
 
 ### Back-end Frameworks, Libraries, and Tools
-
----
 
 The back end is built using a suite of tools to ensure robust performance:
 
@@ -83,8 +65,6 @@ The back end is built using a suite of tools to ensure robust performance:
 - **Mongoose**: ODM library for interacting with MongoDB.
 
 ## Data Models and Database Schema
-
----
 
 LearnSphere uses various schemas to organize data effectively:
 
@@ -98,14 +78,10 @@ LearnSphere uses various schemas to organize data effectively:
 
 ## Database
 
----
-
 LearnSphere uses MongoDB as its database solution, supporting the storage of structured, semi-structured, and unstructured data. This NoSQL database efficiently stores course information, user data, and other essential platform data.
 
 LearnSphere’s architecture and tools create a solid foundation for delivering a seamless educational experience, bridging the gap between students and educators in the digital learning space.
 
 ### API Design:
-
----
 
 The REST architectural approach is used in the architecture of the LearnSphere platform's API. Node.js and Express.js are used in the implementation of the API. It follows common HTTP request methods like GET, POST, PUT, and DELETE and exchanges data using JSON.
