@@ -2,7 +2,19 @@
 
 🔗 [Visit my website](https://learn-sphere-edui.vercel.app)
 
-![Alt text](Images/heroImg.png)
+![HeroImg](Images/heroImg.png)
+
+## Table Of Contents:
+
+- [Introduction](#introduction)
+- [System Architecture](#system-architecture)
+- [Frontend](#front-end)
+- [StudentsPages](#pages-for-students)
+- [InstructorPages](#pages-for-instructors)
+- [Frontend-Tools](#front-end-tools-and-libraries)
+- [Backend](#back-end)
+- [Database](#data-models-and-database-schema)
+- [Api-Design](#api-design)
 
 ## Introduction
 
@@ -27,6 +39,14 @@ The front end is developed using ReactJS, allowing for the creation of dynamic a
 - **Course Content**: Contains the video lessons and related materials for each course.
 - **User Details**: Displays the student’s account details, such as name and email.
 - **User Edit Details**: Allows students to update their personal information.
+- **Video Player and Pdf Viewer**: Students can study from both videos as well as documents added by the instructor.
+
+> Here are some views:
+> ![ecrolledCourses](Images/enrolledCourses.png)
+> ![videoPlayer](Images/videoPlayer.png)
+> ![pdfReader](Images/pdfReader.png)
+
+---
 
 ### Pages for Instructors
 
@@ -34,6 +54,9 @@ The front end is developed using ReactJS, allowing for the creation of dynamic a
 - **Insights**: Provides metrics like course views and engagement statistics.
 - **Course Management**: Enables course creation, updates, deletions, and pricing adjustments.
 - **Profile Management**: Allows instructors to view and edit their profile details.
+
+> Here are some views:
+> ![instructorDashboard](Images/instructorDashboard.png)
 
 ### Front-end Tools and Libraries
 
@@ -68,7 +91,10 @@ The back end is built using a suite of tools to ensure robust performance:
 
 ## Data Models and Database Schema
 
-LearnSphere uses various schemas to organize data effectively:
+### LearnSphere uses various schemas to organize data effectively:
+
+> Here is the Schema architecture:
+> ![schema](Images/schema.png)
 
 - **Student Schema**: Includes name, email, password, and course details.
 - **Instructor Schema**: Contains fields for name, email, password, and instructor-specific details.
@@ -85,5 +111,9 @@ LearnSphere uses MongoDB as its database solution, supporting the storage of str
 LearnSphere’s architecture and tools create a solid foundation for delivering a seamless educational experience, bridging the gap between students and educators in the digital learning space.
 
 ### API Design:
+
+> **Here is the API structure of LearnSphere**
+
+![apiArchitecture](Images/architecture.png)
 
 The REST architectural approach is used in the architecture of the LearnSphere platform's API. Node.js and Express.js are used in the implementation of the API. It follows common HTTP request methods like GET, POST, PUT, and DELETE and exchanges data using JSON.

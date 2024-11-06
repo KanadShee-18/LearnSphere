@@ -99,7 +99,7 @@ const SignUpForm = () => {
       <form onSubmit={handleOnSubmit} className="flex flex-col w-full gap-y-4">
         <div className="flex gap-x-4">
           <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-sm leading-[1.375rem] text-richblack-5">
               First Name <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -109,7 +109,7 @@ const SignUpForm = () => {
               value={firstName}
               onChange={handleOnChange}
               placeholder="Enter first name"
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-cyan-500 shadow-sm shadow-teal-600 outline-2 outline-cyan-300"
+              className="w-full rounded-[0.5rem] text-sm  bg-richblack-800 p-[12px] text-cyan-500 shadow-sm shadow-teal-600 outline-2 outline-cyan-300"
             />
           </label>
           <label>
@@ -141,7 +141,7 @@ const SignUpForm = () => {
             className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-cyan-500 shadow-sm shadow-teal-600 outline-2 outline-cyan-300"
           />
         </label>
-        <div className="flex gap-x-4">
+        <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 md:gap-y-0">
           <label className="relative">
             <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
               Create Password <sup className="text-pink-200">*</sup>

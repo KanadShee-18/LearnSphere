@@ -51,13 +51,13 @@ const VerifyEmail = () => {
         <Spinner />
       ) : (
         <div className="flex flex-col max-w-fit">
-          <h1 className="mb-2 text-4xl font-semibold text-cyan-300">
+          <h1 className="mb-2 text-2xl font-semibold md:text-4xl text-cyan-300">
             Verify Email
           </h1>
-          <p className="text-slate-400 max-w-[90%] px-2">
+          <p className="text-slate-400 max-w-[90%] px-2 md:text-base text-sm ">
             A verification code has been sent to you. Enter the code below.
           </p>
-          <form onSubmit={handleOnSubmit} className="px-2 my-10">
+          <form onSubmit={handleOnSubmit} className="px-2 md:my-10 mt-7">
             <div className="otpWrapperStyle">
               <OTPInput
                 value={otp}
@@ -72,12 +72,12 @@ const VerifyEmail = () => {
 
             <button
               type="submit"
-              className="w-full py-3 font-semibold text-black rounded-md bg-cyan-400 hover:bg-teal-400"
+              className="w-full py-2 text-sm font-semibold text-black rounded-md md:py-3 md:text-base bg-cyan-400 hover:bg-teal-400"
             >
               Verify Email
             </button>
           </form>
-          <div className="flex flex-row items-center justify-between px-2">
+          <div className="flex flex-row items-center justify-between px-2 mt-3">
             <Link
               to={"/login"}
               className="text-sm transition-all duration-200 text-slate-400 hover:text-cyan-500 hover:-translate-x-2"
