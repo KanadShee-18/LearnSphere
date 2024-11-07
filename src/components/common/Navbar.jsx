@@ -59,7 +59,7 @@ const Navbar = () => {
         <img
           src={Logo}
           alt="LearnSphere"
-          className="md:w-[160px] w-[80px]"
+          className="md:w-[160px] w-[95px]"
           loading="lazy"
         />
       </Link>
