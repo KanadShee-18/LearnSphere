@@ -12,6 +12,7 @@
 - [System Architecture](#system-architecture)
 - [Frontend](#front-end)
 - [StudentsPages](#pages-for-students)
+- [Search Box](#search-box-functionality-debouncing)
 - [InstructorPages](#pages-for-instructors)
 - [Frontend-Tools](#front-end-tools-and-libraries)
 - [Backend](#back-end)
