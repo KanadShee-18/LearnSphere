@@ -255,7 +255,7 @@ const SearchBox = ({ setOpenBox }) => {
               custom={index}
               key={index}
               onClick={() => handleLinkClick(suggestion.courseId)}
-              className="w-full px-2 py-1 my-2 text-sm transition-all duration-200 rounded-md shadow-md shadow-slate-950 hover:cursor-pointer hover:text-teal-400 bg-slate-700 hover:scale-95 text-wrap"
+              className="w-full px-2 py-1 my-2 text-xs transition-all duration-200 rounded-md shadow-md md:text-sm shadow-slate-950 hover:cursor-pointer hover:text-teal-400 bg-slate-700 hover:scale-95 text-wrap"
             >
               {suggestion.courseName}
             </motion.li>
