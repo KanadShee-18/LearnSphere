@@ -151,7 +151,7 @@ body {
 .Toastify__toast {
   background-color: #f1fffb !important;
   padding: 2px 2px !important;
-  border-radius: 15px !important;
+  border-radius: 10px !important;
 }
 
 /* OTP CSS */
