@@ -64,6 +64,23 @@ Together, ReactJS, RESTful APIs, and Framer Motion work cohesively to deliver a 
 
 ---
 
+## Search Box Functionality (DEBOUNCING)
+
+![searchBox](Images/search.png)
+
+The **Search Box** allows users to search for courses by typing a query. It dynamically fetches suggestions based on the input using debouncing to prevent excessive API calls. When the user selects a suggestion, they are navigated to the course details page.
+
+### Key Features:
+
+- **Search Input**: Users can type to search for courses.
+- **Debounced API Calls**: The search input triggers a debounced API call, making the search more efficient by waiting for the user to stop typing before fetching data.
+- **Suggestions Display**: As the user types, suggestions matching the query are displayed below the input field.
+- **Navigate to Course**: When a user clicks on a suggestion, they are redirected to the respective course details page.
+- **Click Outside to Close**: Clicking outside the search box will close the suggestion dropdown.
+- **Empty Search Handling**: If the search box is empty, no API calls are made, and any existing suggestions are cleared.
+
+---
+
 ### Pages for Instructors
 
 - **Dashboard**: Summarizes the instructor's courses, including ratings and feedback.
