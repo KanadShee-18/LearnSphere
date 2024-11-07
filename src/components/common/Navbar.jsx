@@ -52,14 +52,14 @@ const Navbar = () => {
 
   return (
     <div
-      className={`flex fixed top-0 z-[100] h-14 w-full px-4 sm:px-9 lg:px-32 mx-auto items-center justify-between border-b-[1px] border-slate-700 shadow-sm shadow-slate-900 bg-[#10101b]  bg-opacity-80 backdrop-blur-sm`}
+      className={`flex fixed top-0 z-[100] h-14 w-full px-2 sm:px-9 lg:px-20 mx-auto items-center justify-between border-b-[1px] border-slate-700 shadow-sm shadow-slate-900 bg-[#10101b]  bg-opacity-80 backdrop-blur-sm`}
     >
       {/* Logo Image */}
       <Link to={"/"}>
         <img
           src={Logo}
           alt="LearnSphere"
-          className="md:w-[160px] w-[120px]"
+          className="md:w-[160px] w-[80px]"
           loading="lazy"
         />
       </Link>
@@ -74,7 +74,7 @@ const Navbar = () => {
 
       {/* nav links */}
       <nav className={`${isNavbarOpen ? "block" : "hidden"} lg:block`}>
-        <ul className="absolute right-2 top-16 z-20 flex flex-col bg-[#3f5264] lg:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] lg:flex-row lg:relative lg:top-0 lg:right-0 lg:bg-none lg:backdrop-blur-none lg:gap-y-0 shadow-md shadow-slate-950 lg:shadow-none">
+        <ul className="absolute right-2 top-16 z-20 flex flex-col bg-[#a0c3e4] lg:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] lg:flex-row lg:relative lg:top-0 lg:right-0 lg:bg-none lg:backdrop-blur-none lg:gap-y-0 shadow-md shadow-slate-950 lg:shadow-none">
           {NavbarLinks.map((link, index) => {
             return (
               <li key={index} className="">
@@ -132,7 +132,7 @@ const Navbar = () => {
       {/* Search Box */}
       <div
         onClick={() => setOpenBox(true)}
-        className="relative flex items-center text-xs text-teal-500 md:text-sm gap-x-2 hover:cursor-pointer"
+        className="relative flex items-center ml-2 text-[11px] text-teal-500 text-nowrap md:text-sm md:gap-x-2 hover:cursor-pointer gap-x-1"
       >
         <AiOutlineFileSearch className="text-xl md:text-2xl" /> Search Courses
         <div className="absolute -bottom-14">
@@ -141,7 +141,7 @@ const Navbar = () => {
       </div>
 
       {/* Buttons (Login, Signup, Dashboard) */}
-      <div className="flex items-center text-sm gap-x-4">
+      <div className="flex items-center ml-2 text-sm md:gap-x-4 gap-x-2">
         {/* <div
           onClick={toggleTheme}
           className="relative flex items-center p-1 rounded-full w-14 h-7 dark:bg-slate-800 bg-slate-200"
@@ -170,14 +170,14 @@ const Navbar = () => {
           )}
         {token === null && (
           <Link to={"/login"}>
-            <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 md:text-sm text-xs md:px-4 px-2 py-2 hover:bg-cyan-500 hover:text-slate-800 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-50 rounded-md">
+            <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 md:text-sm text-xs md:px-4 px-2 py-2 text-nowrap hover:bg-cyan-500 hover:text-slate-800 hover:bg-opacity-85 active:bg-opacity-70 text-richblack-50 rounded-md">
               Log in
             </button>
           </Link>
         )}
         {token === null && (
           <Link to={"/signup"}>
-            <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 md:text-sm text-xs md:px-4 px-2 py-2 hover:bg-cyan-500 hover:bg-opacity-85 hover:text-slate-800 active:bg-opacity-70 text-richblack-50 rounded-md">
+            <button className="border-[1px] font-semibold border-cyan-700 bg-slate-800 bg-opacity-65 md:text-sm text-xs md:px-4 px-1 text-nowrap py-2 hover:bg-cyan-500 hover:bg-opacity-85 hover:text-slate-800 active:bg-opacity-70 text-richblack-50 rounded-md">
               Sign up
             </button>
           </Link>
