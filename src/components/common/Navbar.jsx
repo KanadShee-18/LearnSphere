@@ -16,7 +16,9 @@ import { FaMoon } from "react-icons/fa6";
 import { FiSun } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { RiMenuUnfold2Fill } from "react-icons/ri";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import { toast } from "react-toastify";
+import SearchBox from "./SearchBox";
 
 const Navbar = () => {
   const { toggleTheme } = useContext(ThemeContext);
@@ -24,6 +26,7 @@ const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
+  const [openBox, setOpenBox] = useState(false);
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -63,15 +66,15 @@ const Navbar = () => {
 
       {/* Toggle Button for Navbar */}
       <button
-        className={`absolute p-1 z-30 text-lg rounded-full right-2 top-16 text-slate-900 md:hidden bg-[#a7caeb] shadow-md shadow-slate-950 bg-opacity-00 backdrop-blur-md`} // Hide on medium and larger screens
+        className={`absolute p-1 z-30 text-lg rounded-full right-2 top-16 text-slate-900 lg:hidden bg-[#a7caeb] shadow-md shadow-slate-950 bg-opacity-95 backdrop-blur-md`} // Hide on medium and larger screens
         onClick={() => setIsNavbarOpen((prev) => !prev)} // Toggle visibility
       >
         {isNavbarOpen ? <MdClose /> : <RiMenuUnfold2Fill />}
       </button>
 
       {/* nav links */}
-      <nav className={`${isNavbarOpen ? "block" : "hidden"} md:block`}>
-        <ul className="absolute right-2 top-16 z-20 flex flex-col bg-[#a3b9ce] md:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] md:flex-row md:relative md:top-0 md:right-0 md:bg-none md:backdrop-blur-none md:gap-y-0">
+      <nav className={`${isNavbarOpen ? "block" : "hidden"} lg:block`}>
+        <ul className="absolute right-2 top-16 z-20 flex flex-col bg-[#3f5264] lg:bg-opacity-0 px-3 py-4 rounded-md gap-x-6 gap-y-4 text-slate-800 font-medium text-[15px] lg:flex-row lg:relative lg:top-0 lg:right-0 lg:bg-none lg:backdrop-blur-none lg:gap-y-0 shadow-md shadow-slate-950 lg:shadow-none">
           {NavbarLinks.map((link, index) => {
             return (
               <li key={index} className="">
@@ -82,11 +85,11 @@ const Navbar = () => {
                     </p>
                     <MdOutlineArrowDropDown className="size-6 md:text-slate-100 text-slate-700" />
 
-                    <div className="invisible group-hover:visible absolute top-0 translate-y-[-12%] rounded text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <div className="invisible group-hover:visible absolute -top-3 lg:top-0 translate-y-[-12%] rotate-90 lg:rotate-0 -translate-x-[70%] lg:translate-x-0  rounded text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                       <IoMdArrowDropup className="size-20" />
                     </div>
 
-                    <div className="invisible absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-7 flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
+                    <div className="invisible absolute left-1/2 lg:top-1/2 -top-10 lg:-translate-x-1/2 -translate-x-[130%] translate-y-7 flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
                       {subLinks.length ? (
                         subLinks.map((subLink, index) => (
                           <Link
@@ -103,7 +106,7 @@ const Navbar = () => {
                           </Link>
                         ))
                       ) : (
-                        <div>No Category</div>
+                        <div>Fetching Categories</div>
                       )}
                     </div>
                   </div>
@@ -125,6 +128,17 @@ const Navbar = () => {
           })}
         </ul>
       </nav>
+
+      {/* Search Box */}
+      <div
+        onClick={() => setOpenBox(true)}
+        className="relative flex items-center text-xs text-teal-500 md:text-sm gap-x-2 hover:cursor-pointer"
+      >
+        <AiOutlineFileSearch className="text-xl md:text-2xl" /> Search Courses
+        <div className="absolute -bottom-14">
+          {openBox && <SearchBox setOpenBox={setOpenBox} />}
+        </div>
+      </div>
 
       {/* Buttons (Login, Signup, Dashboard) */}
       <div className="flex items-center text-sm gap-x-4">

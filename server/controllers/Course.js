@@ -471,3 +471,57 @@ exports.getFullCourseDetails = async (req, res) => {
     });
   }
 };
+
+// Get courses acccording to Tags:
+
+exports.getTaggedCourses = async (req, res) => {
+  try {
+    const { searchQuery } = req.query;
+
+    console.log("Search Query is: ", searchQuery);
+
+    if (!searchQuery) {
+      return res.status(400).json({
+        success: false,
+        message: "Search Query is required.",
+      });
+    }
+
+    // Escape the search query to prevent regex injection issues
+    const regex = new RegExp(searchQuery, "i");
+
+    // Query the Course collection
+    const courseDetails = await Course.find({
+      tag: {
+        $in: [regex],
+      },
+    });
+
+    if (courseDetails.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: `No courses found for the tag: "${searchQuery}"`,
+      });
+    }
+
+    // Map the course details to only include courseId and tags
+    const results = courseDetails.map((course) => ({
+      courseId: course._id,
+      tags: course.tag,
+      courseName: course.courseName,
+    }));
+
+    return res.status(200).json({
+      success: true,
+      message: "All courses related to tag have been fetched successfully.",
+      data: results,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message:
+        "Some error occurred while fetching all courses related to tags.",
+      error: error.message,
+    });
+  }
+};

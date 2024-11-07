@@ -10,6 +10,7 @@ const {
   getFullCourseDetails,
   getInstructorCourses,
   deleteCourse,
+  getTaggedCourses,
 } = require("../controllers/Course");
 
 // Category Controllers import
@@ -94,5 +95,8 @@ router.get("/getCourseReviews/:courseId", getAllRatingsForCourse);
 router.get("/getCourseReviews", getAllRatingsForCourse);
 router.post("/modifyRating", auth, isStudent, modifyRating);
 router.post("/destroyRating", auth, isStudent, deleteRating);
+
+// Get all courses related to tags:
+router.get("/tags/courses", getTaggedCourses);
 
 module.exports = router;

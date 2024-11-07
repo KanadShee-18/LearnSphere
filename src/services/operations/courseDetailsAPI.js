@@ -23,7 +23,30 @@ const {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
   LECTURE_COMPLETION_API,
+  GET_TAGGED_COURSES,
 } = courseEndpoints;
+
+export const getTaggedCourses = async (searchQuery) => {
+  // console.log("query in frontend: ", searchQuery);
+
+  let result = [];
+  try {
+    const response = await apiConnector("GET", GET_TAGGED_COURSES, null, null, {
+      searchQuery: searchQuery,
+    });
+    // console.log("TAG COURSES RESPONSE:", response);
+
+    if (!response.data.success) {
+      throw new Error("Could not fetch tagged courses.");
+    }
+    result = response.data.data;
+  } catch (error) {
+    // console.log("TAG COURSES ERROR", error);
+
+    toast(error.response.data.message);
+  }
+  return result;
+};
 
 export const getAllCourses = async () => {
   let result = [];
