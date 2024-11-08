@@ -129,9 +129,9 @@ function App() {
               <Route
                 path="verify-email"
                 element={
-                  // <OpenRoute>
-                  <VerifyEmail />
-                  // </OpenRoute>
+                  <OpenRoute>
+                    <VerifyEmail />
+                  </OpenRoute>
                 }
               />
 
