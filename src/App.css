@@ -126,6 +126,36 @@ body {
   }
 }
 
+/* DB spinner */
+.dbSpinner {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  animation: spinner-plncf9 4s infinite;
+}
+
+.dbSpinner::before,
+.dbSpinner::after {
+  content: "";
+  grid-area: 1/1;
+  border: 3.8px solid;
+  border-radius: 50%;
+  border-color: #7f81ff #7f81ff #0000 #0000;
+  mix-blend-mode: darken;
+  animation: spinner-plncf9 1s infinite linear;
+}
+
+.dbSpinner::after {
+  border-color: #0000 #0000 #dbdcef #dbdcef;
+  animation-direction: reverse;
+}
+
+@keyframes spinner-plncf9 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
 /* Toast styles */
 
 .custom-toast {

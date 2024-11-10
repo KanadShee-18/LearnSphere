@@ -19,6 +19,7 @@ import { RiMenuUnfold2Fill } from "react-icons/ri";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { toast } from "react-toastify";
 import SearchBox from "./SearchBox";
+import Spinner from "./Spinner";
 
 const Navbar = () => {
   const { toggleTheme } = useContext(ThemeContext);
@@ -66,8 +67,8 @@ const Navbar = () => {
 
       {/* Toggle Button for Navbar */}
       <button
-        className={`absolute p-1 z-30 text-lg rounded-full right-2 top-16 text-slate-900 lg:hidden bg-[#a7caeb] shadow-md shadow-slate-950 bg-opacity-95 backdrop-blur-md`} // Hide on medium and larger screens
-        onClick={() => setIsNavbarOpen((prev) => !prev)} // Toggle visibility
+        className={`absolute p-1 z-30 text-lg rounded-full right-2 top-16 text-slate-900 lg:hidden bg-[#a7caeb] shadow-md shadow-slate-950 bg-opacity-95 backdrop-blur-md`}
+        onClick={() => setIsNavbarOpen((prev) => !prev)}
       >
         {isNavbarOpen ? <MdClose /> : <RiMenuUnfold2Fill />}
       </button>
@@ -80,16 +81,16 @@ const Navbar = () => {
               <li key={index} className="">
                 {link.title === "Catalog" ? (
                   <div className="relative flex items-center hover:cursor-pointer group">
-                    <p className="text-sm md:hover:text-blue-50 md:text-slate-100 text-slate-700">
+                    <p className="text-sm lg:hover:text-blue-50 hover:text-blue-200 lg:text-slate-100 text-slate-700">
                       {link.title}
                     </p>
-                    <MdOutlineArrowDropDown className="size-6 md:text-slate-100 text-slate-700" />
+                    <MdOutlineArrowDropDown className="size-6 lg:text-slate-100 text-slate-700" />
 
-                    <div className="invisible group-hover:visible absolute -top-3 lg:top-0 translate-y-[-12%] rotate-90 lg:rotate-0 -translate-x-[70%] lg:translate-x-0  rounded text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                      <IoMdArrowDropup className="size-20" />
+                    <div className="invisible group-hover:visible absolute -top-3 lg:top-0 translate-y-[-12%] rotate-90 lg:rotate-0 -translate-x-[70%] lg:translate-x-0  rounded text-opacity-95 text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                      <IoMdArrowDropup className="size-20 " />
                     </div>
 
-                    <div className="invisible absolute left-1/2 lg:top-1/2 -top-10 lg:-translate-x-1/2 -translate-x-[130%] translate-y-7 flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
+                    <div className="invisible absolute left-1/2 lg:top-1/2 -top-10 lg:-translate-x-1/2 -translate-x-[130%] translate-y-[34px] flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
                       {subLinks.length ? (
                         subLinks.map((subLink, index) => (
                           <Link
@@ -98,25 +99,28 @@ const Navbar = () => {
                               .join("-")
                               .toLowerCase()}`}
                             key={index}
-                            className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275] hover:text-teal-400 flex items-center justify-start md:p-2 p-1 text-start font-medium font-poppins  md:text-sm text-xs text-[#e3fdff] shadow-md shadow-[#212838]"
+                            className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275]  flex items-center justify-start md:p-2 p-1 text-start font-medium font-poppins  md:text-sm text-xs text-[#e3fdff] shadow-md shadow-[#212838]"
                           >
-                            <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:translate-x-2 drop-shadow-xl">
+                            <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:text-blue-200 lg:hover:text-blue-50 hover:translate-x-2 drop-shadow-xl">
                               {subLink.name}
                             </p>
                           </Link>
                         ))
                       ) : (
-                        <div>Fetching Categories</div>
+                        <div className="flex flex-row gap-x-2 text-nowrap">
+                          <p>Refreshing Categories</p>
+                          <span className="dbSpinner"></span>
+                        </div>
                       )}
                     </div>
                   </div>
                 ) : (
                   <Link to={link?.path} className="flex items-center h-full">
                     <p
-                      className={`text-sm w-full md:w-auto md:hover:text-blue-50 ${
+                      className={`text-sm w-full md:w-auto lg:hover:text-blue-50 hover:text-blue-200  ${
                         matchRoute(link?.path)
-                          ? "md:text-cyan-500 text-[#2e66ff]"
-                          : "md:text-slate-100 text-slate-700"
+                          ? "lg:text-cyan-500 text-[#2e66ff]"
+                          : "lg:text-slate-100 text-slate-700"
                       }`}
                     >
                       {link.title}

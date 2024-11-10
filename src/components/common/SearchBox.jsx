@@ -228,8 +228,8 @@ const SearchBox = ({ setOpenBox }) => {
           type="text"
           value={searchValue}
           onChange={handleOnChange}
-          placeholder="Search (ex: ML, AI, DSA) "
-          className="px-2 py-1 bg-transparent outline-none placeholder:text-xs md:placeholder:text-sm"
+          placeholder="Ex: ML, AI, DSA "
+          className="px-2 py-1 bg-transparent outline-none placeholder:text-xs"
         />
       </div>
       {suggestions.length > 0 && (
