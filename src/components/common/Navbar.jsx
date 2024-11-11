@@ -86,7 +86,7 @@ const Navbar = () => {
                     </p>
                     <MdOutlineArrowDropDown className="size-6 lg:text-slate-100 text-slate-700" />
 
-                    <div className="invisible group-hover:visible absolute -top-3 lg:top-0 translate-y-[-12%] rotate-90 lg:rotate-0 -translate-x-[70%] lg:translate-x-0  rounded text-opacity-95 text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <div className="invisible group-hover:visible absolute -top-3 lg:top-2 translate-y-[-12%] rotate-90 lg:rotate-0 -translate-x-[70%] lg:translate-x-0  rounded text-opacity-95 text-slate-400 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                       <IoMdArrowDropup className="size-20 " />
                     </div>
 
