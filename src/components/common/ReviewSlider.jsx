@@ -60,7 +60,7 @@ const ReviewSlider = () => {
             ? Array(8)
                 .fill(null)
                 .map((_, index) => (
-                  <SwiperSlide key={index} className="h-[220px] md:h-auto">
+                  <SwiperSlide key={index} className="min-h-[220px] md:h-auto">
                     <ShimmerReviewCard />
                   </SwiperSlide>
                 ))
