@@ -370,7 +370,7 @@ const Home = () => {
           >
             <InstructorSection />
           </Suspense>
-          <div className="mb-6 bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text md:text-4xl text-center text-3xl font-semibold text-slate-400 font-inter">
+          <div className="mb-6 relative bg-gradient-to-br from-[#2f89ff] via-[#6a78a5] to-[#16dfd5] text-transparent bg-clip-text md:text-4xl text-center text-3xl font-semibold text-slate-400 font-inter">
             Reviews from other Learners
           </div>
           <Suspense

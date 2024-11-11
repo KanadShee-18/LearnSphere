@@ -159,13 +159,13 @@ const SearchBox = ({ setOpenBox }) => {
       return;
     }
     const response = await getTaggedCourses(query);
-    console.log(response);
+    // console.log(response);
     setSuggestions(response);
   };
 
   const handleOnChange = (e) => {
     const query = e.target.value;
-    console.log("e.target.value is: ", e.target.value);
+    // console.log("e.target.value is: ", e.target.value);
 
     setSearchValue(query);
 
@@ -175,7 +175,7 @@ const SearchBox = ({ setOpenBox }) => {
 
     // Use the latest query directly in the timeout
     debounceTimeoutRef.current = setTimeout(() => {
-      console.log("Query while calling:", query);
+      // console.log("Query while calling:", query);
       fetchSuggestions(query); // Pass the latest query directly
     }, 700);
   };
@@ -216,7 +216,7 @@ const SearchBox = ({ setOpenBox }) => {
     };
   }, []);
 
-  console.log("Search Value: ", searchValue);
+  // console.log("Search Value: ", searchValue);
 
   return (
     <div ref={searchContainerRef} className="relative text-slate-300">

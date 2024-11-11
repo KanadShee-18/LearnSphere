@@ -41,7 +41,7 @@ const EnrolledCourses = () => {
       </div>
       {!enrolledCourses ? (
         <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-          <Spinner />
+          <Shimmer />
         </div>
       ) : !enrolledCourses.length ? (
         <p className="grid h-[10vh] w-full place-content-center text-richblack-5">
@@ -107,6 +107,32 @@ const EnrolledCourses = () => {
           ))}
         </div>
       )}
+    </div>
+  );
+};
+
+const Shimmer = () => {
+  return (
+    <div className="flex flex-col w-full gap-6">
+      {Array(6)
+        .fill(0)
+        .map((_, index) => (
+          <div
+            key={index}
+            className="flex items-center p-4 rounded-lg bg-gradient-to-br from-[#1c233b] to-[#28344d] animate-pulse"
+          >
+            {/* Course Thumbnail */}
+            <div className="w-16 h-16 rounded-lg bg-slate-700"></div>
+            <div className="w-1/2 ml-4">
+              {/* Course Name */}
+              <div className="h-4 mb-2 rounded-md bg-slate-700"></div>
+              {/* Course Description */}
+              <div className="h-3 mb-2 rounded-md bg-slate-700"></div>
+              {/* Course Progress */}
+              <div className="w-3/4 h-3 rounded-md bg-slate-700"></div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
