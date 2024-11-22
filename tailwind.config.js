@@ -8,7 +8,8 @@ export default {
         "custom-radial":
           " radial-gradient(circle, rgba(18,18,29,1) 0%, rgba(16,16,27,1) 39%, rgba(13,13,19,1) 83%, rgba(0,9,28,1) 100%)",
         "custom-linear":
-          "linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);",
+          // "linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);"
+          "linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

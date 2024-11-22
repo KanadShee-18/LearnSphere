@@ -69,7 +69,7 @@ function App() {
   return (
     <>
       <ThemeContextProvider>
-        <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] bg-custom-linear font-inter selection:bg-cyan-700">
+        <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] font-inter selection:bg-cyan-700 bg-custom-linear">
           {/* Background overlay */}
           <Navbar />
 
