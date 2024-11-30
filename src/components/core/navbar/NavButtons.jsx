@@ -3,8 +3,10 @@ import ProfileDropdown from "../auth/ProfileDropdown";
 import { Link } from "react-router-dom";
 import { FaCartShopping, FaMoon } from "react-icons/fa6";
 import { FiSun } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 const NavButtons = ({ user, toggleTheme, pathname, token, theme }) => {
+  const { totalItems } = useSelector((state) => state.cart);
   return (
     <div className="flex items-center ml-2 text-sm md:gap-x-4 gap-x-2">
       {/* <div

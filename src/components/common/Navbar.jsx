@@ -16,7 +16,6 @@ const Navbar = () => {
   const { theme } = useSelector((state) => state.theme);
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
-  const { totalItems } = useSelector((state) => state.cart);
   const [openBox, setOpenBox] = useState(false);
   const location = useLocation();
   const pathname = location.pathname;
