@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Logo from "../../../src/assets/Logo/LL_logo.png";
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 
-
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
   "Articles",
@@ -22,7 +21,6 @@ const Community = ["Forums", "Chapters", "Events"];
 const Footer = () => {
   return (
     <div className="bg-gradient-to-br from-richblack-800 via-slate-800 to-richblack-900 font-inter">
-     
       <div className="relative flex items-center justify-between w-11/12 gap-8 mx-auto leading-6 lg:flex-row max-w-maxContent text-richblack-400 py-14">
         <div className="border-b w-[100%] flex flex-col lg:flex-row pb-5 border-richblack-700">
           {/* Section 1 */}

@@ -3,6 +3,21 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { NavbarLinks } from "../../../data/navbar-links";
+import { motion } from "framer-motion";
+
+const listitemVariants = {
+  initial: { opacity: 0 },
+  animate: (index) => ({
+    opacity: 1,
+    transition: {
+      duration: 0.1 * index,
+      delay: 0.08 * index,
+      type: "spring",
+      stiffness: "70",
+      damping: "20",
+    },
+  }),
+};
 
 const NavLinks = ({ isNavbarOpen, subLinks, matchRoute }) => {
   return (
@@ -12,7 +27,7 @@ const NavLinks = ({ isNavbarOpen, subLinks, matchRoute }) => {
           return (
             <li key={index} className="">
               {link.title === "Catalog" ? (
-                <div className="relative flex items-center hover:cursor-pointer group">
+                <motion.div className="relative flex items-center hover:cursor-pointer group">
                   <p className="text-sm lg:hover:text-blue-50 hover:text-blue-200 lg:text-slate-100 text-slate-700">
                     {link.title}
                   </p>
@@ -22,21 +37,27 @@ const NavLinks = ({ isNavbarOpen, subLinks, matchRoute }) => {
                     <IoMdArrowDropup className="size-20 " />
                   </div>
 
-                  <div className="invisible absolute left-1/2 lg:top-1/2 -top-10 lg:-translate-x-1/2 -translate-x-[130%] translate-y-[34px] flex flex-col rounded-xl bg-slate-400 bg-opacity-95 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
+                  <motion.div className="invisible absolute left-1/2 lg:top-1/2 -top-10 lg:-translate-x-1/2 -translate-x-[130%] translate-y-[34px] flex flex-col rounded-xl bg-slate-400 bg-opacity-85 px-2 py-3 text-slate-800 opacity-0 transition-all duration-50 group-hover:visible group-hover:opacity-100 lg:w-[250px] max-h-fit md:w-[200px] w-[150px] z-10 gap-y-3">
                     {subLinks.length ? (
                       subLinks.map((subLink, index) => (
-                        <Link
-                          to={`/catalog/${subLink.name
-                            .split(" ")
-                            .join("-")
-                            .toLowerCase()}`}
+                        <motion.div
+                          variants={listitemVariants}
+                          initial="initial"
+                          whileInView="animate"
                           key={index}
-                          className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275]  flex items-center justify-start md:p-2 p-1 text-start font-medium font-poppins  md:text-sm text-xs text-[#e3fdff] shadow-md shadow-[#212838]"
                         >
-                          <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:text-blue-200 lg:hover:text-blue-50 hover:translate-x-2 drop-shadow-xl">
-                            {subLink.name}
-                          </p>
-                        </Link>
+                          <Link
+                            to={`/catalog/${subLink.name
+                              .split(" ")
+                              .join("-")
+                              .toLowerCase()}`}
+                            className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275]  flex items-center justify-start md:p-2 p-1 text-start font-medium font-poppins  md:text-sm text-xs text-[#e3fdff] shadow-md shadow-[#212838]"
+                          >
+                            <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:text-blue-200 lg:hover:text-blue-50 hover:translate-x-2 drop-shadow-xl">
+                              {subLink.name}
+                            </p>
+                          </Link>
+                        </motion.div>
                       ))
                     ) : (
                       <div className="flex flex-row gap-x-2 text-nowrap">
@@ -44,8 +65,8 @@ const NavLinks = ({ isNavbarOpen, subLinks, matchRoute }) => {
                         <span className="dbSpinner"></span>
                       </div>
                     )}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               ) : (
                 <Link to={link?.path} className="flex items-center h-full">
                   <p
