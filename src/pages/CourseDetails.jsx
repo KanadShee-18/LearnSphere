@@ -15,7 +15,7 @@ import ReactMarkdown from "react-markdown";
 import Footer from "../components/common/Footer";
 import CourseAccordianBar from "../components/core/Course/CourseAccordianBar";
 import { buyCourse } from "../services/operations/studentFeaturesAPI";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 
 const CourseDetails = () => {

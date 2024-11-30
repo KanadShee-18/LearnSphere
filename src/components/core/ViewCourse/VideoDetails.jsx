@@ -150,12 +150,12 @@ const VideoDetails = () => {
                   {/* Navigation buttons can go here */}
                 </div>
               )}
-              <button
+              {/* <button
                 onClick={() => setMaxView(!maxView)}
                 className="absolute z-[20] md:right-4 right-0 md:bottom-0 flex px-3 py-2 sm:text-[12px] text-[10px] tracking-wider md:tracking-wide rounded-md bg-[#2e3458] text-slate-200 hover:bg-slate-700 hover:text-blue-25 font-inter place-items-center"
               >
                 {!maxView ? "Max View" : "Normal View"}
-              </button>
+              </button> */}
             </Player>
           ) : (
             <div className="w-fit relative mx-auto h-[90vh]">

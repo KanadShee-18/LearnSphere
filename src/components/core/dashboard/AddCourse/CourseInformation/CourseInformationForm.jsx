@@ -12,7 +12,7 @@ import { RiMoneyRupeeCircleLine } from "react-icons/ri";
 import RequirementField from "./RequirementField";
 import IconBtn from "../../../../common/IconBtn";
 import { setCourse, setStep } from "../../../../../slices/courseSlice";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { COURSE_STATUS } from "../../../../../utils/constants";
 import Upload from "../Upload";
 import Spinner from "../../../../common/Spinner";

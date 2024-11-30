@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiTrash2 } from "react-icons/fi";
 import { deleteProfile } from "../../../../services/operations/SettingsAPI";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const DeleteAccount = () => {
   const { token } = useSelector((state) => state.auth);

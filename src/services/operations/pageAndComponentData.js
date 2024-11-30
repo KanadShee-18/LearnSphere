@@ -1,6 +1,6 @@
 import { apiConnector } from "../apiConnector";
 import { catalogData } from "../apis";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const getCatalogPageData = async (categoryId) => {
   const toastId = toast.loading("Loading ...");

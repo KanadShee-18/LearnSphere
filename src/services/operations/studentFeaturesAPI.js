@@ -1,5 +1,5 @@
 import { studentEndpoints } from "../apis";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { apiConnector } from "../apiConnector";
 import rzpLogo from "../../assets/Logo/rzp_logo.png";
 import { setPaymentLoading } from "../../slices/courseSlice";

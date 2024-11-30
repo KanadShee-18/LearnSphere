@@ -15,7 +15,7 @@ import {
   fetchInstructorCourses,
 } from "../../../../services/operations/courseDetailsAPI";
 import { setCourse } from "../../../../slices/courseSlice";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 const CourseTable = ({ courses, setCourses }) => {

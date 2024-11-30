@@ -2,7 +2,7 @@ import copy from "copy-to-clipboard";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { BsFillCaretRightFill } from "react-icons/bs";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import { ACCOUNT_TYPE } from "../../../utils/constants";

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import CountryCode from "../../../../data/countrycode.json";
 import Spinner from "../../../common/Spinner";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import IconBtn from "../../../common/IconBtn";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";

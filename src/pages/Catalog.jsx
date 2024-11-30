@@ -8,7 +8,7 @@ import { getCatalogPageData } from "../services/operations/pageAndComponentData"
 import { useSelector } from "react-redux";
 import Spinner from "../components/common/Spinner";
 import CourseCard from "../components/core/Catalog/CourseCard";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 
 const Catalog = () => {

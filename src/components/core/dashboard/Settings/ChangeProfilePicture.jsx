@@ -5,7 +5,7 @@ import IconBtn from "../../../common/IconBtn";
 import { useNavigate } from "react-router-dom";
 import { updateDisplayPicture } from "../../../../services/operations/SettingsAPI";
 import Spinner from "../../../common/Spinner";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const ChangeProfilePicture = () => {
   const { user } = useSelector((state) => state.profile);

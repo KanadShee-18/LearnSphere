@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../components/common/Spinner";
 
 import PasswordValidator from "../components/common/PassValidator";

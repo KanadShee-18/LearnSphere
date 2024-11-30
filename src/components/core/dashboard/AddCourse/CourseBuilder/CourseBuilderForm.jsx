@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { CgAdd } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import NestedView from "./NestedView";
 import {
   setCourse,

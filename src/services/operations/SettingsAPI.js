@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import { setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";

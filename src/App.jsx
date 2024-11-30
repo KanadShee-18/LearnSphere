@@ -9,6 +9,7 @@ import ThemeContextProvider from "./context/ThemeContextProvider";
 import "react-toastify/dist/ReactToastify.css";
 import { Suspense, lazy, useEffect } from "react";
 import Spinner from "./components/common/Spinner";
+import { Toaster, toast } from "sonner";
 
 // Lazy-loaded components
 const CourseDetails = lazy(() => import("./pages/CourseDetails"));
@@ -59,9 +60,6 @@ function App() {
   //     e.preventDefault();
   //   });
   // }, []);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const online = OnlineStatus();
 
   const { user } = useSelector((state) => state.profile);
@@ -205,19 +203,7 @@ function App() {
               <Route path="*" element={<Error />} />
             </Routes>
           </Suspense>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={3000}
-            pauseOnHover={false}
-            bodyClassName="custom-toast-body"
-            toastClassName="custom-toast-container"
-            // theme="dark"
-            transition={Slide}
-            hideProgressBar={true}
-            closeOnClick={true}
-            className={"mb-10"}
-            closeButton={false}
-          />
+          <Toaster richColors position="bottom-right" className="font-inter" />
         </div>
       </ThemeContextProvider>
     </>

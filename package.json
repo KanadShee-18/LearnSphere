@@ -35,6 +35,7 @@
     "react-toastify": "^10.0.5",
     "react-type-animation": "^3.2.0",
     "redux-toolkit": "^1.1.2",
+    "sonner": "^1.7.0",
     "swiper": "^11.1.14",
     "tailwind-scrollbar-hide": "^1.1.7",
     "video-react": "^0.16.0"

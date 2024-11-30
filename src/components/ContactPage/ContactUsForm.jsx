@@ -4,7 +4,8 @@ import { apiConnector } from "../../services/apiConnector";
 import { contactusEndpoint } from "../../services/apis";
 import CountryCode from "../../data/countrycode.json";
 import Spinner from "../common/Spinner";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
+
 import { useLocation } from "react-router-dom";
 
 const ContactUsForm = () => {
