@@ -10,6 +10,9 @@ import Spinner from "../components/common/Spinner";
 import CourseCard from "../components/core/Catalog/CourseCard";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import BounceToTop from "../components/common/BounceToTop";
+import { FaStar } from "react-icons/fa";
+import CatalogShimmer from "../components/common/CatalogShimmer";
 
 const Catalog = () => {
   const { loading: profileLoading } = useSelector((state) => state.profile);
@@ -90,7 +93,7 @@ const Catalog = () => {
   if (loading || profileLoading) {
     return (
       <div className="w-full grid h-[70vh] place-items-center">
-        <Spinner />
+        <CatalogShimmer />
       </div>
     );
   }
@@ -98,6 +101,9 @@ const Catalog = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen mt-14">
+        <div className="fixed  z-[200]">
+          <BounceToTop />
+        </div>
         {/* Hero section or section: 0 */}
         <div className="box-content px-4 bg-richblack-800">
           <motion.div

@@ -16,16 +16,12 @@ const EnrolledCourses = () => {
     try {
       setLoading(true);
       const response = await getUserEnrolledCourses(token);
-      // console.log(
-      //   "Enrolled courses response comes from backend as: ",
-      //   response
-      // );
-
+      
       setEnrolledCourses(response);
     } catch (error) {
-      // console.log("Unable to set enrolled courses.");
+   
     } finally {
-      setLoading(false); // Ensure loading is false after the request completes
+      setLoading(false); 
     }
   };
 
@@ -35,8 +31,8 @@ const EnrolledCourses = () => {
 
   return (
     <div className="w-10/12 mx-auto mt-14">
-      <div className="flex text-3xl text-blue-25 gap-x-3">
-        <FaGraduationCap className="text-4xl" />
+      <div className="flex text-xl md:text-3xl text-blue-25 gap-x-3">
+        <FaGraduationCap className="text-2xl md:text-4xl" />
         Enrolled Courses
       </div>
       {!enrolledCourses ? (
@@ -51,7 +47,7 @@ const EnrolledCourses = () => {
       ) : (
         <div className="my-8 rounded-lg shadow-md text-richblack-5 shadow-slate-800">
           {/* Headings */}
-          <div className="flex rounded-t-lg bg-[#2f3b54] ">
+          <div className="flex rounded-t-lg bg-[#2f3b54] text-sm md:text-base">
             <p className="w-[45%] px-5 py-3">Course Name</p>
             <p className="w-1/4 px-2 py-3">Duration</p>
             <p className="flex-1 px-2 py-3">Progress</p>
@@ -65,7 +61,7 @@ const EnrolledCourses = () => {
               key={i}
             >
               <div
-                className="flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
+                className="md:flex-row flex flex-col w-[45%] cursor-pointer items-center gap-4 px-3 md:px-5 py-3"
                 onClick={() => {
                   navigate(
                     `/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`
@@ -75,10 +71,10 @@ const EnrolledCourses = () => {
                 <img
                   src={course.thumbnail}
                   alt="course_img"
-                  className="object-cover rounded-lg h-14 w-14"
+                  className="object-cover w-full h-24 rounded-lg md:h-14 md:w-14"
                 />
                 <div className="flex flex-col max-w-xs gap-2">
-                  <p className="font-semibold text-slate-400">
+                  <p className="text-sm font-semibold text-slate-400 md:text-base">
                     {course.courseName}
                   </p>
                   <p className="text-xs text-[#7a8cb4] font-poppins">
@@ -88,10 +84,10 @@ const EnrolledCourses = () => {
                   </p>
                 </div>
               </div>
-              <div className="w-1/4 px-2 py-3 text-slate-400">
+              <div className="w-1/4 px-2 py-3 text-xs text-slate-400 md:text-base">
                 {course?.totalDuration}
               </div>
-              <div className="flex flex-col w-1/5 gap-2 px-2 py-3">
+              <div className="flex flex-col w-1/5 gap-2 px-2 py-3 text-xs md:text-base">
                 <p className="text-slate-400">
                   Progress: {course.progressPercentage || 0}%
                 </p>

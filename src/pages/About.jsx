@@ -10,6 +10,7 @@ import StatsComponenet from "../components/core/AboutPage/Stats";
 import HighlightText from "../components/core/homeaccessories/HighlightText";
 import Footer from "../components/common/Footer";
 import Vision from "../components/core/AboutPage/Vision";
+import BounceToTop from "../components/common/BounceToTop";
 
 const About = () => {
   const targetRef = useRef(null);
@@ -31,6 +32,9 @@ const About = () => {
 
   return (
     <div className="mt-0 text-white md:mt-14 scroll-smooth selection:bg-cyan-800">
+      <div className="fixed  z-[200]">
+        <BounceToTop />
+      </div>
       {/* Section 1 */}
       <motion.div
         ref={targetRef}

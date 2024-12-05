@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Suspense, lazy, useEffect } from "react";
 import Spinner from "./components/common/Spinner";
 import { Toaster, toast } from "sonner";
+import { HelmetProvider } from "react-helmet-async";
 
 // Lazy-loaded components
 const CourseDetails = lazy(() => import("./pages/CourseDetails"));
@@ -66,146 +67,152 @@ function App() {
 
   return (
     <>
-      <ThemeContextProvider>
-        <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] font-inter selection:bg-cyan-700 bg-custom-linear">
-          {/* Background overlay */}
-          <Navbar />
+      <HelmetProvider>
+        <ThemeContextProvider>
+          <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] font-inter selection:bg-cyan-700 bg-custom-linear">
+            {/* Background overlay */}
+            <Navbar />
 
-          {!online && <Offline />}
+            {!online && <Offline />}
 
-          {/* Lazy-loaded routes */}
-          <Suspense
-            fallback={
-              <div className="grid h-[60vh] place-items-center">
-                <Spinner />
-              </div>
-            }
-          >
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="catalog/:catalogName" element={<Catalog />} />
-              <Route path="courses/:courseId" element={<CourseDetails />} />
+            {/* Lazy-loaded routes */}
+            <Suspense
+              fallback={
+                <div className="grid h-[60vh] place-items-center">
+                  <Spinner />
+                </div>
+              }
+            >
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="catalog/:catalogName" element={<Catalog />} />
+                <Route path="courses/:courseId" element={<CourseDetails />} />
 
-              <Route
-                path="/signup"
-                element={
-                  <OpenRoute>
-                    <Signup />
-                  </OpenRoute>
-                }
-              />
+                <Route
+                  path="/signup"
+                  element={
+                    <OpenRoute>
+                      <Signup />
+                    </OpenRoute>
+                  }
+                />
 
-              <Route
-                path="/login"
-                element={
-                  <OpenRoute>
-                    <Login />
-                  </OpenRoute>
-                }
-              />
+                <Route
+                  path="/login"
+                  element={
+                    <OpenRoute>
+                      <Login />
+                    </OpenRoute>
+                  }
+                />
 
-              <Route
-                path="/revert-back"
-                element={
-                  <OpenRoute>
-                    <BackToLogin />
-                  </OpenRoute>
-                }
-              />
+                <Route
+                  path="/revert-back"
+                  element={
+                    <OpenRoute>
+                      <BackToLogin />
+                    </OpenRoute>
+                  }
+                />
 
-              <Route
-                path="forgot-password"
-                element={
-                  <OpenRoute>
-                    <ForgotPassword />
-                  </OpenRoute>
-                }
-              />
+                <Route
+                  path="forgot-password"
+                  element={
+                    <OpenRoute>
+                      <ForgotPassword />
+                    </OpenRoute>
+                  }
+                />
 
-              <Route
-                path="verify-email"
-                element={
-                  <OpenRoute>
-                    <VerifyEmail />
-                  </OpenRoute>
-                }
-              />
+                <Route
+                  path="verify-email"
+                  element={
+                    <OpenRoute>
+                      <VerifyEmail />
+                    </OpenRoute>
+                  }
+                />
 
-              <Route
-                path="update-password/:id"
-                element={
-                  <OpenRoute>
-                    <UpdatePassword />
-                  </OpenRoute>
-                }
-              />
+                <Route
+                  path="update-password/:id"
+                  element={
+                    <OpenRoute>
+                      <UpdatePassword />
+                    </OpenRoute>
+                  }
+                />
 
-              <Route
-                element={
-                  <PrivateRoute>
-                    <Dashboard />
-                  </PrivateRoute>
-                }
-              >
-                <Route path="dashboard/my-profile" element={<MyProfile />} />
-                <Route path="dashboard/settings" element={<Settings />} />
+                <Route
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                >
+                  <Route path="dashboard/my-profile" element={<MyProfile />} />
+                  <Route path="dashboard/settings" element={<Settings />} />
 
-                {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                  <>
-                    <Route path="dashboard/cart" element={<Cart />} />
-                    <Route
-                      path="dashboard/enrolled-courses"
-                      element={<EnrolledCourses />}
-                    />
-                  </>
-                )}
+                  {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                    <>
+                      <Route path="dashboard/cart" element={<Cart />} />
+                      <Route
+                        path="dashboard/enrolled-courses"
+                        element={<EnrolledCourses />}
+                      />
+                    </>
+                  )}
 
-                {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
-                  <>
-                    <Route
-                      path="dashboard/instructor"
-                      element={<Instructor />}
-                    />
-                    <Route
-                      path="dashboard/add-course"
-                      element={<AddCourse />}
-                    />
-                    <Route
-                      path="dashboard/my-courses"
-                      element={<MyCourses />}
-                    />
-                    <Route
-                      path="dashboard/edit-course/:courseId"
-                      element={<EditCourse />}
-                    />
-                  </>
-                )}
-              </Route>
-              <Route
-                element={
-                  <PrivateRoute>
-                    <ViewCourse />
-                  </PrivateRoute>
-                }
-              >
-                {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                  <>
-                    <Route
-                      path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
-                      element={<VideoDetails />}
-                    />
-                  </>
-                )}
-              </Route>
+                  {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+                    <>
+                      <Route
+                        path="dashboard/instructor"
+                        element={<Instructor />}
+                      />
+                      <Route
+                        path="dashboard/add-course"
+                        element={<AddCourse />}
+                      />
+                      <Route
+                        path="dashboard/my-courses"
+                        element={<MyCourses />}
+                      />
+                      <Route
+                        path="dashboard/edit-course/:courseId"
+                        element={<EditCourse />}
+                      />
+                    </>
+                  )}
+                </Route>
+                <Route
+                  element={
+                    <PrivateRoute>
+                      <ViewCourse />
+                    </PrivateRoute>
+                  }
+                >
+                  {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                    <>
+                      <Route
+                        path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                        element={<VideoDetails />}
+                      />
+                    </>
+                  )}
+                </Route>
 
-              <Route path="*" element={<Error />} />
-            </Routes>
-          </Suspense>
-          <Toaster richColors position="bottom-right" className="font-inter" />
-        </div>
-      </ThemeContextProvider>
+                <Route path="*" element={<Error />} />
+              </Routes>
+            </Suspense>
+            <Toaster
+              richColors
+              position="bottom-right"
+              className="font-inter"
+            />
+          </div>
+        </ThemeContextProvider>
+      </HelmetProvider>
     </>
   );
 }
