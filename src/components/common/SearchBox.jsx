@@ -61,9 +61,11 @@ const SearchBox = ({ setOpenBox }) => {
     };
   }, []);
 
-  const handleLinkClick = (courseId) => {
+  const handleLinkClick = (e, courseId) => {
+    e.stopPropagation();
     setSuggestions([]);
     setSearchValue("");
+    setOpenBox(false);
     navigate(`courses/${courseId}`);
   };
 
@@ -99,9 +101,9 @@ const SearchBox = ({ setOpenBox }) => {
   return (
     <div
       ref={searchContainerRef}
-      className="fixed text-slate-300 pt-5 grid w-screen h-screen place-items-center !mt-14 inset-0 z-[1000] bg-slate-900 overflow-auto bg-opacity-95 backdrop-blur-lg"
+      className="fixed text-slate-300 !mt-14 pt-5 grid w-screen h-screen place-items-center inset-0 z-[1000] bg-slate-950 overflow-auto bg-opacity-95 backdrop-blur-lg"
     >
-      <div className="relative w-[350px] md:w-[400px] lg:w-[500px] h-auto min-h-[200px] shadow-md flex gap-x-2 flex-col shadow-slate-950 bg-gradient-to-br from-slate-800 to-slate-700 rounded-md px-4 py-4 text-sm items-start justify-center">
+      <div className="relative w-[350px] md:w-[400px] lg:w-[500px] h-auto min-h-[200px] shadow-md flex gap-x-2 flex-col shadow-slate-950 bg-gradient-to-br from-slate-800 to-slate-900 rounded-md px-4 py-4 text-sm items-start justify-center">
         <span className="absolute -top-3 -right-3 text-slate-300">
           <button onClick={handleCloseButtonClick}>
             <MdClose className="p-1 text-2xl rounded-full bg-slate-700 hover:bg-slate-800 hover:text-slate-200 shadow-md shadow-slate-950" />
@@ -144,7 +146,7 @@ const SearchBox = ({ setOpenBox }) => {
                 // }}
                 custom={index}
                 key={index}
-                onClick={() => handleLinkClick(suggestion.courseId)}
+                onClick={(e) => handleLinkClick(e, suggestion.courseId)}
                 className=" px-2 py-3 my-2 text-xs transition-all duration-200 rounded-md shadow-md md:text-sm shadow-slate-950 hover:cursor-pointer hover:text-teal-400 bg-slate-700 hover:scale-95 text-wrap"
               >
                 {suggestion.courseName}
