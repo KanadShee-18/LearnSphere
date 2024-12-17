@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import SearchBox from "../../common/SearchBox";
 
 const NavSearchBox = ({ openBox, setOpenBox }) => {
+  const handleOnClick = () => {
+    setOpenBox(true);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setOpenBox(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setOpenBox]);
+
   return (
     <div
-      onClick={() => setOpenBox(true)}
-      className="relative flex items-center ml-2 text-[11px] text-teal-500 text-nowrap md:text-sm md:gap-x-2 hover:cursor-pointer gap-x-1"
+      onClick={handleOnClick}
+      className="relative flex items-center ml-2  text-teal-500 text-nowrap text-sm md:gap-x-2 hover:cursor-pointer gap-x-1"
     >
-      <AiOutlineFileSearch className="text-xl md:text-2xl" /> Search Courses
+      <AiOutlineFileSearch className="text-xl md:text-2xl" /> Courses
+      <span>
+        <kbd className="hidden sm:block text-xs bg-slate-800 text-slate-300 rounded-md py-2 px-2 shadow-inner shadow-slate-500">
+          Ctrl + K
+        </kbd>
+      </span>
       <div className="absolute -bottom-14">
         {openBox && <SearchBox setOpenBox={setOpenBox} />}
       </div>
