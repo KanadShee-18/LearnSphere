@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa";
 const CatalogShimmer = () => {
   return (
     <div className="flex flex-col gap-6 mt-16">
-      <div className="box-content flex flex-col w-full h-48 px-4 bg-richblack-800 animate-pulse gap-y-4">
+      <div className="box-content flex flex-col w-full h-48 px-4 bg-richblack-800 animate-pulse gap-y-4 rounded-md shadow-md shadow-slate-900">
         <div className="mt-10 w-[150px] h-7 bg-slate-800 rounded-md ml-5 shadow-md shadow-slate-950" />
         <div className=" w-[90px] h-4 bg-slate-800 rounded-md ml-5 shadow-md shadow-slate-950" />
         <div className="w-3/4 h-10 mt-1 ml-5 rounded-md shadow-md bg-slate-800 shadow-slate-950" />
