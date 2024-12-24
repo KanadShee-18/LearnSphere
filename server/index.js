@@ -18,19 +18,15 @@ const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
 const contactRoutes = require("./routes/Contact");
 
-// Database & Cloudinary Configurations
 require("./config/database").connect();
 require("./config/cloudinary").cloudinaryConnect();
 require("./config/drive").connectDrive();
 
-// Set Port
 const port = process.env.PORT || 4000;
 
-// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS (Cross-Origin Resource Sharing) Settings
 const allowedOrigins = [
   "http://localhost:5173",
   "https://learn-sphere-edui.vercel.app",
@@ -46,10 +42,10 @@ app.use(
       }
       return callback(null, true);
     },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Include OPTIONS
-    allowedHeaders: "Content-Type,Authorization,Accept", // Ensure you include all necessary headers
-    optionsSuccessStatus: 204, // For legacy browsers
-    credentials: true, // Allow cookies or auth headers
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization,Accept",
+    optionsSuccessStatus: 204,
+    credentials: true,
   })
 );
 
