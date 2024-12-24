@@ -31,7 +31,7 @@ const InputBox = ({
           className && `${className}`
         } rounded-lg h-12 px-2 bg-transparent focus-within:bg-[#293346] 
         ${type === "password" && "pr-12"}
-        outline-none border-b-[2px] border-b-slate-500 focus-within:border-b-teal-400 placeholder-transparent text-slate-400`}
+        outline-none border-b-[2px] border-b-slate-500 focus-within:border-b-teal-400 placeholder-transparent text-slate-300`}
       />
       <label className="absolute -top-7 peer-placeholder-shown:top-3 peer-placeholder-shown:left-2 left-0 peer-placeholder-shown:text-base text-sm pointer-events-none text-teal-400 transition-all duration-300">
         {label}

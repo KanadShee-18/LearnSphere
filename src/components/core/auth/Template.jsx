@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Spinner from "../../common/Spinner";
 import SignUpForm from "./SignUpForm";
 import LogInForm from "./LogInForm";
 import frameImg from "../../../assets/Images/frame.png";
@@ -75,7 +74,7 @@ const Template = ({ title, description1, description2, image, formType }) => {
 
 const Shimmer = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-11/12 mx-auto my-32 max-w-maxContent md:my-0 animate-pulse">
+    <div className="flex flex-col gap-6 items-center justify-center w-11/12 mx-auto my-32 max-w-maxContent md:my-0 animate-pulse">
       {/* Left Section Placeholder */}
       <div className="flex flex-col w-11/12 md:w-[450px] max-w-[450px] mx-auto md:mx-0 gap-y-4">
         <div className="w-3/4 h-6 rounded-md bg-slate-600"></div>
@@ -89,7 +88,7 @@ const Shimmer = () => {
       </div>
 
       {/* Right Section Placeholder (Image Frame) */}
-      <div className="w-[400px]  h-[370px] mt-10 md:mt-0 bg-slate-800 rounded-lg relative overflow-hidden">
+      <div className="w-full h-[370px] mt-10 md:mt-0 bg-slate-800 rounded-lg relative overflow-hidden">
         <div className="absolute rounded-lg inset-2 bg-slate-600"></div>
       </div>
       <div className="flex flex-col w-11/12 md:w-[400px] max-w-[450px] mx-auto md:mx-0 gap-y-4">
