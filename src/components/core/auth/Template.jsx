@@ -9,7 +9,7 @@ const Template = ({ title, description1, description2, image, formType }) => {
   const { loading } = useSelector((state) => state.auth);
 
   return (
-    <div className="grid min-h-[calc(100vh-4rem)] place-items-center z-20">
+    <div className="grid min-h-screen place-items-center z-20 pt-14">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#6a78a52e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0 -top-48"></div>
       <div className="fixed -bottom-[40%] aspect-square h-[70vh] md:bg-teal-400 bg-blue-400 rounded-full blur-[140px] md:bg-opacity-25 bg-opacity-35"></div>
       {loading ? (
@@ -89,7 +89,7 @@ const Shimmer = () => {
       </div>
 
       {/* Right Section Placeholder (Image Frame) */}
-      <div className="w-full h-[370px] mt-10 md:mt-0 bg-slate-800 rounded-lg relative overflow-hidden">
+      <div className="w-[500px] h-[370px] mt-10 md:mt-0 bg-slate-800 rounded-lg relative overflow-hidden">
         <div className="absolute rounded-lg inset-2 bg-slate-600"></div>
       </div>
       <div className="flex flex-col w-11/12 md:w-[400px] max-w-[450px] mx-auto md:mx-0 gap-y-4">
