@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { checkValidData } from "../../../utils/validate";
 import { Link } from "react-router-dom";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 import { sendOtp } from "../../../services/operations/authAPI";
 import { ACCOUNT_TYPE } from "../../../utils/constants";
@@ -198,16 +199,21 @@ const SignUpForm = () => {
         ) : (
           <PassValidator />
         )}
-        <Link to={"/login"}>
-          <p className="mt-1 ml-auto text-sm max-w-max text-cyan-500 hover:underline">
+        <Link to={"/login"} className="hover:translate-x-2 duration-300">
+          <p className="mt-1 ml-auto text-sm max-w-max text-cyan-500 hover:text-cyan-300 hover:underline">
             Already have an account?
           </p>
         </Link>
         <button
           type="submit"
-          className="mt-3 rounded-[8px] bg-teal-500 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600 py-[10px] px-[12px] font-medium text-richblack-900 transition-all duration-150"
+          className="mt-3 rounded-[8px] bg-teal-500 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600 py-[10px] px-[12px] font-medium text-richblack-900 transition-all duration-300 "
         >
-          Create Account
+          <p className="group flex items-center gap-x-3 justify-center w-full">
+            Create Account{" "}
+            <span className="group-hover:translate-x-2 duration-200">
+              <FaArrowRightLong />
+            </span>{" "}
+          </p>
         </button>
       </form>
     </div>

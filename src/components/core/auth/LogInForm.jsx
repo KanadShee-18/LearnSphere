@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { login } from "../../../services/operations/authAPI";
 import InputBox from "../../common/InputBox";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const LogInForm = () => {
   const navigate = useNavigate();
@@ -61,7 +62,12 @@ const LogInForm = () => {
         type="submit"
         className="px-3 py-3 mt-6 font-medium bg-teal-500 rounded-lg text-richblack-900 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600"
       >
-        Sign In
+        <p className="group flex items-center gap-x-3 justify-center w-full">
+          Sign In{" "}
+          <span className="group-hover:translate-x-2 duration-200">
+            <FaArrowRightLong />
+          </span>{" "}
+        </p>
       </button>
     </form>
   );
