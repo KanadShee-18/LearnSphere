@@ -55,7 +55,7 @@ const ContactUsForm = () => {
   return (
     <form
       onSubmit={handleSubmit(submitContactForm)}
-      className={`flex justify-center text-cyan-500 max-w-[460px] ${
+      className={`flex justify-center relative text-cyan-500 max-w-[460px] ${
         location.pathname === "/about" &&
         "bg-[#36455f] bg-opacity-20 rounded-lg"
       }`}
