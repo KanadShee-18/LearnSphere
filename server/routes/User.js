@@ -18,15 +18,27 @@ const {
 // Auth middleware
 const { auth } = require("../middlewares/auth");
 
+// OTP Limiter:
+const { otpLimiter } = require("../middlewares/otp-limiter");
+
+// Reset Password Limiter:
+const {
+  resetPasswordRequestLimiter,
+} = require("../middlewares/reset-password-rate-limit");
+
 // Authentcation routes:
 
 router.post("/login", login);
 router.post("/signup", signUp);
-router.post("/sendotp", sendOtp);
+router.post("/sendotp", otpLimiter, sendOtp);
 router.post("/changepassword", auth, changePassword);
 
 // Reset password routes:
-router.post("/reset-password-token", resetPasswordToken);
+router.post(
+  "/reset-password-token",
+  resetPasswordRequestLimiter,
+  resetPasswordToken
+);
 router.post("/reset-password", resetPassword);
 
 module.exports = router;

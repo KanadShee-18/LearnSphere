@@ -15,7 +15,7 @@ require("dotenv").config();
 
 // Initiate the razorpay order
 exports.capturePayment = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const { courses } = req.body;
   const userId = req.user.id;
@@ -46,7 +46,7 @@ exports.capturePayment = async (req, res) => {
       }
       totalAmount += course.price;
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       return res.status(500).json({
         success: false,
         message: error.message,
@@ -61,15 +61,15 @@ exports.capturePayment = async (req, res) => {
   try {
     const PaymentResponse = await instance.orders.create(options);
     PaymentResponse.key = process.env.RAZORPAY_KEY;
-    console.log("Payment Response: ", PaymentResponse);
-    console.log("Order has been successfully initiated.");
+    // console.log("Payment Response: ", PaymentResponse);
+    // console.log("Order has been successfully initiated.");
 
     res.json({
       success: true,
       message: PaymentResponse,
     });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.status(500).json({
       success: false,
       message: "Could not initiate order.",
@@ -178,12 +178,12 @@ const enrollStudents = async (courses, userId, res) => {
           enrolledStudent.lastName
         )
       );
-      console.log(
-        "Course enrollment email has been sent successfully. The response is: ",
-        mailResponse
-      );
+      // console.log(
+      //   "Course enrollment email has been sent successfully. The response is: ",
+      //   mailResponse
+      // );
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return res.status(500).json({
         success: false,
         message: error.message,
@@ -216,7 +216,7 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
       )
     );
   } catch (error) {
-    console.log("Error occurred in sending payment success mail: ", error);
+    // console.log("Error occurred in sending payment success mail: ", error);
     return res.status(500).json({
       success: false,
       message: "Could not send payment success mail.",
