@@ -1,6 +1,6 @@
-import rateLimit from "express-rate-limit";
+const rateLimit = require("express-rate-limit");
 
-export const resetPasswordRequestLimiter = rateLimit({
+const resetPasswordRequestLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 5,
   message:
@@ -8,3 +8,5 @@ export const resetPasswordRequestLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+module.exports = { resetPasswordRequestLimiter };
