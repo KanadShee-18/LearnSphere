@@ -1,5 +1,5 @@
 exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
       <html>
       
       <head>
@@ -43,8 +43,8 @@ exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
               .cta {
                   display: inline-block;
                   padding: 10px 20px;
-                  background-color: #FFD60A;
-                  color: #000000;
+                  background-color: #00ab7a;
+                  color: #ffffff;
                   text-decoration: none;
                   border-radius: 5px;
                   font-size: 16px;
@@ -67,7 +67,7 @@ exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
       
       <body>
           <div class="container">
-              <a href="https://studynotion-edtech-project.vercel.app"><img class="logo" src="https://i.ibb.co/SQRddZG/ls-logo.png"
+              <a href="https://learn-sphere-edui.vercel.app"><img class="logo" src="https://res.cloudinary.com/dtsigjdfz/image/upload/v1747237214/learnsphere-logo_vqcaft.png"
                       alt="LearnSphere Logo"></a>
               <div class="message">Course Payment Confirmation</div>
               <div class="body">
@@ -77,7 +77,7 @@ exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
                   <p>Your Order ID is <b>${orderId}</b></p>
               </div>
               <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-                      href="mailto:kanadshee18@gmail.com">info@learnsphere.com</a>. We are here to help!</div>
+                      href="mailto:kanadshee18@gmail.com">kanadshee18@gmail.com</a>. We are here to help!</div>
           </div>
       </body>
       

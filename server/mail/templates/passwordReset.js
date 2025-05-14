@@ -84,10 +84,10 @@ exports.passwordReset = (name, link) => {
 
   <body>
     <div class="container">
-      <a href="https://studynotion-edtech-project.vercel.app"
+      <a href="https://learn-sphere-edui.vercel.app"
         ><img
           class="logo"
-          src="https://i.ibb.co/SQRddZG/ls-logo.png"
+          src="https://res.cloudinary.com/dtsigjdfz/image/upload/v1747237214/learnsphere-logo_vqcaft.png"
           alt="LearnSphere Logo"
       /></a>
       <div class="message">Password Reset Link</div>

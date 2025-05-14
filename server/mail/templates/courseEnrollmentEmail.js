@@ -1,5 +1,5 @@
 exports.courseEnrollmentEmail = (courseName, firstName, lastName) => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
     <html>
     
     <head>
@@ -67,7 +67,7 @@ exports.courseEnrollmentEmail = (courseName, firstName, lastName) => {
     
     <body>
         <div class="container">
-            <a href="https://studynotion-edtech-project.vercel.app"><img class="logo" src="https://i.ibb.co/SQRddZG/ls-logo.png"
+            <a href="https://learn-sphere-edui.vercel.app"><img class="logo" src="https://res.cloudinary.com/dtsigjdfz/image/upload/v1747237214/learnsphere-logo_vqcaft.png"
                     alt="LearnSphere Logo"></a>
             <div class="message">Course Registration Confirmation</div>
             <div class="body">
@@ -76,10 +76,10 @@ exports.courseEnrollmentEmail = (courseName, firstName, lastName) => {
                     are excited to have you as a participant!</p>
                 <p>Please log in to your learning dashboard to access the course materials and start your learning journey.
                 </p>
-                <a class="cta" href="https://studynotion-edtech-project.vercel.app/dashboard">Go to Dashboard</a>
+                <a class="cta" href="https://learn-sphere-edui.vercel.app/dashboard">Go to Dashboard</a>
             </div>
             <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-                    href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+                    href="mailto:kanadshee18@gmail.com">kanadshee18@gmail.com</a>. We are here to help!</div>
         </div>
     </body>
     

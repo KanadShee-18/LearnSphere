@@ -1,4 +1,3 @@
-import React from "react";
 import HighlightText from "./HighlightText";
 import CTAButton from "./CTAButton";
 import { FaArrowRight } from "react-icons/fa6";
@@ -30,7 +29,7 @@ const InstructorSection = () => {
         </p>
         <p className="text-slate-400 font-inter mt-3 text-sm mb-10 w-[60%] sm:w-[80%]">
           Instructors from around the world teach millions of students on
-          StudyNotion. We provide the tools and skills to teach what you love.
+          Learnsphere. We provide the tools and skills to teach what you love.
         </p>
         <CTAButton active={true} linkto={"/signup"}>
           <div className="flex gap-3 items-center font-playwrite text-[13px]">
