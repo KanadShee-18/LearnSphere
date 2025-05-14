@@ -11,6 +11,7 @@ import { Suspense, lazy, useEffect } from "react";
 import Spinner from "./components/common/Spinner";
 import { Toaster, toast } from "sonner";
 import { HelmetProvider } from "react-helmet-async";
+import { Analytics } from "@vercel/analytics/react";
 
 // Lazy-loaded components
 const CourseDetails = lazy(() => import("./pages/CourseDetails"));
@@ -213,6 +214,7 @@ function App() {
           </div>
         </ThemeContextProvider>
       </HelmetProvider>
+      <Analytics />
     </>
   );
 }
