@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { COURSE_STATUS } from "../../../../utils/constants";
-import ConfirmationModal from "../../../common/ConfirmationModal";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import { RxTimer } from "react-icons/rx";
-import { SiTicktick } from "react-icons/si";
-import { LuFileEdit } from "react-icons/lu";
+import { useState } from "react";
 import { HiTrash } from "react-icons/hi2";
 import { IoTime } from "react-icons/io5";
+import { LuFilePen } from "react-icons/lu";
+import { SiTicktick } from "react-icons/si";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import { toast } from "sonner";
 import { formatDate } from "../../../../services/formatDate";
 import {
   deleteCourse,
   fetchInstructorCourses,
 } from "../../../../services/operations/courseDetailsAPI";
-import { setCourse } from "../../../../slices/courseSlice";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { COURSE_STATUS } from "../../../../utils/constants";
+import ConfirmationModal from "../../../common/ConfirmationModal";
 
 const CourseTable = ({ courses, setCourses }) => {
   const dispatch = useDispatch();
@@ -102,7 +99,7 @@ const CourseTable = ({ courses, setCourses }) => {
                       navigate(`/dashboard/edit-course/${course._id}`);
                     }}
                   >
-                    <LuFileEdit className="text-xl" />
+                    <LuFilePen className="text-xl" />
                   </button>
                   <button
                     className="p-3 text-pink-100 rounded-full hover:bg-slate-700"

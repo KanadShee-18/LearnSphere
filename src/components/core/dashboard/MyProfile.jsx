@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import IconBtn from "../../common/IconBtn";
-import { LuClipboardEdit } from "react-icons/lu";
+import { LuClipboardPen } from "react-icons/lu";
 import orbital from "../../../assets/Images/orbital.png";
 import { PiStudent } from "react-icons/pi";
 import { TbDetails } from "react-icons/tb";
@@ -95,7 +95,7 @@ const MyProfile = () => {
             onclick={() => {
               navigate("/dashboard/settings");
             }}
-            children={<LuClipboardEdit className="md:size-6 size-4" />}
+            children={<LuClipboardPen className="md:size-6 size-4" />}
             customClasses={
               "md:px-4 px-2 h-fit py-2 bg-teal-500 my-auto rounded-md text-slate-800 font-semibold hover:bg-slate-700 hover:text-slate-100 active:bg-slate-700 active:text-slate-100 gap-x-2 md:text-sm text-xs"
             }
