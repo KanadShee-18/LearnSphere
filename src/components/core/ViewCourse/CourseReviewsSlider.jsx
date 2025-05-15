@@ -66,7 +66,7 @@ const CourseReviewsSlider = ({ Reviews, Id }) => {
             {Reviews?.map((review, i) => (
               <div
                 key={i}
-                className="md:min-w-[230px] min-w-[170px] max-w-[300px] bg-gradient-to-br from-[#1d2c47] to-[#273f68] inline-block  md:h-[170px] h-[220px]  mb-16 rounded-md shadow-md bg-opacity-45 backdrop-blur-lg shadow-slate-600 p-4 md:mx-4 mx-2"
+                className="md:min-w-[230px] min-w-[170px] max-w-[300px] bg-gradient-to-br from-[#1d2c47] to-[#273f68] inline-block md:min-h-[170px] min-h-[220px]  mb-16 rounded-md shadow-md bg-opacity-45 backdrop-blur-lg shadow-slate-600 p-4 md:mx-4 mx-2"
               >
                 <div className="flex flex-col gap-y-2">
                   <div className="flex flex-row items-center my-1 gap-x-2 justify-between">
@@ -74,7 +74,7 @@ const CourseReviewsSlider = ({ Reviews, Id }) => {
                       {review?.user?.image && (
                         <img
                           src={review?.user?.image}
-                          className="w-5 h-5 "
+                          className="object-cover w-5 rounded-full md:w-8 lg:w-10 aspect-square"
                           alt="User"
                         />
                       )}
