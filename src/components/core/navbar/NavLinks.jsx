@@ -53,7 +53,7 @@ const NavLinks = ({ isNavbarOpen, subLinks, matchRoute }) => {
                               .toLowerCase()}`}
                             className="w-full h-14 rounded-lg bg-[#4d5c83] bg-opacity-95 hover:bg-[#435275]  flex items-center justify-start md:p-2 p-1 text-start font-medium font-poppins  md:text-sm text-xs text-[#e3fdff] shadow-md shadow-[#212838]"
                           >
-                            <p className="flex items-center justify-start w-full h-full transition-all duration-500 ease-in-out hover:text-blue-200 lg:hover:text-blue-50 hover:translate-x-2 drop-shadow-xl">
+                            <p className="flex items-center justify-start w-full h-full transition-all duration-200 hover:text-blue-200 lg:hover:text-blue-50 hover:translate-x-2 drop-shadow-xl">
                               {subLink.name}
                             </p>
                           </Link>

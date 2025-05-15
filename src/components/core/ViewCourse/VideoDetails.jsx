@@ -10,6 +10,8 @@ import { FaHeadphonesSimple } from "react-icons/fa6";
 import { apiConnector } from "../../../services/apiConnector";
 import { ratingsEndpoints } from "../../../services/apis";
 import CourseReviewsSlider from "./CourseReviewsSlider";
+import { RiMenuFold2Line } from "react-icons/ri";
+import { PiStudent } from "react-icons/pi";
 
 const VideoDetails = () => {
   const navigate = useNavigate();
@@ -32,18 +34,16 @@ const VideoDetails = () => {
 
   const [reviews, setReviews] = useState([]);
 
+  const fetchCourseReviews = async () => {
+    const reviewData = await apiConnector(
+      "GET",
+      ratingsEndpoints.SPECIFIC_COURSE_REVIEW_API.replace(":courseId", courseId)
+    );
+    // console.log("Reviews coming as: ", reviewData);
+    setReviews(reviewData?.data?.courseRatings?.ratingAndReviews);
+  };
+
   useEffect(() => {
-    const fetchCourseReviews = async () => {
-      const reviewData = await apiConnector(
-        "GET",
-        ratingsEndpoints.SPECIFIC_COURSE_REVIEW_API.replace(
-          ":courseId",
-          courseId
-        )
-      );
-      // console.log("Reviews coming as: ", reviewData);
-      setReviews(reviewData?.data?.courseRatings?.ratingAndReviews);
-    };
     if (courseId) {
       fetchCourseReviews();
     }
@@ -150,12 +150,6 @@ const VideoDetails = () => {
                   {/* Navigation buttons can go here */}
                 </div>
               )}
-              {/* <button
-                onClick={() => setMaxView(!maxView)}
-                className="absolute z-[20] md:right-4 right-0 md:bottom-0 flex px-3 py-2 sm:text-[12px] text-[10px] tracking-wider md:tracking-wide rounded-md bg-[#2e3458] text-slate-200 hover:bg-slate-700 hover:text-blue-25 font-inter place-items-center"
-              >
-                {!maxView ? "Max View" : "Normal View"}
-              </button> */}
             </Player>
           ) : (
             <div className="w-fit relative mx-auto h-[90vh]">
@@ -175,16 +169,24 @@ const VideoDetails = () => {
           )}
         </div>
       )}
-      <h1 className="mt-4 md:text-3xl sm:text-2xl text-xl font-semibold text-[#95a9d8]">
-        {videoData?.title}
-      </h1>
-      <p className="pt-2 pb-6 text-sm font-medium md:text-base text-slate-500 ">
+      <div className="flex mt-14 mb-4 text-[#95a9d8] flex-row items-center justify-start gap-x-4">
+        <RiMenuFold2Line className="size-8" />
+        <h1 className="md:px-2 md:text-3xl sm:text-2xl text-xl font-semibold">
+          {videoData?.title}
+        </h1>
+      </div>
+      <div className="mt-2 mb-4 w-full bg-slate-600 h-px" />
+      <p className="pt-2 pb-6 md:px-4 lg:px-10 text-sm font-medium md:text-base text-slate-500 ">
         {videoData?.description}
       </p>
       <div className="md:w-10/12 w-[95%] mx-auto md:mt-24 mt-16 mb-32">
-        <h2 className="text-lg text-[#6071a8] sm:text-xl mb-8 md:text-2xl">
-          Students Reviews for This Course
-        </h2>
+        <div className="flex flex-row items-center justify-start gap-x-4">
+          <PiStudent className="text-2xl text-[#6071a8]" />
+          <h2 className="text-lg text-[#6071a8] sm:text-xl md:text-2xl">
+            Students Reviews in this Course
+          </h2>
+        </div>
+        <div className="mt-2 mb-12 w-full bg-slate-600 h-px" />
         <CourseReviewsSlider Reviews={reviews} Id={"CourseReview"} />
       </div>
     </div>

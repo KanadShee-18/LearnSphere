@@ -94,7 +94,7 @@ router.get("/getAllRatingsAndReviews", getAllRatings);
 router.get("/getCourseReviews/:courseId", getAllRatingsForCourse);
 router.get("/getCourseReviews", getAllRatingsForCourse);
 router.post("/modifyRating", auth, isStudent, modifyRating);
-router.post("/destroyRating", auth, isStudent, deleteRating);
+router.delete("/destroyRating", auth, isStudent, deleteRating);
 
 // Get all courses related to tags:
 router.get("/tags/courses", getTaggedCourses);

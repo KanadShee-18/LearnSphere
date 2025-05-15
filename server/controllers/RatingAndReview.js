@@ -76,7 +76,8 @@ exports.createRating = async (req, res) => {
 // Edit rating:
 exports.modifyRating = async (req, res) => {
   try {
-    const { reviewId, rating, review, userId } = req.body;
+    const userId = req.user.id;
+    const { reviewId, rating, review } = req.body;
     if (!reviewId || !rating || !review || !userId) {
       return res.status(400).json({
         success: false,
@@ -127,7 +128,8 @@ exports.modifyRating = async (req, res) => {
 // Delete Rating
 exports.deleteRating = async (req, res) => {
   try {
-    const { reviewId, userId } = req.body;
+    const userId = req.user.id;
+    const { reviewId } = req.body;
     if (!reviewId || !userId) {
       return res.status(400).json({
         success: false,

@@ -22,7 +22,7 @@ const MyProfile = () => {
         alt="orbital"
         className="absolute object-contain orbital"
       />
-      <h1 className="relative my-8 ml-12 text-xs text-slate-400">
+      <h1 className="relative my-8 ml-12 text-xs md:text-sm text-slate-400 tracking-wider">
         Home<span className="text-[#ace320]">{location.pathname}</span>
       </h1>
       <div className="w-10/12 flex items-center gap-x-2 max-w-[1000px] mx-auto text-start md:text-4xl text-2xl font-medium text-blue-25 font-poppins">
@@ -42,7 +42,9 @@ const MyProfile = () => {
             <p className="text-base text-teal-500 md:text-lg font-playwrite">
               {user?.firstName + " " + user?.lastName}
             </p>
-            <p className="text-xs text-blue-100 md:text-sm">{user?.email}</p>
+            <p className="text-xs text-cyan-300 md:text-sm tracking-wider">
+              {user?.email}
+            </p>
           </div>
         </div>
         <IconBtn
@@ -50,7 +52,7 @@ const MyProfile = () => {
           onclick={() => {
             navigate("/dashboard/settings");
           }}
-          children={<LuClipboardEdit className="md:size-6 size-4" />}
+          children={<LuClipboardPen className="md:size-6 size-4" />}
           customClasses={
             "md:px-4 px-2 h-fit py-2 bg-teal-500 my-auto rounded-md text-slate-800 font-semibold hover:bg-slate-700 hover:text-slate-100 active:bg-slate-700 active:text-slate-100 gap-x-2 md:text-sm text-xs"
           }
@@ -69,7 +71,7 @@ const MyProfile = () => {
             onclick={() => {
               navigate("/dashboard/settings");
             }}
-            children={<LuClipboardEdit className="md:size-6 size-4" />}
+            children={<LuClipboardPen className="md:size-6 size-4" />}
             customClasses={
               "md:px-4 px-2 h-fit py-2 bg-teal-500 my-auto rounded-md text-slate-800 font-semibold hover:bg-slate-700 hover:text-slate-100 active:bg-slate-700 active:text-slate-100 gap-x-2 md:text-sm text-xs"
             }

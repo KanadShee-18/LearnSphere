@@ -185,14 +185,14 @@ const Home = () => {
               <p>LEARN</p>.<p>TEACH</p>.<p>EARN</p>
             </motion.div>
             <motion.div
-              initial={{ x: 400, y: 300, opacity: 0 }}
-              animate={{ x: 0, y: 0, opacity: 1 }}
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
                 duration: 1.5,
                 delay: 2.0,
                 type: "spring",
                 stiffness: 60,
-                damping: 25,
+                damping: 20,
               }}
               className="flex flex-row mt-8 gap-7 font-poppins"
             >

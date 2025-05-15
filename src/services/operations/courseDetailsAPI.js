@@ -1,10 +1,8 @@
 import { toast } from "sonner";
 
 import { updateCompletedLectures } from "../../slices/viewCourseSlice";
-// import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";
 import { courseEndpoints } from "../apis";
-import Spinner from "../../components/common/Spinner";
 
 const {
   COURSE_DETAILS_API,
@@ -22,6 +20,8 @@ const {
   DELETE_COURSE_API,
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
+  MODIFY_RATING_API,
+  DESTROY_RATING_API,
   LECTURE_COMPLETION_API,
   GET_TAGGED_COURSES,
 } = courseEndpoints;
@@ -394,3 +394,46 @@ export const createRating = async (data, token) => {
 
   return success;
 };
+
+// Edit a rating for course
+export const modifyRating = async (data, token) => {
+  let success = false;
+  try {
+    const response = await apiConnector("POST", MODIFY_RATING_API, data, {
+      Authorization: `Bearer ${token}`,
+    });
+    // console.log("EDIT RATING API RESPONSE............", response);
+    if (!response?.data?.success) {
+      throw new Error("Could not update review!");
+    } else {
+      toast.success("Review Updated!");
+    }
+    success = true;
+  } catch (error) {
+    success = false;
+    // console.log("EDIT RATING API ERROR............", error);
+    toast.error(error?.response?.data?.message);
+  }
+  return success;
+};
+
+// Delete a REVIEW for course
+export const destroyRating = async (data, token) => {
+  let success = false;
+  try {
+    const response = await apiConnector("DELETE", DESTROY_RATING_API, data, {
+      Authorization: `Bearer ${token}`,
+    });
+    // console.log("DELETE RATING API RESPONSE............", response);
+    if (!response?.data?.success) {
+      throw new Error("Could not delete review!");
+    } else {
+      toast.success("Review Deleted!");
+    }
+  } catch (error) {
+    success = false;
+    // console.log("DELETE RATING API ERROR............", error);
+    toast.error(error?.response?.data?.message);
+  }
+  return success;
+}

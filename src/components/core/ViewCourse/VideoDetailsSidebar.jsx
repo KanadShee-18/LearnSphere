@@ -46,21 +46,6 @@ const VideoDetailsSidebar = ({ setReviewModal }) => {
     setActiveFlags();
   }, [courseSectionData, courseEntireData, location.pathname]);
 
-  // const handleCompletedLecture = async (courseId, subSectionId) => {
-  //   setLoading(true);
-  //   const res = await markLectureAsComplete(
-  //     {
-  //       courseId: courseId,
-  //       subSectionId: subSectionId,
-  //     },
-  //     token
-  //   );
-  //   if (res) {
-  //     dispatch(updateCompletedLectures(subSectionId));
-  //   }
-  //   setLoading(false);
-  // };
-
   return (
     <>
       {showSidebar && (
