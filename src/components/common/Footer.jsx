@@ -20,7 +20,10 @@ const Community = ["Forums", "Chapters", "Events"];
 
 const Footer = () => {
   return (
-    <div className="bg-gradient-to-br from-richblack-800 via-slate-800 to-richblack-900 font-inter">
+    <div
+      id="footer"
+      className="bg-gradient-to-br from-richblack-800 via-slate-800 to-richblack-900 font-inter"
+    >
       <div className="relative flex items-center justify-between w-11/12 gap-8 mx-auto leading-6 lg:flex-row max-w-maxContent text-richblack-400 py-14">
         <div className="border-b w-[100%] flex flex-col lg:flex-row pb-5 border-richblack-700">
           {/* Section 1 */}
@@ -30,19 +33,19 @@ const Footer = () => {
               <h1 className="text-slate-300 font-semibold text-[16px]">
                 Company
               </h1>
-              <div className="flex flex-col gap-2 text-[#577bb3]">
+              <div className="flex flex-col gap-2 text-[#678fcf]">
                 {["About", "Careers", "Affiliates"].map((ele, i) => {
                   return (
                     <div
                       key={i}
                       className="text-[14px] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
                     >
-                      <Link to="/">{ele}</Link>
+                      <Link to="/#footer">{ele}</Link>
                     </div>
                   );
                 })}
               </div>
-              <div className="flex gap-3 text-lg text-[#577bb3]">
+              <div className="flex gap-3 text-lg text-[#678fcf]">
                 <FaFacebook className="transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-slate-400" />
                 <FaGoogle className="transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-slate-400" />
                 <FaTwitter className="transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-slate-400" />
@@ -61,11 +64,9 @@ const Footer = () => {
                   return (
                     <div
                       key={index}
-                      className="text-[14px] text-[#577bb3] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
+                      className="text-[14px] text-[#678fcf] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
                     >
-                      <Link to={ele.split(" ").join("-").toLowerCase()}>
-                        {ele}
-                      </Link>
+                      <Link to="/#footer">{ele}</Link>
                     </div>
                   );
                 })}
@@ -74,7 +75,7 @@ const Footer = () => {
               <h1 className="text-slate-300 font-semibold text-[16px] mt-7">
                 Support
               </h1>
-              <div className="text-[14px] text-[#577bb3] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200 mt-2">
+              <div className="text-[14px] text-[#678fcf] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200 mt-2">
                 <Link to={"/contact"}>Help Center</Link>
               </div>
             </div>
@@ -89,11 +90,9 @@ const Footer = () => {
                   return (
                     <div
                       key={index}
-                      className="text-[14px] text-[#577bb3] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
+                      className="text-[14px] text-[#678fcf] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
                     >
-                      <Link to={ele.split(" ").join("-").toLowerCase()}>
-                        {ele}
-                      </Link>
+                      <Link to="/#footer">{ele}</Link>
                     </div>
                   );
                 })}
@@ -107,11 +106,9 @@ const Footer = () => {
                   return (
                     <div
                       key={index}
-                      className="text-[14px] cursor-pointer hover:text-slate-300 text-[#577bb3] hover:translate-x-2 transition-all duration-200"
+                      className="text-[14px] cursor-pointer hover:text-slate-300 text-[#678fcf] hover:translate-x-2 transition-all duration-200"
                     >
-                      <Link to={ele.split(" ").join("-").toLowerCase()}>
-                        {ele}
-                      </Link>
+                      <Link to="/#footer">{ele}</Link>
                     </div>
                   );
                 })}
@@ -132,9 +129,9 @@ const Footer = () => {
                       return (
                         <div
                           key={index}
-                          className="text-[14px] text-[#577bb3] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
+                          className="text-[14px] text-[#678fcf] cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
                         >
-                          <Link to={link.link}>{link.title}</Link>
+                          <Link to={"/#footer"}>{link.title}</Link>
                         </div>
                       );
                     })}
@@ -160,9 +157,7 @@ const Footer = () => {
                       : "border-r border-richblack-700 cursor-pointer hover:text-slate-300 hover:translate-x-2 transition-all duration-200"
                   } px-3 `}
                 >
-                  <Link to={ele.split(" ").join("-").toLocaleLowerCase()}>
-                    {ele}
-                  </Link>
+                  <Link to={"/#footer"}>{ele}</Link>
                 </div>
               );
             })}

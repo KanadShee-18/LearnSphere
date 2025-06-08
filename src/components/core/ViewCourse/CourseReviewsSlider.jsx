@@ -35,7 +35,7 @@ const CourseReviewsSlider = ({ Reviews, Id }) => {
         token
       );
       window.location.reload();
-    } catch (error) {
+    } catch {
       toast.error("Error occurred while deleting review. Try again!");
     }
   };
