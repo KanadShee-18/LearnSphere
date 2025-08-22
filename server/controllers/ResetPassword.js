@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
     // generate token
     const token = crypto.randomBytes(20).toString("hex");
     // update user by adding token and expire time
-    const upatedDetails = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { email: email },
       {
         token: token,
@@ -47,6 +47,7 @@ exports.resetPasswordToken = async (req, res) => {
       message: `Email sent successfully. Please check your email ${email} to continue further.`,
     });
   } catch (error) {
+    console.log("Error in reset password token: ", error);
     res.status(500).json({
       error: error.message,
       success: false,
