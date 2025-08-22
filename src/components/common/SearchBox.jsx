@@ -21,6 +21,7 @@ const listitemVariants = {
 };
 
 const SearchBox = ({ setOpenBox }) => {
+  const inputRef = useRef();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -99,6 +100,10 @@ const SearchBox = ({ setOpenBox }) => {
     };
   }, []);
 
+  useEffect(() => {
+    inputRef.current && inputRef.current.focus();
+  }, []);
+
   return (
     <div
       onClick={() => {
@@ -106,13 +111,21 @@ const SearchBox = ({ setOpenBox }) => {
         setSearchValue("");
         setOpenBox(false);
       }}
-      className="fixed text-slate-300 !mt-14 pt-5 grid w-screen h-screen place-items-center inset-0 z-[1000] bg-slate-950 bg-opacity-70 backdrop-blur-sm"
+      className="fixed text-slate-300 !mt-14 pt-5 grid w-screen h-screen place-items-center inset-0 z-[1000] bg-slate-950/70"
     >
       <div
         ref={searchContainerRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-[350px] md:w-[400px] lg:w-[500px] h-auto min-h-[200px] shadow-md flex gap-x-2 flex-col shadow-slate-950 bg-gradient-to-br from-slate-800 to-slate-900 rounded-md px-4 py-4 text-sm items-start justify-center  scrollbar-hide"
+        className="relative w-[350px] md:w-[400px] lg:w-[500px] h-auto min-h-[200px] shadow-md flex gap-x-2 flex-col shadow-slate-950 bg-gradient-to-br from-slate-800 to-slate-900 rounded-md px-4 pt-4 pb-10 text-sm items-start justify-center  scrollbar-hide"
       >
+        <span className="absolute bottom-0.5 right-2 font-poppins text-xs bg-neutral-900 px-2 py-1 rounded-md">
+          Press{" "}
+          <kbd className="font-poppins px-1.5 py-0.5 rounded-md bg-black/55 text-rose-200/75 font-medium">
+            ESC
+          </kbd>{" "}
+          to cancel
+        </span>
+
         <span className="absolute -top-3 -right-3 text-slate-300">
           <button onClick={handleCloseButtonClick}>
             <MdClose className="p-1 text-2xl rounded-full bg-slate-700 hover:bg-slate-800 hover:text-slate-200 shadow-md shadow-slate-950" />
@@ -126,6 +139,7 @@ const SearchBox = ({ setOpenBox }) => {
             <BsSearch className="relative text-teal-400" />
           </div>
           <input
+            ref={inputRef}
             type="text"
             value={searchValue}
             onChange={handleOnChange}

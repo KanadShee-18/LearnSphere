@@ -1,10 +1,10 @@
-import React, { lazy, Suspense, useRef } from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, spring, useScroll, useTransform } from "framer-motion";
-import Spinner from "../components/common/Spinner.jsx";
-import BounceToTop from "../components/common/BounceToTop.jsx";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { lazy, Suspense, useRef } from "react";
 import { Helmet } from "react-helmet-async";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import BounceToTop from "../components/common/BounceToTop.jsx";
+import Spinner from "../components/common/Spinner.jsx";
 
 // Lazy load components
 const LearningLanguageSection = lazy(() =>
@@ -52,18 +52,12 @@ const container = (delay) => ({
 });
 
 const Home = () => {
-  const navigate = useNavigate();
   const targetRef1 = useRef(null);
-  const targetRef2 = useRef(null);
 
   // Set up separate scroll hooks with different offsets
   const { scrollYProgress: scrollYProgress1 } = useScroll({
     target: targetRef1,
     offset: ["end end", "end start"],
-  });
-  const { scrollYProgress: scrollYProgress2 } = useScroll({
-    target: targetRef2,
-    offset: ["start end", "end start"],
   });
 
   const opacity = useTransform(scrollYProgress1, [0, 0.5, 0.8], [1, 0.6, 0.1], {
@@ -76,17 +70,6 @@ const Home = () => {
     stiffness: 50,
     damping: 20,
   });
-
-  const scaleFixed = useTransform(
-    scrollYProgress1,
-    [0, 0.5, 0.8],
-    [1, 0.5, 0.3],
-    {
-      type: "spring",
-      stiffness: 50,
-      damping: 20,
-    }
-  );
 
   return (
     <>

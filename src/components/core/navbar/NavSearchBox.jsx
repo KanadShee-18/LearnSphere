@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import SearchBox from "../../common/SearchBox";
 
@@ -12,6 +12,10 @@ const NavSearchBox = ({ openBox, setOpenBox }) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setOpenBox(true);
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpenBox(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);

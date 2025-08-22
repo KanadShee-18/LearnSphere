@@ -1,17 +1,20 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
 
-import Catalog from "./pages/Catalog";
-import Navbar from "./components/common/Navbar";
-import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, Slide } from "react-toastify";
-import ThemeContextProvider from "./context/ThemeContextProvider";
-import "react-toastify/dist/ReactToastify.css";
-import { Suspense, lazy, useEffect } from "react";
-import Spinner from "./components/common/Spinner";
-import { Toaster, toast } from "sonner";
-import { HelmetProvider } from "react-helmet-async";
 import { Analytics } from "@vercel/analytics/react";
+import { Suspense, lazy } from "react";
+import { HelmetProvider } from "react-helmet-async";
+import { useSelector } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
+import Navbar from "./components/common/Navbar";
+import Offline from "./components/common/Offline";
+import Spinner from "./components/common/Spinner";
+import ThemeContextProvider from "./context/ThemeContextProvider";
+import Catalog from "./pages/Catalog";
+import Home from "./pages/Home";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import OnlineStatus from "./utils/OnlineStatus";
 
 // Lazy-loaded components
 const CourseDetails = lazy(() => import("./pages/CourseDetails"));
@@ -51,10 +54,6 @@ const ViewCourse = lazy(() => import("./pages/ViewCourse"));
 const VideoDetails = lazy(() =>
   import("./components/core/ViewCourse/VideoDetails")
 );
-import { ACCOUNT_TYPE } from "./utils/constants";
-import Offline from "./components/common/Offline";
-import OnlineStatus from "./utils/OnlineStatus";
-import Home from "./pages/Home";
 
 function App() {
   // useEffect(() => {
