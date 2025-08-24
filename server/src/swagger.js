@@ -1,5 +1,6 @@
 import swaggerAutogen from "swagger-autogen";
-import { CONFIGS } from "./config/index.ts";
+import dotenv from "dotenv";
+dotenv.config();
 
 const doc = {
   info: {
@@ -8,11 +9,11 @@ const doc = {
     version: "1.1.0",
   },
   host:
-    CONFIGS.node_environment === "development"
+    process.env.NODE_ENV === "development"
       ? "localhost:4000"
       : `${CONFIGS.server_url}`,
   basePath: "/api/v2",
-  schemes: [CONFIGS.node_environment === "development" ? "http" : "https"],
+  schemes: [process.env.NODE_ENV === "development" ? "http" : "https"],
 };
 
 const outputFile = "./swagger-output.json";
