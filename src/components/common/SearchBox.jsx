@@ -21,7 +21,7 @@ const listitemVariants = {
 };
 
 const SearchBox = ({ setOpenBox }) => {
-  const inputRef = useRef();
+  const inputSearchRef = useRef();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -101,7 +101,7 @@ const SearchBox = ({ setOpenBox }) => {
   }, []);
 
   useEffect(() => {
-    inputRef.current && inputRef.current.focus();
+    inputSearchRef.current && inputSearchRef.current.focus();
   }, []);
 
   return (
@@ -139,7 +139,7 @@ const SearchBox = ({ setOpenBox }) => {
             <BsSearch className="relative text-teal-400" />
           </div>
           <input
-            ref={inputRef}
+            ref={inputSearchRef}
             type="text"
             value={searchValue}
             onChange={handleOnChange}

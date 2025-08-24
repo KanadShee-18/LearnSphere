@@ -1,6 +1,5 @@
-import React from "react";
-import Template from "../components/core/auth/Template";
 import signupImg from "../assets/Images/signup.jpg";
+import Template from "../components/core/auth/Template";
 
 const Signup = () => {
   return (

@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 server/.env
 server/node_modules
+server/src/swagger-output.json
 .env

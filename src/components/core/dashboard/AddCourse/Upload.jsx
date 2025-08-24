@@ -98,7 +98,7 @@ const Upload = ({
         } flex min-h-[250px] cursor-pointer items-center rounded-md border-2 border-dotted border-slate-600`}
         {...getRootProps()}
       >
-        <input {...getInputProps()} ref={inputRef} />
+        <input {...getInputProps()} />
         {previewSource ? (
           <div className="flex flex-col items-center w-full p-6">
             {!video && !pdf ? (
