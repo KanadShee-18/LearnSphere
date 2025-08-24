@@ -11,7 +11,7 @@ const doc = {
   host:
     process.env.NODE_ENV === "development"
       ? "localhost:4000"
-      : `${CONFIGS.server_url}`,
+      : `${process.env.SERVER_URL}`,
   basePath: "/api/v2",
   schemes: [process.env.NODE_ENV === "development" ? "http" : "https"],
 };
