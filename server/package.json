@@ -4,7 +4,7 @@
   "main": "./dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p . && node src/swagger.js",
     "start": "node dist/index.js",
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "swagger": "node src/swagger.js"
