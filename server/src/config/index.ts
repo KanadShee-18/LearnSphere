@@ -19,4 +19,6 @@ export const CONFIGS = {
   google_api_private_key: process.env.PRIVATE_KEY,
   google_drive_folder_identifier: process.env.GOOGLE_DRIVE_FOLDER,
   client_side_url: process.env.BASE_URL,
+  node_environment: process.env.NODE_ENV,
+  server_url: process.env.SERVER_URL,
 };

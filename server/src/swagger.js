@@ -1,4 +1,5 @@
 import swaggerAutogen from "swagger-autogen";
+import { CONFIGS } from "./config/index.ts";
 
 const doc = {
   info: {
@@ -6,9 +7,12 @@ const doc = {
     description: "Automatically generated swagger docs for testing APIs",
     version: "1.1.0",
   },
-  host: "localhost:4000",
+  host:
+    CONFIGS.node_environment === "development"
+      ? "localhost:4000"
+      : `${CONFIGS.server_url}`,
   basePath: "/api/v2",
-  schemes: ["http"],
+  schemes: [CONFIGS.node_environment === "development" ? "http" : "https"],
 };
 
 const outputFile = "./swagger-output.json";
