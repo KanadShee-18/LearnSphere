@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/common/Spinner";
 import { getPasswordResetToken } from "../services/operations/authAPI";
 
 const ForgotPassword = () => {
+  const emailRef = useRef();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
@@ -14,6 +15,10 @@ const ForgotPassword = () => {
     e.preventDefault();
     dispatch(getPasswordResetToken(email, setEmailSent));
   };
+
+  useEffect(() => {
+    emailRef.current && emailRef.current.focus();
+  }, []);
 
   return (
     <div className="flex w-11/12 mx-auto text-white my-28 max-w-maxContent">
@@ -46,6 +51,7 @@ const ForgotPassword = () => {
                   Email Address <sup className="text-pink-200">*</sup>
                 </span>
                 <input
+                  ref={emailRef}
                   type="email"
                   name="email"
                   placeholder="Enter your email"

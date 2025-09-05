@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +7,7 @@ import InputBox from "../../common/InputBox";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const LogInForm = () => {
+  const emailRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,12 +20,17 @@ const LogInForm = () => {
     dispatch(login(email, password, navigate));
   };
 
+  useEffect(() => {
+    emailRef.current && emailRef.current.focus();
+  }, []);
+
   return (
     <form
       onSubmit={handleOnSubmit}
       className="flex flex-col w-full mt-6 text-white gap-y-2"
     >
       <InputBox
+        ref={emailRef}
         type={"text"}
         required
         name={"email"}

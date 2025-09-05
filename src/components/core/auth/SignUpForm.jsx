@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
@@ -15,6 +15,7 @@ import Tab from "../../common/Tab";
 import PassValidator from "../../common/PassValidator";
 
 const SignUpForm = () => {
+  const nameRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -91,6 +92,10 @@ const SignUpForm = () => {
     },
   ];
 
+  useEffect(() => {
+    nameRef.current && nameRef.current.focus();
+  }, []);
+
   return (
     <div className="text-white">
       {/* Tab */}
@@ -104,6 +109,7 @@ const SignUpForm = () => {
               First Name <sup className="text-pink-200">*</sup>
             </p>
             <input
+              ref={nameRef}
               required
               type="text"
               name="firstName"
