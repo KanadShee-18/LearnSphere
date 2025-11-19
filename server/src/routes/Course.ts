@@ -44,11 +44,15 @@ import {
   deleteRating,
 } from "../controllers/RatingAndReview.js";
 
+import { aiContent } from "../ai/gemini.js";
+
 // Course progress controller:
 import { updateCourseProgress } from "../controllers/CourseProgress.js";
 
 // Middlewares importing from Auth
 import { auth, isStudent, isInstructor, isAdmin } from "../middlewares/auth.js";
+import { aiContent_groq } from "../ai/groq.js";
+import { generateAIthumbnail } from "../ai/hugging-face.js";
 
 // ******************************************
 
@@ -98,5 +102,9 @@ router.delete("/course/destroyRating", auth, isStudent, deleteRating);
 
 // Get all courses related to tags:
 router.get("/course/tags/courses", getTaggedCourses);
+
+// router.post("/get-content", aiContent);
+router.post("/course/get-content", auth, aiContent_groq);
+router.post("/course/get-thumbnail", auth, generateAIthumbnail);
 
 export default router;

@@ -24,6 +24,8 @@ const {
   DESTROY_RATING_API,
   LECTURE_COMPLETION_API,
   GET_TAGGED_COURSES,
+  GET_AI_CONTENT_API,
+  GET_AI_THUMBNAIL_API,
 } = courseEndpoints;
 
 export const getTaggedCourses = async (searchQuery) => {
@@ -123,6 +125,60 @@ export const addCourseDetails = async (data, token) => {
   }
 
   //console.log("Course creation result: ", result);
+  return result;
+};
+
+// add the course details through AI
+export const addCourseDetailsWithAI = async (courseName, token) => {
+  let result = null;
+  try {
+    const response = await apiConnector(
+      "POST",
+      GET_AI_CONTENT_API,
+      { courseName },
+      {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    // console.log("CREATE COURSE API RESPONSE............", response);
+    if (!response?.data?.success) {
+      throw new Error("Could Not Add Course Details");
+    }
+    toast.success("Course Details Added Successfully using AI");
+    result = response?.data?.data;
+  } catch (error) {
+    // console.log("CREATE COURSE WITH AI API ERROR............", error);
+    toast.error(error.message);
+  }
+  // console.log("Course creation result with AI: ", result);
+  return result;
+};
+
+// generate thumbnail through AI
+export const addCourseThumbnail = async (prompt, token) => {
+  let result = null;
+  try {
+    const response = await apiConnector(
+      "POST",
+      GET_AI_THUMBNAIL_API,
+      { prompt },
+      {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    // console.log("CREATE THUMBNAIL API RESPONSE............", response);
+    if (!response?.data?.success) {
+      throw new Error("Could Not generate thumbnail");
+    }
+    toast.success("Thumbnail Generated!");
+    result = response?.data;
+  } catch (error) {
+    // console.log("THUMBNAIL GENERATION WITH AI API ERROR............", error);
+    toast.error(error.message);
+  }
+  // console.log("Thumbnail generation result with AI: ", result);
   return result;
 };
 
@@ -436,4 +492,4 @@ export const destroyRating = async (data, token) => {
     toast.error(error?.response?.data?.message);
   }
   return success;
-}
+};

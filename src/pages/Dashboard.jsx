@@ -10,18 +10,18 @@ const Dashboard = () => {
 
   if (profileLoading || authLoading) {
     return (
-      <div className="flex items-center justify-center mt-20">
+      <div className='flex items-center justify-center mt-20'>
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="text-white mt-14 relative flex min-h-[calc(100vh-3.5rem)]">
+    <div className='text-white mt-14 relative flex h-screen'>
       <Sidebar />
 
-      <div className="h-[calc(100vh-3.5rem)] overflow-auto w-full">
-        <div className="">
+      <div className='h-screen flex-1 w-full overflow-auto'>
+        <div className=' pb-20'>
           <Outlet />
         </div>
       </div>

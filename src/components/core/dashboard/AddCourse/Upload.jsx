@@ -14,6 +14,8 @@ const Upload = ({
   pdf = false,
   viewData = null,
   editData = null,
+  contentUploadSection = true,
+  externalFile,
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewSource, setPreviewSource] = useState(
@@ -87,10 +89,17 @@ const Upload = ({
     }
   }, [viewData, editData]);
 
+  useEffect(() => {
+    if (externalFile instanceof File) {
+      previewFile(externalFile);
+      setSelectedFile(externalFile);
+    }
+  }, [externalFile]);
+
   return (
-    <div className="flex flex-col space-y-2">
+    <div className='flex flex-col space-y-2'>
       <label htmlFor={name}>
-        {label} <sup className="text-pink-200">*</sup>
+        {label} <sup className='text-pink-200'>*</sup>
       </label>
       <div
         className={`${
@@ -100,62 +109,64 @@ const Upload = ({
       >
         <input {...getInputProps()} />
         {previewSource ? (
-          <div className="flex flex-col items-center w-full p-6">
+          <div className='flex flex-col items-center w-full p-6'>
             {!video && !pdf ? (
               <img
                 src={previewSource}
                 alt={`Img Preview`}
-                className="object-cover w-full h-full rounded-md"
+                className='object-cover w-full h-full rounded-md'
               />
             ) : video ? (
-              <Player aspectRatio="16:9" playsInline src={previewSource} />
+              <Player aspectRatio='16:9' playsInline src={previewSource} />
             ) : pdf ? (
               <iframe
                 src={previewSource}
-                title="PDF Preview"
-                className="w-full h-full rounded-md aspect-[3/4]"
+                title='PDF Preview'
+                className='w-full h-full rounded-md aspect-[3/4]'
               />
             ) : null}
             {!viewData && (
               <button
-                type="button"
+                type='button'
                 onClick={() => {
                   setPreviewSource("");
                   setSelectedFile(null);
                   setValue(name, null); // Reset form value
                 }}
-                className="px-3 py-1 mt-3 tracking-wide rounded-md text-slate-300 bg-slate-700 hover:bg-slate-600 w-fit"
+                className='px-3 py-1 mt-3 tracking-wide rounded-md text-slate-300 bg-slate-700 hover:bg-slate-600 w-fit'
               >
                 Cancel
               </button>
             )}
           </div>
         ) : (
-          <div className="flex flex-col items-center w-full p-6">
-            <div className="grid rounded-full aspect-square w-14 place-items-center bg-pure-greys-800">
-              <FiUploadCloud className="text-2xl text-cyan-600" />
+          <div className='flex flex-col items-center w-full p-6'>
+            <div className='grid rounded-full aspect-square w-14 place-items-center bg-pure-greys-800'>
+              <FiUploadCloud className='text-2xl text-cyan-600' />
             </div>
-            <p className="text-sm mt-2 max-w-[200px] text-center text-[#8a97d8]">
+            <p className='text-sm mt-2 max-w-[200px] text-center text-[#8a97d8]'>
               Drag and drop{" "}
               {!video && !pdf ? "an image" : video ? "a video" : "a pdf"}, or
               click to{" "}
-              <span className="font-semibold text-cyan-500">Browse</span> a file
+              <span className='font-semibold text-cyan-500'>Browse</span> a file
             </p>
-            <ul className="flex flex-col justify-between mt-10 space-x-0 space-y-2 text-xs text-center list-disc md:space-x-12 md:flex-row md:space-y-0 text-slate-400">
-              {video && (
-                <li className="list-none tracking-wide text-[#8a97d8]">
-                  Aspect ratio: 16:9
+            {contentUploadSection && (
+              <ul className='flex flex-col justify-between mt-10 space-x-0 space-y-2 text-xs text-center list-disc md:space-x-12 md:flex-row md:space-y-0 text-slate-400'>
+                {video && (
+                  <li className='list-none tracking-wide text-[#8a97d8]'>
+                    Aspect ratio: 16:9
+                  </li>
+                )}
+                <li className='list-none tracking-wide text-[#8a97d8]'>
+                  {video ? "Recommended size 1024x576" : "UPLOAD PDF"}
                 </li>
-              )}
-              <li className="list-none tracking-wide text-[#8a97d8]">
-                {video ? "Recommended size 1024x576" : "UPLOAD PDF"}
-              </li>
-            </ul>
+              </ul>
+            )}
           </div>
         )}
       </div>
       {errors[name] && (
-        <span className="ml-2 text-xs tracking-wide text-pink-200">
+        <span className='ml-2 text-xs tracking-wide text-pink-200'>
           {label} is required.
         </span>
       )}

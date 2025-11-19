@@ -25,10 +25,10 @@ const RenderSteps = () => {
 
   return (
     <>
-      <div className="relative flex justify-center w-full mb-2">
+      <div className='relative flex justify-center w-full'>
         {steps.map((item) => (
           <React.Fragment key={item.id}>
-            <div className="flex flex-col items-center " key={item.id}>
+            <div className='flex flex-col items-center ' key={item.id}>
               <button
                 className={`grid cursor-default aspect-square w-[34px] place-items-center rounded-full border-[1px] ${
                   step >= item.id
@@ -37,7 +37,7 @@ const RenderSteps = () => {
                 } ${step > item.id && "bg-teal-400 text-yellow-50"}} `}
               >
                 {step > item.id ? (
-                  <FaCheck className="font-bold text-richblack-900" />
+                  <FaCheck className='font-bold text-richblack-900' />
                 ) : (
                   item.id
                 )}
@@ -56,11 +56,11 @@ const RenderSteps = () => {
         ))}
       </div>
 
-      <div className="relative flex justify-between w-full mb-16 select-none">
+      <div className='relative flex justify-between w-full mb-16 select-none'>
         {steps.map((item) => (
           <React.Fragment key={item.id}>
             <div
-              className="flex min-w-[130px] flex-col items-center gap-y-2"
+              className='flex min-w-[130px] flex-col items-center gap-y-2'
               key={item.id}
             >
               <p

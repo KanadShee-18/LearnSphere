@@ -46,6 +46,9 @@ export const courseEndpoints = {
   MODIFY_RATING_API: BASE_URL + "/course/modifyRating",
   DESTROY_RATING_API: BASE_URL + "/course/destroyRating",
   GET_TAGGED_COURSES: BASE_URL + "/course/tags/courses",
+
+  GET_AI_CONTENT_API: BASE_URL + "/course/get-content",
+  GET_AI_THUMBNAIL_API: BASE_URL + "/course/get-thumbnail",
 };
 
 // RATINGS AND REVIEWS
