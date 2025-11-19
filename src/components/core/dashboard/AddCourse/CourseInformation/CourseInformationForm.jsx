@@ -89,6 +89,10 @@ High resolution, modern design suitable for an online course thumbnail.
 
   const handelAIContentGeneration = async () => {
     setStartGeneration(true);
+    if (aiCourseName.trim().length === 0) {
+      toast.error("Please provide the course name to generate content.");
+      return;
+    }
     try {
       const resp = await addCourseDetailsWithAI(aiCourseName, token);
       // console.log(resp);

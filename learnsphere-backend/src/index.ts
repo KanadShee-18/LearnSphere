@@ -1,0 +1,84 @@
+import express, {
+  type Application,
+  type Request,
+  type Response,
+} from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import fileUpload from "express-fileupload";
+
+// configs
+import { CONFIGS } from "./configs/index.js";
+import { dbConnect } from "./configs/db.config.js";
+import { connectCloudinary } from "./configs/cloudinary.config.js";
+import { connectDrive } from "./configs/drive.config.js";
+
+// Main application
+const app: Application = express();
+
+// Necessary Routes
+import userRoutes from "./routes/user.route.js";
+import profileRoutes from "./routes/profile.route.js";
+import paymentRoutes from "./routes/payment.route.js";
+import courseRoutes from "./routes/course.route.js";
+import contactRoutes from "./routes/contact.route.js";
+
+dbConnect();
+connectCloudinary();
+connectDrive();
+
+const port = CONFIGS.port_no || 4000;
+
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(cookieParser());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://learn-sphere-edui.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = "CORS policy does not allow access from this origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization,Accept",
+    optionsSuccessStatus: 204,
+    credentials: true,
+  })
+);
+
+// File Upload Middleware
+app.use(
+  fileUpload({
+    useTempFiles: false,
+    // tempFileDir: "/tmp",
+  })
+);
+
+// Routes Middleware
+app.use("/api/v2", userRoutes);
+app.use("/api/v2", profileRoutes);
+app.use("/api/v2", courseRoutes);
+app.use("/api/v2", paymentRoutes);
+app.use("/api/v2", contactRoutes);
+
+// Default Route
+app.get("/", (req: Request, res: Response) => {
+  return res.json({
+    success: true,
+    message: "Server is active and running ...",
+  });
+});
+
+// Start the Server
+app.listen(port, () => {
+  console.log(`Server is running at port ${port} ...`);
+});
