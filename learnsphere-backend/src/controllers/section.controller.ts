@@ -5,6 +5,7 @@ import type { AuthRequest } from "../types/extend-auth.js";
 import { Course } from "../models/course.model.js";
 import { Section } from "../models/section.model.js";
 import { SubSection } from "../models/subSection.model.js";
+import logger from "../configs/logger.js";
 
 export const createSection = async (req: AuthRequest, res: Response) => {
   try {
@@ -51,7 +52,7 @@ export const createSection = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in updating course: ", error);
+    logger.error("Error in updating course: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -113,7 +114,7 @@ export const updateSection = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in updating section of course: ", error);
+    logger.error("Error in updating section of course: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -132,17 +133,15 @@ export const updateSection = async (req: AuthRequest, res: Response) => {
 // Delete Section:
 
 export const deleteSection = async (req: AuthRequest, res: Response) => {
-  console.log("Delete section has been called in backend.");
+  logger.info("Delete section has been called in backend.");
 
   try {
     // Fetch id -> assuming we're sending id through params
-    console.log("Req body coming as: ", req.body);
-
+    logger.info("Req body coming as: ", req.body);
     const { sectionId, courseId } = req.body;
 
-    console.log("Section id: ", sectionId);
-    console.log("Course id: ", courseId);
-
+    logger.info("Section id: ", sectionId);
+    logger.info("Course id: ", courseId);
     await Course.findByIdAndUpdate(courseId, {
       $pull: {
         courseContent: sectionId,
@@ -187,7 +186,7 @@ export const deleteSection = async (req: AuthRequest, res: Response) => {
       data: updatedCourse,
     });
   } catch (error) {
-    console.log("Error in deleting section: ", error);
+    logger.error("Error in deleting section: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

@@ -2,6 +2,7 @@ import type { Response } from "express";
 import { Category } from "../models/category.model.js";
 import { type ICourse } from "../models/course.model.js";
 import type { AuthRequest } from "../types/extend-auth.js";
+import logger from "../configs/logger.js";
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
@@ -89,7 +90,7 @@ export const categoryPageDetails = async (req: AuthRequest, res: Response) => {
   try {
     // Get category id
     const { categoryId } = req.body;
-    // console.log("Category ID comes from client: ", categoryId);
+    // logger.info("Category ID comes from client: ", categoryId);
 
     //Get all courses for a particular category
     const selectedCategory = await Category.findById(categoryId)
@@ -101,7 +102,7 @@ export const categoryPageDetails = async (req: AuthRequest, res: Response) => {
       .exec();
 
     if (!selectedCategory) {
-      // console.log("Category not found!");
+      // logger.error("Category not found!");
       res.status(404).json({
         success: false,
         message: "Category Not Found.",
@@ -110,7 +111,7 @@ export const categoryPageDetails = async (req: AuthRequest, res: Response) => {
     }
 
     if (selectedCategory.courses.length === 0) {
-      // console.log("No courses found on this selected category.");
+      // logger.warn("No courses found on this selected category.");
       res.status(404).json({
         success: false,
         message: "No courses found on this selected category!",

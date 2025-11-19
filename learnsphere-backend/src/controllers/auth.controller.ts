@@ -13,6 +13,7 @@ import { mailSender } from "../utils/mailSender.js";
 import { passwordUpdateTemplate } from "../mail/templates/passwordUpdate.js";
 import type { PAYLOAD_TYPE } from "../types/payload-type.js";
 import { CONFIGS } from "../configs/index.js";
+import logger from "../configs/logger.js";
 
 // send otp
 export const sendOtp = async (req: AuthRequest, res: Response) => {
@@ -248,7 +249,7 @@ export const login = async (req: AuthRequest, res: Response) => {
       });
     }
   } catch (error: any) {
-    console.log("Error: ", error.message);
+    logger.error("Error: ", error.message);
 
     res.status(500).json({
       success: false,
@@ -335,7 +336,7 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
         passwordUpdateTemplate(existingUser.firstName, existingUser.email)
       );
     } catch (mailError: any) {
-      console.error("Failed to send email notification:", mailError.message);
+      logger.error("Failed to send email notification:", mailError.message);
     }
 
     // Return success response
@@ -344,7 +345,7 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
       message: "Password has been updated.",
     });
   } catch (error: any) {
-    console.error("Error while updating password:", error.message);
+    logger.error("Error while updating password:", error.message);
     return res.status(500).json({
       success: false,
       message:

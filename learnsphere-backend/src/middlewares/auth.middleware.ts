@@ -4,6 +4,7 @@ import type { AuthRequest } from "../types/extend-auth.js";
 import type { PAYLOAD_TYPE } from "../types/payload-type.js";
 import { User } from "../models/user.model.js";
 import { CONFIGS } from "../configs/index.js";
+import logger from "../configs/logger.js";
 
 // auth
 export const auth = async (
@@ -16,7 +17,7 @@ export const auth = async (
 
     const token = authHeader?.replace("Bearer ", "");
 
-    console.log("Token comes in backend auth is: ", token);
+    logger.info("Token comes in backend auth is: ", token);
 
     if (!token) {
       return res.status(401).json({
@@ -50,7 +51,7 @@ export const auth = async (
         authUser: existingUser,
       };
 
-      console.log("Decoded user from auth: ", payload);
+      logger.info("Decoded user from auth: ", payload);
     } catch (error) {
       res.status(401).json({
         success: false,
@@ -60,7 +61,7 @@ export const auth = async (
     }
     next();
   } catch (error) {
-    console.log("Error in verifying token: ", error);
+    logger.error("Error in verifying token: ", error);
     if (error instanceof Error) {
       res.status(401).json({
         success: false,

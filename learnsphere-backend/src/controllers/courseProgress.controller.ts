@@ -5,6 +5,7 @@ import { CourseProgress } from "../models/courseProgress.model.js";
 import { SubSection } from "../models/subSection.model.js";
 import { User, type IUser } from "../models/user.model.js";
 import type { AuthRequest } from "../types/extend-auth.js";
+import logger from "../configs/logger.js";
 
 export const updateCourseProgress = async (req: AuthRequest, res: Response) => {
   const { courseId, subSectionId } = req.body;
@@ -72,14 +73,14 @@ export const updateCourseProgress = async (req: AuthRequest, res: Response) => {
     await courseProgress.save();
     await user.save();
 
-    console.log(courseProgress.completedVideos);
+    logger.info("Updated completed videos: ", courseProgress.completedVideos);
 
     return res.status(200).json({
       success: true,
       message: "Course progress has been marked/updated.",
     });
   } catch (error) {
-    console.log("Error in Updating course progress: ", error);
+    logger.error("Error in Updating course progress: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

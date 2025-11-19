@@ -1,5 +1,6 @@
 import mongoose, { type ConnectOptions } from "mongoose";
 import { CONFIGS } from "./index.js";
+import logger from "./logger.js";
 
 const options: ConnectOptions = {
   retryWrites: true,
@@ -17,9 +18,9 @@ export const dbConnect = async (): Promise<void> => {
     }
 
     await mongoose.connect(mongoUrl, options);
-    console.log("<<< ✅ [DB] Connected Successfully ... >>>");
+    logger.info("<<< ✅ [DB] Connected Successfully ... >>>");
   } catch (error) {
-    console.log("<<< ❌ [DB] Connected failed ... >>>", error);
+    logger.error("<<< ❌ [DB] Connected failed ... >>>", error);
     process.exit(1);
   }
 };

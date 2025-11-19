@@ -2,6 +2,7 @@ import type { Response } from "express";
 import { contactUsEmail } from "../mail/templates/contactFormRes.js";
 import type { AuthRequest } from "../types/extend-auth.js";
 import { mailSender } from "../utils/mailSender.js";
+import logger from "../configs/logger.js";
 
 export const contactUsHandler = async (req: AuthRequest, res: Response) => {
   const { email, firstname, lastname, message, phoneno, countrycode } =
@@ -22,7 +23,7 @@ export const contactUsHandler = async (req: AuthRequest, res: Response) => {
     return;
   }
 
-  // console.log(req.body);
+  // logger.info("Contact form data received: ", req.body);
 
   try {
     const mailRes = await mailSender(
@@ -30,7 +31,7 @@ export const contactUsHandler = async (req: AuthRequest, res: Response) => {
       "We have received your data successfully.",
       contactUsEmail(email, firstname, lastname, message, phoneno, countrycode)
     );
-    console.log("Email res of contact: ", mailRes);
+    logger.info("Email res of contact: ", mailRes);
 
     res.json({
       success: true,
@@ -38,8 +39,8 @@ export const contactUsHandler = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    // console.log("Contact form error: ", error);
-    // console.log("Error Message: ", error.message);
+    // logger.error("Contact form error: ", error);
+    // logger.error("Error Message: ", error.message);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

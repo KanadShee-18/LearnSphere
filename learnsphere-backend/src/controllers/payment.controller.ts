@@ -9,10 +9,11 @@ import { User } from "../models/user.model.js";
 import { mailSender } from "../utils/mailSender.js";
 import { courseEnrollmentEmail } from "../mail/templates/courseEnrollmentEmail.js";
 import { paymentSuccessEmail } from "../mail/templates/paymentSuccessEmail.js";
+import logger from "../configs/logger.js";
 
 // Initiate the razorpay order
 export const capturePayment = async (req: AuthRequest, res: Response) => {
-  // console.log(req.body);
+  // logger.info(req.body);
 
   const { courses } = req.body;
   const userId = req.auth?.authUser?.id;
@@ -47,8 +48,8 @@ export const capturePayment = async (req: AuthRequest, res: Response) => {
         totalAmount += course.price;
       }
     } catch (error) {
-      // console.log(error.message);
-      console.log("Error in course modification: ", error);
+      // logger.info(error.message);
+      logger.error("Error in course modification: ", error);
       if (error instanceof Error) {
         res.status(500).json({
           success: false,
@@ -77,8 +78,8 @@ export const capturePayment = async (req: AuthRequest, res: Response) => {
     };
 
     // PaymentResponse.key = process.env.RAZORPAY_KEY as string;
-    // console.log("Payment Response: ", PaymentResponse);
-    // console.log("Order has been successfully initiated.");
+    // logger.info("Payment Response: ", PaymentResponse);
+    // logger.info("Order has been successfully initiated.");
 
     res.json({
       success: true,
@@ -86,7 +87,7 @@ export const capturePayment = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    // console.log(error.message);
+    logger.error("Error in initiating order: ", error);
     return res.status(500).json({
       success: false,
       message: "Could not initiate order.",
@@ -206,7 +207,7 @@ const enrollStudents = async (
       //   mailResponse
       // );
     } catch (error) {
-      console.log("Error in enroll students controller: ", error);
+      logger.error("Error in enroll students controller: ", error);
       if (error instanceof Error) {
         res.status(500).json({
           success: false,
@@ -257,7 +258,7 @@ export const sendPaymentSuccessEmail = async (
       )
     );
   } catch (error) {
-    console.log("Error occurred in sending payment success mail: ", error);
+    logger.error("Error occurred in sending payment success mail: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

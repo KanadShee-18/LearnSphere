@@ -26,17 +26,23 @@ import { resetPasswordRequestLimiter } from "../middlewares/resetPasswordRateLim
 
 // Authentcation routes:
 
+// #swagger.tags = ['Auth]
 router.post("/auth/login", login);
+// #swagger.tags = ['Auth]
 router.post("/auth/signup", signUp);
+// #swagger.tags = ['Auth]
 router.post("/auth/sendotp", otpLimiter, sendOtp);
+// #swagger.tags = ['Auth]
 router.post("/auth/changepassword", auth, changePassword);
 
 // Reset password routes:
+// #swagger.tags = ['Auth]
 router.post(
   "/auth/reset-password-token",
   resetPasswordRequestLimiter,
   resetPasswordToken
 );
+// #swagger.tags = ['Auth]
 router.post("/auth/reset-password", resetPassword);
 
 export default router;

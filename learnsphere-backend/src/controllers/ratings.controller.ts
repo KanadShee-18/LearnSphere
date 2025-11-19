@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import { RatingAndReviews } from "../models/rating.model.js";
-import { Course } from "../models/course.model.js";
-import type { AuthRequest } from "../types/extend-auth.js";
 import type { Response } from "express";
-import type { Auth } from "googleapis";
+import mongoose from "mongoose";
+import { Course } from "../models/course.model.js";
+import { RatingAndReviews } from "../models/rating.model.js";
+import type { AuthRequest } from "../types/extend-auth.js";
+import logger from "../configs/logger.js";
 
 // Create rating
 
@@ -14,7 +14,6 @@ export const createRating = async (req: AuthRequest, res: Response) => {
 
     // fetch data from req body
     const { rating, review, courseId } = req.body;
-    console.log("Rating: ", rating);
 
     // check user has bought the course means he is enrolled or not
     const courseDetails = await Course.findOne({
@@ -71,7 +70,7 @@ export const createRating = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in creating rating: ", error);
+    logger.error("Error in creating rating: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -143,7 +142,7 @@ export const modifyRating = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in modify rating: ", error);
+    logger.error("Error in modify rating: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -220,7 +219,7 @@ export const deleteRating = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in deleting rating: ", error);
+    logger.error("Error in deleting rating: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -274,7 +273,7 @@ export const getAverageRating = async (req: AuthRequest, res: Response) => {
       averageRating: 0,
     });
   } catch (error) {
-    console.log("Error in getting average rating: ", error);
+    logger.error("Error in getting average rating: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -314,7 +313,7 @@ export const getAllRatings = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in getting all ratings: ", error);
+    logger.error("Error in getting all ratings: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -362,7 +361,7 @@ export const getAllRatingsForCourse = async (
     });
     return;
   } catch (error) {
-    console.log("Error in getting all ratings for course: ", error);
+    logger.error("Error in getting all ratings for course: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

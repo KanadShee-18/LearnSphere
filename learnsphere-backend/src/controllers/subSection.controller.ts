@@ -12,6 +12,7 @@ import { getAuthClient } from "../configs/drive.config.js";
 import { SubSection } from "../models/subSection.model.js";
 import type { UploadedFile } from "express-fileupload";
 import { CONFIGS } from "../configs/index.js";
+import logger from "../configs/logger.js";
 
 // Create SubSection:
 
@@ -39,7 +40,7 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
     const fileType = uploadingFile.name.split(".").pop()?.toLowerCase();
 
     const uploadedFile = req.files;
-    console.log("Uploaded file name:", uploadedFile);
+    logger.info("Uploaded file name:", uploadedFile);
 
     // Validate required fields
     if (!sectionId || !title || !description || !file) {
@@ -75,7 +76,7 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
     } else if (fileType === "pdf") {
       // Upload PDF to Google Drive
       const authClient = getAuthClient();
-      console.log("File uploading to drive is: ", file);
+      logger.info("File uploading to drive is: ", file);
 
       if (authClient) {
         const uploadResponse = await uploadPdfToDrive(
@@ -91,13 +92,13 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
           return;
         }
         pdfFileId = uploadResponse.fileId;
-        console.log("Uploaded PDF details: ", uploadResponse);
+        logger.info("Uploaded PDF details: ", uploadResponse);
 
         const pdfViewLinks = await generatePublicUrlForPdf(
           authClient,
           uploadResponse.fileId
         );
-        console.log("Generated link for web view: ", pdfViewLinks);
+        logger.info("Generated link for web view: ", pdfViewLinks);
 
         // Get the webViewLink for the PDF
         fileUrl = pdfViewLinks.webViewLink;
@@ -124,7 +125,7 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
       { new: true }
     ).populate("subSection");
 
-    console.log("Updated Section is: ", updatedSection);
+    logger.info("Updated Section is: ", updatedSection);
 
     // Return the updated section in the response
     return res.status(200).json({
@@ -132,7 +133,7 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
       data: updatedSection,
     });
   } catch (error) {
-    console.log("Error in creating sub section: ", error);
+    logger.error("Error in creating sub section: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -174,7 +175,7 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
             authClient,
             drivePdfId
           );
-          console.log("Deleted PDF: ", deletedPDF);
+          logger.info("Deleted PDF: ", deletedPDF);
         }
       }
     } else {
@@ -182,7 +183,7 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
         const publicId = checkSubSection.publicId;
         if (publicId) {
           const deletedVideo = await destroyVideoFromCloudinary(publicId);
-          console.log("Deleted Video from cloudinary: ", deletedVideo);
+          logger.info("Deleted Video from cloudinary: ", deletedVideo);
         }
       }
     }
@@ -227,13 +228,13 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
             CONFIGS.google_drive_folder_identifier as string,
             authClient
           );
-          console.log("Uploaded PDF details: ", uploadResponse);
+          logger.info("Uploaded PDF details: ", uploadResponse);
 
           const pdfViewLinks = await generatePublicUrlForPdf(
             authClient,
             uploadResponse.fileId
           );
-          console.log("Generated link for web view: ", pdfViewLinks);
+          logger.info("Generated link for web view: ", pdfViewLinks);
 
           // Get the webViewLink for the PDF
           fileUrl = pdfViewLinks.webViewLink;
@@ -263,7 +264,7 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
       data: updatedSection,
     });
   } catch (error) {
-    console.log("Error in updating sub section: ", error);
+    logger.error("Error in updating sub section: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -284,7 +285,7 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
 export const deleteSubSection = async (req: AuthRequest, res: Response) => {
   try {
     // Fetch the subsection id from the params
-    // console.log("Request comes to backend to delete subsection...");
+    // logger.info("Request comes to backend to delete subsection...");
 
     const { subSectionId, sectionId } = req.body;
     await Section.findByIdAndUpdate(
@@ -313,7 +314,7 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
             authClient,
             drivePdfId
           );
-          console.log("Deleted PDF: ", deletedPDF);
+          logger.info("Deleted PDF: ", deletedPDF);
         }
       }
     } else {
@@ -321,7 +322,7 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
         const publicId = checkSubSection.publicId;
         if (publicId) {
           const deletedVideo = await destroyVideoFromCloudinary(publicId);
-          console.log("Deleted Video from cloudinary: ", deletedVideo);
+          logger.info("Deleted Video from cloudinary: ", deletedVideo);
         }
       }
     }
@@ -342,7 +343,7 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
       "subSection"
     );
 
-    // console.log("Updated Section after deleteing subsection: ", updatedSection);
+    // logger.info("Updated Section after deleteing subsection: ", updatedSection);
 
     // return success response
     return res.status(200).json({
@@ -351,7 +352,7 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
       data: updatedSection,
     });
   } catch (error) {
-    console.log("Error in deleting sub section: ", error);
+    logger.error("Error in deleting sub section: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

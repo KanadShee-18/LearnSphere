@@ -1,5 +1,6 @@
 import { v2 as cloudinary, type ConfigOptions } from "cloudinary";
 import { CONFIGS } from "./index.js";
+import logger from "./logger.js";
 
 export const connectCloudinary = (): void => {
   try {
@@ -8,8 +9,8 @@ export const connectCloudinary = (): void => {
       api_key: CONFIGS.cloudinary_api_key as string,
       api_secret: CONFIGS.cloudinary_api_secret as string,
     } satisfies ConfigOptions);
-    console.log("Cloudinary set up successfully ...");
+    logger.info("Cloudinary set up successfully ...");
   } catch (error) {
-    console.log("Cloudinary Connection Error: ", error);
+    logger.error("Cloudinary Connection Error: ", error);
   }
 };

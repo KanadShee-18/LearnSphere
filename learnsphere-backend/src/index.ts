@@ -13,6 +13,10 @@ import { dbConnect } from "./configs/db.config.js";
 import { connectCloudinary } from "./configs/cloudinary.config.js";
 import { connectDrive } from "./configs/drive.config.js";
 
+// swagger documentation
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "../swagger-output.json" with { type: "json" };
+
 // Main application
 const app: Application = express();
 
@@ -22,6 +26,9 @@ import profileRoutes from "./routes/profile.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import courseRoutes from "./routes/course.route.js";
 import contactRoutes from "./routes/contact.route.js";
+import { errorHandler } from "./utils/error-handler.js";
+import logger from "./configs/logger.js";
+import { assert } from "console";
 
 dbConnect();
 connectCloudinary();
@@ -70,6 +77,13 @@ app.use("/api/v2", courseRoutes);
 app.use("/api/v2", paymentRoutes);
 app.use("/api/v2", contactRoutes);
 
+// Swagger Documentation
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.get("/docs-json", (req: Request, res: Response) => {
+  res.json(swaggerFile);
+});
+
+
 // Default Route
 app.get("/", (req: Request, res: Response) => {
   return res.json({
@@ -78,7 +92,10 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
+app.use(errorHandler);
+
 // Start the Server
 app.listen(port, () => {
-  console.log(`Server is running at port ${port} ...`);
+  logger.info(`Server is running at port ${port} ...`);
+  logger.info(`Swagger docs at http://localhost:${port}/docs`);
 });

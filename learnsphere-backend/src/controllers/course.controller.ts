@@ -7,6 +7,7 @@ import { Section, type ISection } from "../models/section.model.js";
 import { SubSection, type ISubSection } from "../models/subSection.model.js";
 import { CourseProgress } from "../models/courseProgress.model.js";
 import { User } from "../models/user.model.js";
+import logger from "../configs/logger.js";
 
 import {
   uploadImageToCloudinary,
@@ -69,17 +70,11 @@ export const createCourse = async (req: AuthRequest, res: Response) => {
       instructions: _instructions,
     } = req.body;
 
-    console.log("Req body receives as: ", req.body);
-    console.log("Req file receives as: ", req.files?.thumbnailImage);
-
     // get thumbnail
     const thumbnail = req.files?.thumbnailImage;
 
     const tag = JSON.parse(_tag);
     const instructions = JSON.parse(_instructions);
-
-    console.log("Tag: ", tag);
-    console.log("Instructions: ", instructions);
 
     //Validation
     if (
@@ -199,7 +194,7 @@ export const editCourse = async (req: AuthRequest, res: Response) => {
   try {
     const { courseId, ...updatesRaw } = req.body;
     const updates: CourseUpdate = updatesRaw;
-    console.log("Updates coming as: ", updates);
+    logger.info("Updates coming as: ", updates);
 
     // find course
     const course = await Course.findById(courseId);
@@ -227,7 +222,7 @@ export const editCourse = async (req: AuthRequest, res: Response) => {
           const deletedImgResultStatus = await destroyImageFromCloudinary(
             publicId
           );
-          console.log("DeletedImgResultStatus: ", deletedImgResultStatus);
+          logger.info("DeletedImgResultStatus: ", deletedImgResultStatus);
         }
       }
 
@@ -237,7 +232,7 @@ export const editCourse = async (req: AuthRequest, res: Response) => {
         newThumbnail,
         process.env.CLOUDINARY_FOLDER_NAME as string
       );
-      console.log("Updated course image result: ", newThumbnailImage);
+      logger.info("Updated course image result: ", newThumbnailImage);
 
       course.thumbnail = newThumbnailImage.secure_url;
     }
@@ -286,6 +281,7 @@ export const editCourse = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
+    logger.error("Error in editing course: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -329,6 +325,7 @@ export const getAllCourses = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
+    logger.error("Error in getting all courses: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -346,7 +343,7 @@ export const getAllCourses = async (req: AuthRequest, res: Response) => {
 
 export const getCourseDetails = async (req: AuthRequest, res: Response) => {
   try {
-    console.log("Request comes to get course details.");
+    logger.info("Request comes to get course details.");
 
     const { courseId } = req.body;
     const courseDetails = (await Course.findOne({
@@ -395,6 +392,7 @@ export const getCourseDetails = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
+    logger.error("Error in getting course details: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -434,7 +432,7 @@ export const getInstructorCourses = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log(error);
+    logger.error("Error in getting instructor courses: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -496,7 +494,7 @@ export const deleteCourse = async (req: AuthRequest, res: Response) => {
       message: "Course Deleted Successfully!",
     });
   } catch (error) {
-    console.log(`Error in deleting course: ${error}`);
+    logger.error("Error in deleting course: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -542,7 +540,7 @@ export const getFullCourseDetails = async (req: AuthRequest, res: Response) => {
       userId: userId,
     });
 
-    console.log("courseProgressCount : ", courseProgressCount);
+    logger.info("courseProgressCount : ", courseProgressCount);
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -561,7 +559,7 @@ export const getFullCourseDetails = async (req: AuthRequest, res: Response) => {
 
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
-    console.log("Course Details: ", courseDetails);
+    logger.info("Course Details: ", courseDetails);
 
     return res.status(200).json({
       success: true,
@@ -574,7 +572,7 @@ export const getFullCourseDetails = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
-    console.log(`Error in getting full course details: ${error}`);
+    logger.error("Error in getting full course details: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -596,7 +594,7 @@ export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
   try {
     const { searchQuery } = req.query;
 
-    console.log("Search Query is: ", searchQuery);
+    logger.info("Search Query is: ", searchQuery);
 
     if (
       !searchQuery ||
@@ -655,7 +653,7 @@ export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
       data: results,
     });
   } catch (error) {
-    console.log(`Error in getting tagged courses: ${error}`);
+    logger.error("Error in getting tagged courses: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

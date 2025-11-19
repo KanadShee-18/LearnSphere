@@ -1,6 +1,7 @@
 import type { NextFunction, Response } from "express";
 import type { AuthRequest } from "../types/extend-auth.js";
 import type { UploadedFile } from "express-fileupload";
+import logger from "../configs/logger.js";
 
 export const fileUploadAuth = async (
   req: AuthRequest,
@@ -21,7 +22,7 @@ export const fileUploadAuth = async (
         return;
       }
       req.images = image;
-      console.log("Passed from file upload auth...");
+      logger.info("Passed from file upload auth...");
     }
     next();
   } catch (error: any) {

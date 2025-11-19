@@ -1,6 +1,7 @@
 import { google } from "googleapis";
 import type { JWT } from "google-auth-library";
 import { CONFIGS } from "./index.js";
+import logger from "./logger.js";
 
 let jwtClient: JWT | null = null;
 
@@ -21,9 +22,9 @@ export const connectDrive = async (): Promise<void> => {
     });
 
     await jwtClient.authorize();
-    console.log("<<< [✅Drive API] => connected successfully ...>>>");
+    logger.info("<<< [✅Drive API] => connected successfully ...>>>");
   } catch (error) {
-    console.log("<<< ❌Error while connecting to Google Drive ...>>>", error);
+    logger.error("<<< ❌Error while connecting to Google Drive ...>>>", error);
   }
 };
 

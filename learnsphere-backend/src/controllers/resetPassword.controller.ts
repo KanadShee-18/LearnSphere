@@ -7,6 +7,7 @@ import { mailSender } from "../utils/mailSender.js";
 import { passwordReset } from "../mail/templates/passwordReset.js";
 import { passwordUpdateTemplate } from "../mail/templates/passwordUpdate.js";
 import { CONFIGS } from "../configs/index.js";
+import logger from "../configs/logger.js";
 
 const baseURL = CONFIGS.client_side_url;
 
@@ -50,7 +51,7 @@ export const resetPasswordToken = async (req: AuthRequest, res: Response) => {
       message: `Email sent successfully. Please check your email ${email} to continue further.`,
     });
   } catch (error) {
-    console.log("Error in reset password token: ", error);
+    logger.error("Error in reset password token: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -136,7 +137,7 @@ export const resetPassword = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in resetting password: ", error);
+    logger.error("Error in resetting password: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,

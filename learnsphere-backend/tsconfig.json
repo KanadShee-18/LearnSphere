@@ -10,6 +10,7 @@
     "module": "nodenext",
     "target": "esnext",
     "types": [],
+    "resolveJsonModule": true,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,

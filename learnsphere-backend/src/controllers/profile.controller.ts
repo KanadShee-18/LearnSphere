@@ -1,16 +1,17 @@
-import { Profile } from "../models/profile.model.js";
-import { User, type IUser } from "../models/user.model.js";
+import type { Response } from "express";
 import { Course, type ICourse } from "../models/course.model.js";
 import { CourseProgress } from "../models/courseProgress.model.js";
-import { convertSecondsToDuration } from "../utils/secToDuration.js";
-import {
-  uploadImageToCloudinary,
-  destroyImageFromCloudinary,
-} from "../utils/imageUploader.js";
-import type { AuthRequest } from "../types/extend-auth.js";
-import type { Response } from "express";
+import { Profile } from "../models/profile.model.js";
 import type { ISection } from "../models/section.model.js";
-import { SubSection, type ISubSection } from "../models/subSection.model.js";
+import { type ISubSection } from "../models/subSection.model.js";
+import { User, type IUser } from "../models/user.model.js";
+import type { AuthRequest } from "../types/extend-auth.js";
+import {
+  destroyImageFromCloudinary,
+  uploadImageToCloudinary,
+} from "../utils/imageUploader.js";
+import { convertSecondsToDuration } from "../utils/secToDuration.js";
+import logger from "../configs/logger.js";
 
 // Update Profile
 export const updateProfile = async (req: AuthRequest, res: Response) => {
@@ -71,7 +72,7 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in updating user profile: ", error);
+    logger.error("Error in updating user profile: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -117,7 +118,7 @@ export const deleteProfile = async (req: AuthRequest, res: Response) => {
     );
     // Now delete the User
     const deletedUser = await User.findByIdAndDelete(userId);
-    console.log("Deleted User", deletedUser);
+    logger.info("Deleted User", deletedUser);
 
     // Return Success Response
     res.status(200).json({
@@ -136,7 +137,7 @@ export const deleteProfile = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in deleting profile: ", error);
+    logger.error("Error in deleting profile: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -184,7 +185,7 @@ export const getUserAllDetails = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in getting user all details: ", error);
+    logger.error("Error in getting user all details: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -204,7 +205,7 @@ export const getUserAllDetails = async (req: AuthRequest, res: Response) => {
 export const updateDisplayPicture = async (req: AuthRequest, res: Response) => {
   try {
     const displayPicture = req.images;
-    console.log(req.images);
+    logger.info(req.images);
 
     const userId = req.auth?.authUser?.id;
 
@@ -226,7 +227,7 @@ export const updateDisplayPicture = async (req: AuthRequest, res: Response) => {
     // Destroying old image
     if (publicId) {
       const deletedImg = await destroyImageFromCloudinary(publicId);
-      console.log(deletedImg);
+      logger.info(deletedImg);
     }
 
     // Uploading new image.
@@ -237,7 +238,7 @@ export const updateDisplayPicture = async (req: AuthRequest, res: Response) => {
       1000,
       70
     );
-    console.log("Uploaded image details: ", image);
+    logger.info("Uploaded image details: ", image);
 
     const updatedProfile = await User.findByIdAndUpdate(
       userId,
@@ -253,7 +254,7 @@ export const updateDisplayPicture = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
-    console.log("Error in updating display picture: ", error);
+    logger.error("Error in updating display picture: ", error);
 
     if (error instanceof Error) {
       res.status(500).json({
@@ -331,48 +332,6 @@ export const getEnrolledCourses = async (req: AuthRequest, res: Response) => {
           ? 100
           : Math.round((completedCount / SubsectionLength) * 100 * 100) / 100;
     }
-
-    // userDetails = userDetails.toObject();
-    // var SubsectionLength = 0;
-    // for (var i = 0; i < userDetails.courses.length; i++) {
-    //   let totalDurationInSeconds = 0;
-    //   SubsectionLength = 0;
-    //   for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
-    //     totalDurationInSeconds += userDetails.courses[i].courseContent[
-    //       j
-    //     ].subSection.reduce(
-    //       (acc, curr) => acc + parseInt(curr.timeDuration),
-    //       0
-    //     );
-    //     userDetails.courses[i].totalDuration = convertSecondsToDuration(
-    //       totalDurationInSeconds
-    //     );
-    //     SubsectionLength +=
-    //       userDetails.courses[i].courseContent[j].subSection.length;
-    //   }
-    //   let courseProgressCount = await CourseProgress.findOne({
-    //     courseID: userDetails.courses[i]._id,
-    //     userId: userId,
-    //   });
-    //   courseProgressCount = courseProgressCount?.completedVideos.length;
-    //   if (SubsectionLength === 0) {
-    //     userDetails.courses[i].progressPercentage = 100;
-    //   } else {
-    //     // To make it up to 2 decimal point
-    //     const multiplier = Math.pow(10, 2);
-    //     userDetails.courses[i].progressPercentage =
-    //       Math.round(
-    //         (courseProgressCount / SubsectionLength) * 100 * multiplier
-    //       ) / multiplier;
-    //   }
-    // }
-
-    // if (!userDetails) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: `Could not find user with id: ${userDetails}`,
-    //   });
-    // }
     res.status(200).json({
       success: true,
       courses: {
@@ -381,7 +340,7 @@ export const getEnrolledCourses = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    console.log("Error in getting enrolled courses: ", error);
+    logger.error("Error in getting enrolled courses: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
@@ -422,7 +381,7 @@ export const instructorDashboard = async (req: AuthRequest, res: Response) => {
       courses: courseData,
     });
   } catch (error) {
-    console.log("Error in getting instructor dashboard: ", error);
+    logger.error("Error in getting instructor dashboard: ", error);
     if (error instanceof Error) {
       res.status(500).json({
         success: false,
