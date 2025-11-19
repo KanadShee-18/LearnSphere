@@ -6,9 +6,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
-    "build": "tsc",
+    "build": "tsc && npm run generate:swagger",
     "start": "node dist/index.js",
-    "swagger": "node ./swagger.js"
+    "generate:swagger": "node ./swagger.js"
   },
   "keywords": [],
   "author": "Kanad Shee",
