@@ -7,10 +7,11 @@ import InstructorChart from "./InstructorChart";
 import { useLocation } from "react-router-dom";
 import Statistics from "./Statistics";
 import InstructorCourses from "./InstructorCourses";
+import { useToken } from "../../../../context/TokenContext";
 
 const Instructor = () => {
   const location = useLocation();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { user } = useSelector((state) => state.profile);
 
   const [loading, setLoading] = useState(false);

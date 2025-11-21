@@ -56,11 +56,7 @@ const VideoDetails = lazy(() =>
 );
 
 function App() {
-  // useEffect(() => {
-  //   document.addEventListener("contextmenu", (e) => {
-  //     e.preventDefault();
-  //   });
-  // }, []);
+
   const online = OnlineStatus();
 
   const { user } = useSelector((state) => state.profile);
@@ -69,7 +65,7 @@ function App() {
     <>
       <HelmetProvider>
         <ThemeContextProvider>
-          <div className="relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] font-inter selection:bg-cyan-700 bg-custom-linear">
+          <div className='relative flex flex-col w-screen min-h-screen dark:bg-custom-radial dark:bg-[rgb(3,2,37)] bg-[rgb(194,194,255)] font-inter selection:bg-cyan-700 bg-custom-linear'>
             {/* Background overlay */}
             <Navbar />
 
@@ -78,20 +74,20 @@ function App() {
             {/* Lazy-loaded routes */}
             <Suspense
               fallback={
-                <div className="grid h-[60vh] place-items-center">
+                <div className='grid h-[60vh] place-items-center'>
                   <Spinner />
                 </div>
               }
             >
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="catalog/:catalogName" element={<Catalog />} />
-                <Route path="courses/:courseId" element={<CourseDetails />} />
+                <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='catalog/:catalogName' element={<Catalog />} />
+                <Route path='courses/:courseId' element={<CourseDetails />} />
 
                 <Route
-                  path="/signup"
+                  path='/signup'
                   element={
                     <OpenRoute>
                       <Signup />
@@ -100,7 +96,7 @@ function App() {
                 />
 
                 <Route
-                  path="/login"
+                  path='/login'
                   element={
                     <OpenRoute>
                       <Login />
@@ -109,7 +105,7 @@ function App() {
                 />
 
                 <Route
-                  path="/revert-back"
+                  path='/revert-back'
                   element={
                     <OpenRoute>
                       <BackToLogin />
@@ -118,7 +114,7 @@ function App() {
                 />
 
                 <Route
-                  path="forgot-password"
+                  path='forgot-password'
                   element={
                     <OpenRoute>
                       <ForgotPassword />
@@ -127,7 +123,7 @@ function App() {
                 />
 
                 <Route
-                  path="verify-email"
+                  path='verify-email'
                   element={
                     <OpenRoute>
                       <VerifyEmail />
@@ -136,7 +132,7 @@ function App() {
                 />
 
                 <Route
-                  path="update-password/:id"
+                  path='update-password/:id'
                   element={
                     <OpenRoute>
                       <UpdatePassword />
@@ -151,14 +147,14 @@ function App() {
                     </PrivateRoute>
                   }
                 >
-                  <Route path="dashboard/my-profile" element={<MyProfile />} />
-                  <Route path="dashboard/settings" element={<Settings />} />
+                  <Route path='dashboard/my-profile' element={<MyProfile />} />
+                  <Route path='dashboard/settings' element={<Settings />} />
 
                   {user?.accountType === ACCOUNT_TYPE.STUDENT && (
                     <>
-                      <Route path="dashboard/cart" element={<Cart />} />
+                      <Route path='dashboard/cart' element={<Cart />} />
                       <Route
-                        path="dashboard/enrolled-courses"
+                        path='dashboard/enrolled-courses'
                         element={<EnrolledCourses />}
                       />
                     </>
@@ -167,19 +163,19 @@ function App() {
                   {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
                     <>
                       <Route
-                        path="dashboard/instructor"
+                        path='dashboard/instructor'
                         element={<Instructor />}
                       />
                       <Route
-                        path="dashboard/add-course"
+                        path='dashboard/add-course'
                         element={<AddCourse />}
                       />
                       <Route
-                        path="dashboard/my-courses"
+                        path='dashboard/my-courses'
                         element={<MyCourses />}
                       />
                       <Route
-                        path="dashboard/edit-course/:courseId"
+                        path='dashboard/edit-course/:courseId'
                         element={<EditCourse />}
                       />
                     </>
@@ -195,20 +191,20 @@ function App() {
                   {user?.accountType === ACCOUNT_TYPE.STUDENT && (
                     <>
                       <Route
-                        path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                        path='view-course/:courseId/section/:sectionId/sub-section/:subSectionId'
                         element={<VideoDetails />}
                       />
                     </>
                   )}
                 </Route>
 
-                <Route path="*" element={<Error />} />
+                <Route path='*' element={<Error />} />
               </Routes>
             </Suspense>
             <Toaster
               richColors
-              position="bottom-right"
-              className="font-inter"
+              position='bottom-right'
+              className='font-inter'
             />
           </div>
         </ThemeContextProvider>

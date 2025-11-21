@@ -10,10 +10,11 @@ import {
   setTotalNoOfLectures,
 } from "../slices/viewCourseSlice";
 import VideoDetailsSidebar from "../components/core/ViewCourse/VideoDetailsSidebar";
+import { useToken } from "../context/TokenContext";
 
 const ViewCourse = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { courseId } = useParams();
   const [reviewModal, setReviewModal] = useState(false);
 
@@ -34,10 +35,10 @@ const ViewCourse = () => {
 
   return (
     <>
-      <div className="relative flex min-h-[calc(100vh-3.5rem)]">
+      <div className='relative flex min-h-[calc(100vh-3.5rem)]'>
         <VideoDetailsSidebar setReviewModal={setReviewModal} />
-        <div className="h-calc-[100vh-3.5rem] mt-14 flex-1 overflow-auto">
-          <div className="mx-3">
+        <div className='h-calc-[100vh-3.5rem] mt-14 flex-1 overflow-auto'>
+          <div className='mx-3'>
             <Outlet />
           </div>
         </div>

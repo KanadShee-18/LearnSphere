@@ -5,12 +5,13 @@ import Spinner from "../../../common/Spinner";
 import RenderSteps from "../AddCourse/RenderSteps";
 import { getFullDetailsOfCourse } from "../../../../services/operations/courseDetailsAPI";
 import { setCourse, setEditCourse } from "../../../../slices/courseSlice";
+import { useToken } from "../../../../context/TokenContext";
 
 const EditCourse = () => {
   const dispatch = useDispatch();
   const { courseId } = useParams();
   const { course } = useSelector((state) => state.course);
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

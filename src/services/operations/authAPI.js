@@ -5,6 +5,8 @@ import { resetCart } from "../../slices/cartSlice";
 import { setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";
 import { endpoints } from "../apis";
+import { saveAccessToken } from "../../utils/tokenStore";
+import { useToken } from "../../context/TokenContext";
 
 const {
   SENDOTP_API,
@@ -90,7 +92,8 @@ export function signUp(
   };
 }
 
-export function login(email, password, navigate) {
+export function login(email, password, navigate, updateToken) {
+  console.log("Checing login api");
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
@@ -113,18 +116,20 @@ export function login(email, password, navigate) {
       // console.log("Auth User set as: ", user);
 
       toast.success("Login Successful");
-      dispatch(setToken(token));
+      // dispatch(setToken(token));
 
       const userImage = image
         ? image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`;
       dispatch(setUser({ ...user, image: userImage }));
+      updateToken(token);
 
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("user", JSON.stringify(user));
+      // localStorage.setItem("user", JSON.stringify(user));
+
+      // localStorage.setItem("token", JSON.stringify(token));
       navigate("/dashboard/my-profile");
     } catch (error) {
-      // console.log("LOGIN API ERROR............", error);
+      console.log("LOGIN API ERROR............", error);
       const errorMessage = error.response?.data?.message || "Login failed";
       // console.log("Setting error message:", errorMessage);
       // console.log("Error message after setting:", errorMessage);
@@ -141,7 +146,7 @@ export function logout(navigate) {
     dispatch(setToken(null));
     dispatch(setUser(null));
     dispatch(resetCart());
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged Out Successfully!");
     navigate("/");

@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../services/operations/authAPI";
 import InputBox from "../../common/InputBox";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useToken } from "../../../context/TokenContext";
 
 const LogInForm = () => {
   const emailRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { updateToken } = useToken();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ const LogInForm = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(login(email, password, navigate));
+    dispatch(login(email, password, navigate, updateToken));
   };
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const LogInForm = () => {
   return (
     <form
       onSubmit={handleOnSubmit}
-      className="flex flex-col w-full mt-6 text-white gap-y-2"
+      className='flex flex-col w-full mt-6 text-white gap-y-2'
     >
       <InputBox
         ref={emailRef}
@@ -44,33 +46,33 @@ const LogInForm = () => {
       <InputBox
         type={"password"}
         required
-        name="password"
-        autoComplete="current-password"
+        name='password'
+        autoComplete='current-password'
         handleOnChangeEvent={(e) => setPassword(e.target.value)}
-        placeholder="Enter Password"
-        label="Enter Password"
+        placeholder='Enter Password'
+        label='Enter Password'
         value={password}
         className={"relative"}
       />
-      <div className="flex flex-row items-center justify-between px-2">
+      <div className='flex flex-row items-center justify-between px-2'>
         <Link to={"/signup"}>
-          <p className="mt-1 text-sm max-w-max text-cyan-600 hover:underline">
+          <p className='mt-1 text-sm max-w-max text-cyan-600 hover:underline'>
             No Account?
           </p>
         </Link>
         <Link to={"/forgot-password"}>
-          <p className="mt-1 text-xs max-w-max text-cyan-500 hover:underline">
+          <p className='mt-1 text-xs max-w-max text-cyan-500 hover:underline'>
             Forgot Password
           </p>
         </Link>
       </div>
       <button
-        type="submit"
-        className="px-3 py-3 mt-6 font-medium bg-teal-500 rounded-lg text-richblack-900 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600"
+        type='submit'
+        className='px-3 py-3 mt-6 font-medium bg-teal-500 rounded-lg text-richblack-900 hover:bg-cyan-700 hover:text-slate-200 active:bg-teal-600'
       >
-        <p className="group flex items-center gap-x-3 justify-center w-full">
+        <p className='group flex items-center gap-x-3 justify-center w-full'>
           Sign In{" "}
-          <span className="group-hover:translate-x-2 duration-200">
+          <span className='group-hover:translate-x-2 duration-200'>
             <FaArrowRightLong />
           </span>{" "}
         </p>

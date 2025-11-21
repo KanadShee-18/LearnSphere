@@ -10,11 +10,12 @@ import { RiMenuUnfold2Fill } from "react-icons/ri";
 import NavLinks from "../core/navbar/NavLinks";
 import NavSearchBox from "../core/navbar/NavSearchBox";
 import NavButtons from "../core/navbar/NavButtons";
+import { useToken } from "../../context/TokenContext";
 
 const Navbar = () => {
   const { toggleTheme } = useContext(ThemeContext);
   const { theme } = useSelector((state) => state.theme);
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { user } = useSelector((state) => state.profile);
   const [openBox, setOpenBox] = useState(false);
   const location = useLocation();
@@ -48,9 +49,9 @@ const Navbar = () => {
       <Link to={"/"}>
         <img
           src={Logo}
-          alt="LearnSphere"
-          className="md:w-[160px] w-[95px]"
-          loading="lazy"
+          alt='LearnSphere'
+          className='md:w-[160px] w-[95px]'
+          loading='lazy'
         />
       </Link>
 

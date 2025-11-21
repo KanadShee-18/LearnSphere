@@ -5,13 +5,14 @@ import { resetCourseState, setStep } from "../../../../../slices/courseSlice";
 import { COURSE_STATUS } from "../../../../../utils/constants";
 import { editCourseDetails } from "../../../../../services/operations/courseDetailsAPI";
 import { useNavigate } from "react-router-dom";
+import { useToken } from "../../../../../context/TokenContext";
 
 const PublishCourse = () => {
   const { register, handleSubmit, setValue, getValues } = useForm();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { course } = useSelector((state) => state.course);
   const [loading, setLoading] = useState(false);
 

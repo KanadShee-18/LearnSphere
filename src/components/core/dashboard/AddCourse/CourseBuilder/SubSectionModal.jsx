@@ -11,6 +11,7 @@ import Upload from "../Upload";
 import { setCourse } from "../../../../../slices/courseSlice";
 import Spinner from "../../../../common/Spinner";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { useToken } from "../../../../../context/TokenContext";
 const SubSectionModal = ({
   modalData,
   setModalData,
@@ -34,7 +35,7 @@ const SubSectionModal = ({
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { course } = useSelector((state) => state.course);
 
   const [uploadPdf, setUploadPdf] = useState(false);

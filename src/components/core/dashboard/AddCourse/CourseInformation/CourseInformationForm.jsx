@@ -19,10 +19,11 @@ import { toast } from "sonner";
 import { COURSE_STATUS } from "../../../../../utils/constants";
 import Upload from "../Upload";
 import Spinner from "../../../../common/Spinner";
+import { useToken } from "../../../../../context/TokenContext";
 
 const CourseInformationForm = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { course, editCourse } = useSelector((state) => state.course);
   const [aiCourseName, setAICourseName] = useState("");
   const [aiImageURL, setAIImageURL] = useState("");
@@ -91,6 +92,7 @@ High resolution, modern design suitable for an online course thumbnail.
     setStartGeneration(true);
     if (aiCourseName.trim().length === 0) {
       toast.error("Please provide the course name to generate content.");
+      setStartGeneration(false);
       return;
     }
     try {

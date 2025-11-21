@@ -14,10 +14,11 @@ import {
   createSection,
   updateSection,
 } from "../../../../../services/operations/courseDetailsAPI";
+import { useToken } from "../../../../../context/TokenContext";
 
 const CourseBuilderForm = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { course } = useSelector((state) => state.course);
 
   const [loading, setLoading] = useState(false);

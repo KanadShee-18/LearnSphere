@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { updateDisplayPicture } from "../../../../services/operations/SettingsAPI";
 import Spinner from "../../../common/Spinner";
 import { toast } from "sonner";
+import { useToken } from "../../../../context/TokenContext";
 
 const ChangeProfilePicture = () => {
   const { user } = useSelector((state) => state.profile);
-  const { token } = useSelector((state) => state.auth);
+  const { token } =useToken();
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);

@@ -9,13 +9,14 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../../services/operations/SettingsAPI";
+import { useToken } from "../../../../context/TokenContext";
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.profile);
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
 
   const {
     register,

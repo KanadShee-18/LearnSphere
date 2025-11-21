@@ -12,13 +12,14 @@ import { ratingsEndpoints } from "../../../services/apis";
 import CourseReviewsSlider from "./CourseReviewsSlider";
 import { RiMenuFold2Line } from "react-icons/ri";
 import { PiStudent } from "react-icons/pi";
+import { useToken } from "../../../context/TokenContext";
 
 const VideoDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { courseSectionData, completedLectures } = useSelector(
     (state) => state.viewCourse
   );
@@ -105,11 +106,11 @@ const VideoDetails = () => {
       : videoUrl;
 
   return (
-    <div className="">
+    <div className=''>
       {!videoData ? (
         <div>No video is available.</div>
       ) : (
-        <div className="relative">
+        <div className='relative'>
           {fileType === "video" ? (
             <Player
               ref={playerRef}
@@ -117,17 +118,17 @@ const VideoDetails = () => {
               playsInline
               onEnded={() => setVideoEnded(true)}
               src={videoUrl}
-              className="relative"
+              className='relative'
             >
-              <BigPlayButton position="center" />
+              <BigPlayButton position='center' />
               {/* Render when video ends */}
               {videoEnded && (
-                <div className="absolute bg-gradient-to-t from-slate-950 to-transparent backdrop-blur-sm inset-0 z-[100] grid w-full h-full place-content-center font-inter">
+                <div className='absolute bg-gradient-to-t from-slate-950 to-transparent backdrop-blur-sm inset-0 z-[100] grid w-full h-full place-content-center font-inter'>
                   {!completedLectures.includes(subSectionId) && (
                     <button
                       disabled={loading}
                       onClick={() => handleLectureCompletion()}
-                      className="px-4 py-2 mx-auto text-lg font-semibold bg-teal-500 rounded-md text-slate-900 max-w-max hover:bg-cyan-500"
+                      className='px-4 py-2 mx-auto text-lg font-semibold bg-teal-500 rounded-md text-slate-900 max-w-max hover:bg-cyan-500'
                     >
                       {!loading ? "Mark As Completed" : <Spinner />}
                     </button>
@@ -142,7 +143,7 @@ const VideoDetails = () => {
                         playerRef.current?.play();
                       }
                     }}
-                    className="px-4 py-2 mx-auto mt-10 text-lg font-semibold rounded-md bg-slate-600 text-slate-200 max-w-max"
+                    className='px-4 py-2 mx-auto mt-10 text-lg font-semibold rounded-md bg-slate-600 text-slate-200 max-w-max'
                   >
                     Rewatch
                   </button>
@@ -152,16 +153,16 @@ const VideoDetails = () => {
               )}
             </Player>
           ) : (
-            <div className="w-fit relative mx-auto h-[90vh]">
+            <div className='w-fit relative mx-auto h-[90vh]'>
               <iframe
                 src={pdfUrl}
-                className="md:w-auto w-11/12 h-full md:!aspect-square aspect-auto mx-auto border-none"
-                title="PDF Viewer"
+                className='md:w-auto w-11/12 h-full md:!aspect-square aspect-auto mx-auto border-none'
+                title='PDF Viewer'
                 style={{ backgroundColor: "##3e89fa" }}
               />
               <div
                 onClick={() => navigate("/contact")}
-                className="absolute top-0 right-0 flex flex-col items-center justify-center h-16 text-4xl sm:w-16 w-14 md:h-20 group- bg-slate-800 bg-opacity-70 backdrop-blur-lg rounded-bl-xl text-slate-400 "
+                className='absolute top-0 right-0 flex flex-col items-center justify-center h-16 text-4xl sm:w-16 w-14 md:h-20 group- bg-slate-800 bg-opacity-70 backdrop-blur-lg rounded-bl-xl text-slate-400 '
               >
                 <FaHeadphonesSimple />
               </div>
@@ -169,24 +170,24 @@ const VideoDetails = () => {
           )}
         </div>
       )}
-      <div className="flex mt-14 mb-4 text-[#95a9d8] flex-row items-center justify-start gap-x-4">
-        <RiMenuFold2Line className="size-8" />
-        <h1 className="md:px-2 md:text-3xl sm:text-2xl text-xl font-semibold">
+      <div className='flex mt-14 mb-4 text-[#95a9d8] flex-row items-center justify-start gap-x-4'>
+        <RiMenuFold2Line className='size-8' />
+        <h1 className='md:px-2 md:text-3xl sm:text-2xl text-xl font-semibold'>
           {videoData?.title}
         </h1>
       </div>
-      <div className="mt-2 mb-4 w-full bg-slate-600 h-px" />
-      <p className="pt-2 pb-6 md:px-4 lg:px-10 text-sm font-medium md:text-base text-slate-500 ">
+      <div className='mt-2 mb-4 w-full bg-slate-600 h-px' />
+      <p className='pt-2 pb-6 md:px-4 lg:px-10 text-sm font-medium md:text-base text-slate-500 '>
         {videoData?.description}
       </p>
-      <div className="md:w-10/12 w-[95%] mx-auto md:mt-24 mt-16 mb-32">
-        <div className="flex flex-row items-center justify-start gap-x-4">
-          <PiStudent className="text-2xl text-[#6071a8]" />
-          <h2 className="text-lg text-[#6071a8] sm:text-xl md:text-2xl">
+      <div className='md:w-10/12 w-[95%] mx-auto md:mt-24 mt-16 mb-32'>
+        <div className='flex flex-row items-center justify-start gap-x-4'>
+          <PiStudent className='text-2xl text-[#6071a8]' />
+          <h2 className='text-lg text-[#6071a8] sm:text-xl md:text-2xl'>
             Students Reviews in this Course
           </h2>
         </div>
-        <div className="mt-2 mb-12 w-full bg-slate-600 h-px" />
+        <div className='mt-2 mb-12 w-full bg-slate-600 h-px' />
         <CourseReviewsSlider Reviews={reviews} Id={"CourseReview"} />
       </div>
     </div>

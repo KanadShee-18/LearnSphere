@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiTrash2 } from "react-icons/fi";
 import { deleteProfile } from "../../../../services/operations/SettingsAPI";
 import { toast } from "sonner";
+import { useToken } from "../../../../context/TokenContext";
 
 const DeleteAccount = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

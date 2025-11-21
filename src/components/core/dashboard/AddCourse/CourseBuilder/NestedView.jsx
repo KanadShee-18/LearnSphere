@@ -16,9 +16,10 @@ import {
 import { setCourse } from "../../../../../slices/courseSlice";
 import SubSectionModal from "./SubSectionModal";
 import Spinner from "../../../../common/Spinner";
+import { useToken } from "../../../../../context/TokenContext";
 
 const NestedView = ({ handleChangeEditSectionName }) => {
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const { course } = useSelector((state) => state.course);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);

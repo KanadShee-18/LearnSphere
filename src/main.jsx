@@ -6,17 +6,26 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
 import { configureStore } from "@reduxjs/toolkit";
+import AuthProvider from "./providers/AuthProvider.jsx";
+import { TokenProvider } from "./context/TokenContext.jsx";
+// import { setupAxiosInterceptors } from "./services/apiConnector.js";
 
 const store = configureStore({
   reducer: rootReducer,
 });
 
+// setupAxiosInterceptors();
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <TokenProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AuthProvider>
+      </TokenProvider>
     </Provider>
   </StrictMode>
 );

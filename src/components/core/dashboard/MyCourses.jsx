@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI";
 import { setCourse, setEditCourse } from "../../../slices/courseSlice";
 import CourseTable from "./InstructorCourses/CourseTable";
+import { useToken } from "../../../context/TokenContext";
 
 const MyCourses = () => {
   const [loading, setLoading] = useState(false);
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useToken();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [courses, setCourses] = useState([]);
