@@ -1,31 +1,28 @@
 // Create section handler function
 
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import type { AuthRequest } from "../types/extend-auth.js";
 import { Course } from "../models/course.model.js";
 import { Section } from "../models/section.model.js";
 import { SubSection } from "../models/subSection.model.js";
 import logger from "../configs/logger.js";
+import { BadRequestError, NotFoundError } from "../utils/error-handler.js";
 
-export const createSection = async (req: AuthRequest, res: Response) => {
+export const createSection = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Data fetch
     const { sectionName, courseId } = req.body;
     // Data validation
     if (!sectionName || !courseId) {
-      res.status(400).json({
-        success: false,
-        message: "Missing properties.",
-      });
-      return;
+      return next(new BadRequestError("Missing properties."));
     }
     const findCourse = await Course.findById(courseId).exec();
     if (!findCourse) {
-      res.status(404).json({
-        success: false,
-        message: "No course found with this id.",
-      });
-      return;
+      return next(new NotFoundError("No course found with this id."));
     }
     // Create section
     const newSection = await Section.create({ sectionName: sectionName });
@@ -53,43 +50,28 @@ export const createSection = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in updating course: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Update Section:
 
-export const updateSection = async (req: AuthRequest, res: Response) => {
+export const updateSection = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Data fetch
     const { sectionName, sectionId, courseId } = req.body;
 
     // validate data
     if (!sectionId || !sectionName) {
-      res.status(400).json({
-        success: false,
-        message: "All properties should be filled.",
-      });
-      return;
+      return next(new BadRequestError("Missing properties."));
     }
     const findSection = await Section.findById(sectionId).exec();
     if (!findSection) {
-      res.status(400).json({
-        success: false,
-        message: "No section is available with this id.",
-      });
-      return;
+      return next(new NotFoundError("No section is available with this id."));
     }
     // update section
     const updateSectionDetails = await Section.findByIdAndUpdate(
@@ -115,24 +97,17 @@ export const updateSection = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in updating section of course: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Delete Section:
 
-export const deleteSection = async (req: AuthRequest, res: Response) => {
+export const deleteSection = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   logger.info("Delete section has been called in backend.");
 
   try {
@@ -151,12 +126,7 @@ export const deleteSection = async (req: AuthRequest, res: Response) => {
     // validate:
     const sectionDetails = await Section.findById(sectionId);
     if (!sectionDetails) {
-      res.status(400).json({
-        success: false,
-        message:
-          "No section is available with this id in the course. Plese re-check it.",
-      });
-      return;
+      return next(new NotFoundError("No section found with this id."));
     }
 
     // Validate that there are subsections to delete
@@ -187,17 +157,6 @@ export const deleteSection = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in deleting section: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

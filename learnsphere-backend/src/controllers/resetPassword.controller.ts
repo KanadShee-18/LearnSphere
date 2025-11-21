@@ -1,30 +1,35 @@
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import type { AuthRequest } from "../types/extend-auth.js";
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { User } from "../models/user.model.js";
 import { mailSender } from "../utils/mailSender.js";
 import { passwordReset } from "../mail/templates/passwordReset.js";
 import { passwordUpdateTemplate } from "../mail/templates/passwordUpdate.js";
 import { CONFIGS } from "../configs/index.js";
 import logger from "../configs/logger.js";
+import { BadRequestError, NotFoundError } from "../utils/error-handler.js";
 
 const baseURL = CONFIGS.client_side_url;
 
-export const resetPasswordToken = async (req: AuthRequest, res: Response) => {
+export const resetPasswordToken = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // get email from body
     const { email } = req.body;
+
+    if (!email) {
+      return next(new BadRequestError("Email is required."));
+    }
 
     // check user for this email exists or not
     const user = await User.findOne({ email: email });
     // email validation
     if (!user) {
-      res.status(401).json({
-        success: false,
-        message: "Your email doesn't registered with us. Please re-check it.",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
     // generate token
     const token = crypto.randomBytes(20).toString("hex");
@@ -52,46 +57,34 @@ export const resetPasswordToken = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in reset password token: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Reset Password:
 
-export const resetPassword = async (req: AuthRequest, res: Response) => {
+export const resetPassword = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // fetch data
     const { password, confirmPassword, token } = req.body;
     // validation
     if (password !== confirmPassword) {
-      res.json({
-        successs: false,
-        message: "Both passwords should be same. Please re-check them.",
-      });
-      return;
+      return next(new BadRequestError("Passwords do not match."));
     }
 
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
     // validation for password strength
     if (!passwordRegex.test(password)) {
-      res.json({
-        success: false,
-        message:
-          "Password must be at least 8 characters long and include at least one digit, one lowercase letter, and one uppercase letter.",
-      });
-      return;
+      return next(
+        new BadRequestError(
+          "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number."
+        )
+      );
     }
 
     // get user details using token
@@ -102,11 +95,9 @@ export const resetPassword = async (req: AuthRequest, res: Response) => {
 
     // if no entry - token invalid or token time expires
     if (!userDetails) {
-      res.status(401).json({
-        success: false,
-        messgae: "Token has been expired or invalid token.",
-      });
-      return;
+      return next(
+        new BadRequestError("Password reset token is invalid or has expired.")
+      );
     }
     // hash new password
     const newHashedPassword = await bcrypt.hash(password, 10);
@@ -138,17 +129,6 @@ export const resetPassword = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in resetting password: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

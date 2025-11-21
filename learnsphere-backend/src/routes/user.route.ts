@@ -7,6 +7,7 @@ import {
   signUp,
   login,
   changePassword,
+  refreshAccessToken,
 } from "../controllers/auth.controller.js";
 
 // Reset Password Controllers:
@@ -44,5 +45,7 @@ router.post(
 );
 // #swagger.tags = ['Auth]
 router.post("/auth/reset-password", resetPassword);
+// #swagger.tags = ['Auth]
+router.post("/auth/refresh", refreshAccessToken);
 
 export default router;

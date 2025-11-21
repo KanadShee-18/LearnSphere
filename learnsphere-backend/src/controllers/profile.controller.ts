@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { Course, type ICourse } from "../models/course.model.js";
 import { CourseProgress } from "../models/courseProgress.model.js";
 import { Profile } from "../models/profile.model.js";
@@ -12,9 +12,14 @@ import {
 } from "../utils/imageUploader.js";
 import { convertSecondsToDuration } from "../utils/secToDuration.js";
 import logger from "../configs/logger.js";
+import { NotFoundError } from "../utils/error-handler.js";
 
 // Update Profile
-export const updateProfile = async (req: AuthRequest, res: Response) => {
+export const updateProfile = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Fetch data
     const {
@@ -32,21 +37,13 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
     const userDetails = await User.findById(id);
 
     if (!userDetails) {
-      res.status(404).json({
-        success: false,
-        message: "User not found!",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
 
     const profile = await Profile.findById(userDetails.additionalDetails);
 
     if (!profile) {
-      res.status(404).json({
-        success: false,
-        message: "User profile not available!",
-      });
-      return;
+      return next(new NotFoundError("User profile not available!"));
     }
 
     // Update the profile fields
@@ -73,35 +70,24 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in updating user profile: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Delete Account:
 
-export const deleteProfile = async (req: AuthRequest, res: Response) => {
+export const deleteProfile = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const userId = req.auth?.authUser?.id;
     // const userId = req.body.userId;
     // validate id:
     const findUser = await User.findById(userId);
     if (!findUser) {
-      res.status(400).json({
-        success: false,
-        message: "User not found!",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
     // Now delete the profile associated with the user
     const deletedProfile = await Profile.findByIdAndDelete({
@@ -138,24 +124,17 @@ export const deleteProfile = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in deleting profile: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Get a particular user all details
 
-export const getUserAllDetails = async (req: AuthRequest, res: Response) => {
+export const getUserAllDetails = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // get id
     // const userId = req.user.id || req.headers.userid;
@@ -166,11 +145,7 @@ export const getUserAllDetails = async (req: AuthRequest, res: Response) => {
       .populate("additionalDetails")
       .populate("courses");
     if (!userDetails) {
-      res.status(400).json({
-        success: false,
-        message: "Not able to fetch all details of the user.",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
     res.status(200).json({
       success: true,
@@ -186,37 +161,25 @@ export const getUserAllDetails = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in getting user all details: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Update Display Picture:
-export const updateDisplayPicture = async (req: AuthRequest, res: Response) => {
+export const updateDisplayPicture = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const displayPicture = req.images;
-    logger.info(req.images);
 
     const userId = req.auth?.authUser?.id;
 
     const user = await User.findById(userId);
 
     if (!user) {
-      res.status(404).json({
-        success: false,
-        message: "User not found!",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
 
     const oldImgUrl = user.image;
@@ -256,22 +219,15 @@ export const updateDisplayPicture = async (req: AuthRequest, res: Response) => {
   } catch (error) {
     logger.error("Error in updating display picture: ", error);
 
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
-export const getEnrolledCourses = async (req: AuthRequest, res: Response) => {
+export const getEnrolledCourses = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const userId = req.auth?.authUser?.id;
     const userDoc = await User.findOne({
@@ -289,11 +245,7 @@ export const getEnrolledCourses = async (req: AuthRequest, res: Response) => {
       .exec();
 
     if (!userDoc) {
-      res.status(404).json({
-        success: false,
-        message: "User not found!",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
 
     const userDetails = userDoc.toObject() as unknown as IUser & {
@@ -341,22 +293,15 @@ export const getEnrolledCourses = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in getting enrolled courses: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
-export const instructorDashboard = async (req: AuthRequest, res: Response) => {
+export const instructorDashboard = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const courseDetails = await Course.find({
       instructor: req.auth?.authUser?.id,
@@ -382,17 +327,6 @@ export const instructorDashboard = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in getting instructor dashboard: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

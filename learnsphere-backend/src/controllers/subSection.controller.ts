@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import type { AuthRequest } from "../types/extend-auth.js";
 import { Section } from "../models/section.model.js";
 import {
@@ -13,10 +13,15 @@ import { SubSection } from "../models/subSection.model.js";
 import type { UploadedFile } from "express-fileupload";
 import { CONFIGS } from "../configs/index.js";
 import logger from "../configs/logger.js";
+import { NotFoundError, ValidationError } from "../utils/error-handler.js";
 
 // Create SubSection:
 
-export const createSubSection = async (req: AuthRequest, res: Response) => {
+export const createSubSection = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Fetch data from body
     const { sectionId, title, description } = req.body;
@@ -26,37 +31,31 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
       | UploadedFile[]
       | undefined;
 
+    let fileType: string | undefined;
     if (!file) {
-      res.status(400).json({ success: false, message: "No file uploaded." });
-      return;
+      return next(new ValidationError("File is required."));
+    } else {
+      const safeFile = file as UploadedFile | UploadedFile[];
+      //@ts-ignore
+      const uploadingFile: UploadedFile = Array.isArray(safeFile)
+        ? safeFile[0]
+        : safeFile;
+
+      fileType = uploadingFile.name.split(".").pop()?.toLowerCase();
     }
-
-    const safeFile = file as UploadedFile | UploadedFile[];
-    //@ts-ignore
-    const uploadingFile: UploadedFile = Array.isArray(safeFile)
-      ? safeFile[0]
-      : safeFile;
-
-    const fileType = uploadingFile.name.split(".").pop()?.toLowerCase();
 
     const uploadedFile = req.files;
     logger.info("Uploaded file name:", uploadedFile);
 
     // Validate required fields
     if (!sectionId || !title || !description || !file) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required!",
-      });
+      return next(new ValidationError("All fields are required."));
     }
 
     // Check if the section exists
     const findSection = await Section.findById(sectionId);
     if (!findSection) {
-      return res.status(400).json({
-        success: false,
-        message: "No section is available with this ID.",
-      });
+      return next(new NotFoundError("No section found with this id."));
     }
 
     let uploadDetails;
@@ -85,11 +84,9 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
           authClient
         );
         if (!uploadResponse || !uploadResponse.fileId) {
-          res.status(422).json({
-            success: false,
-            message: "Error occurred while uploading pdf.",
-          });
-          return;
+          return next(
+            new ValidationError("Failed to upload PDF to Google Drive.")
+          );
         }
         pdfFileId = uploadResponse.fileId;
         logger.info("Uploaded PDF details: ", uploadResponse);
@@ -104,10 +101,7 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
         fileUrl = pdfViewLinks.webViewLink;
       }
     } else {
-      return res.status(400).json({
-        success: false,
-        message: "Unsupported file type. Only MP4 and PDF are allowed.",
-      });
+      return next(new ValidationError("Only MP4 and PDF files are supported."));
     }
 
     const newSubSection = await SubSection.create({
@@ -134,24 +128,17 @@ export const createSubSection = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in creating sub section: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Update Sub-section:
 
-export const updateSubSection = async (req: AuthRequest, res: Response) => {
+export const updateSubSection = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Fetch data from req body
     const { sectionId, subSectionId, title, description } = req.body;
@@ -159,10 +146,9 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
     // Check if the sub-section is present with the given id
     const checkSubSection = await SubSection.findById(subSectionId);
     if (!checkSubSection) {
-      return res.status(400).json({
-        success: false,
-        message: "No sub-section is available with this id.",
-      });
+      return next(
+        new NotFoundError("No sub-section is available with this id.")
+      );
     }
 
     // If the sub-section has a previous video, delete it from Cloudinary (for MP4 files)
@@ -243,10 +229,9 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
           checkSubSection.publicId = null; // No publicId for PDFs
         }
       } else {
-        return res.status(400).json({
-          success: false,
-          message: "Only MP4 and PDF files are supported.",
-        });
+        return next(
+          new ValidationError("Only MP4 and PDF files are supported.")
+        );
       }
     }
 
@@ -265,24 +250,17 @@ export const updateSubSection = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in updating sub section: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Delete sub-section:
 
-export const deleteSubSection = async (req: AuthRequest, res: Response) => {
+export const deleteSubSection = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Fetch the subsection id from the params
     // logger.info("Request comes to backend to delete subsection...");
@@ -299,10 +277,9 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
 
     const checkSubSection = await SubSection.findById(subSectionId);
     if (!checkSubSection) {
-      return res.status(400).json({
-        success: false,
-        message: "No sub-section is available with this id.",
-      });
+      return next(
+        new NotFoundError("No sub-section is available with this id.")
+      );
     }
 
     if (checkSubSection.timeDuration === "N/A") {
@@ -332,10 +309,9 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
     });
     // Validate:
     if (!subSection) {
-      return res.status(400).json({
-        success: false,
-        message: "No sub-section is available with this id.",
-      });
+      return next(
+        new NotFoundError("No sub-section is available with this id.")
+      );
     }
 
     // Remove the deleted subsection id from the section schema also
@@ -353,17 +329,6 @@ export const deleteSubSection = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in deleting sub section: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

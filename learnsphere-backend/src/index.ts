@@ -1,17 +1,17 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import express, {
   type Application,
   type Request,
   type Response,
 } from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
 import fileUpload from "express-fileupload";
 
 // configs
-import { CONFIGS } from "./configs/index.js";
-import { dbConnect } from "./configs/db.config.js";
 import { connectCloudinary } from "./configs/cloudinary.config.js";
+import { dbConnect } from "./configs/db.config.js";
 import { connectDrive } from "./configs/drive.config.js";
+import { CONFIGS } from "./configs/index.js";
 
 // swagger documentation
 import swaggerUi from "swagger-ui-express";
@@ -21,14 +21,14 @@ import swaggerFile from "../swagger-output.json" with { type: "json" };
 const app: Application = express();
 
 // Necessary Routes
-import userRoutes from "./routes/user.route.js";
-import profileRoutes from "./routes/profile.route.js";
-import paymentRoutes from "./routes/payment.route.js";
-import courseRoutes from "./routes/course.route.js";
 import contactRoutes from "./routes/contact.route.js";
-import { errorHandler } from "./utils/error-handler.js";
+import courseRoutes from "./routes/course.route.js";
+import paymentRoutes from "./routes/payment.route.js";
+import profileRoutes from "./routes/profile.route.js";
+import userRoutes from "./routes/user.route.js";
+// import { errorHandler } from "./utils/error-handler.js";
 import logger from "./configs/logger.js";
-import { assert } from "console";
+import { errorMiddleware } from "./middlewares/error-middleware.js";
 
 dbConnect();
 connectCloudinary();
@@ -92,7 +92,7 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.use(errorHandler);
+app.use(errorMiddleware);
 
 // Start the Server
 app.listen(port, () => {

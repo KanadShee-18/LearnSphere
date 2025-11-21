@@ -1,8 +1,8 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { Category } from "../models/category.model.js";
 import { type ICourse } from "../models/course.model.js";
 import type { AuthRequest } from "../types/extend-auth.js";
-import logger from "../configs/logger.js";
+import { BadRequestError, NotFoundError } from "../utils/error-handler.js";
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
@@ -10,18 +10,22 @@ function getRandomInt(max: number) {
 
 // Create tag handler function
 
-export const createCategory = async (req: AuthRequest, res: Response) => {
+export const createCategory = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // fetch data from req body
     const { name, description } = req.body;
 
     // validate data
     if (!name || !description) {
-      res.status(400).json({
-        success: false,
-        message: "All fields are required.",
-      });
-      return;
+      return next(
+        new BadRequestError(
+          "Name and Description are required to create a category."
+        )
+      );
     }
 
     // create entry in db
@@ -30,31 +34,23 @@ export const createCategory = async (req: AuthRequest, res: Response) => {
       description: description,
     });
     // send success response
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Category crated successfully.",
       category: categoryDetails,
     });
-    return;
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 //get all categories handler function
 
-export const showAllCategories = async (req: AuthRequest, res: Response) => {
+export const showAllCategories = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const allCategories = await Category.find(
       {},
@@ -69,24 +65,17 @@ export const showAllCategories = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Category Page Details
 
-export const categoryPageDetails = async (req: AuthRequest, res: Response) => {
+export const categoryPageDetails = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Get category id
     const { categoryId } = req.body;
@@ -103,20 +92,14 @@ export const categoryPageDetails = async (req: AuthRequest, res: Response) => {
 
     if (!selectedCategory) {
       // logger.error("Category not found!");
-      res.status(404).json({
-        success: false,
-        message: "Category Not Found.",
-      });
-      return;
+      return next(new NotFoundError("Category not found!"));
     }
 
     if (selectedCategory.courses.length === 0) {
       // logger.warn("No courses found on this selected category.");
-      res.status(404).json({
-        success: false,
-        message: "No courses found on this selected category!",
-      });
-      return;
+      return next(
+        new NotFoundError("No courses found on this selected category!")
+      );
     }
 
     // Get courses for different categories -> means where category id !== categoryId
@@ -172,17 +155,6 @@ export const categoryPageDetails = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

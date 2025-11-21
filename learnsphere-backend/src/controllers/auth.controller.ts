@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import type { AuthRequest } from "../types/extend-auth.js";
 
 import otpGenerator from "otp-generator";
@@ -14,29 +14,40 @@ import { passwordUpdateTemplate } from "../mail/templates/passwordUpdate.js";
 import type { PAYLOAD_TYPE } from "../types/payload-type.js";
 import { CONFIGS } from "../configs/index.js";
 import logger from "../configs/logger.js";
+import {
+  findRefreshToken,
+  revokeRefreshToken,
+  signAccessToken,
+  signRefreshToken,
+  storeRefreshToken,
+} from "../utils/generateTokens.js";
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+  UnauthorizedError,
+  ValidationError,
+} from "../utils/error-handler.js";
 
 // send otp
-export const sendOtp = async (req: AuthRequest, res: Response) => {
+export const sendOtp = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email } = req.body;
 
     const checkUser = await User.findOne({ email });
     if (checkUser) {
-      res.status(401).json({
-        success: false,
-        message: "User already exists.",
-      });
-      return;
+      return next(new ConflictError("User already exists!"));
     }
 
-    // if no, generate OTP
     var otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-
-    // make sure otp is unique
 
     let result = await OTP.findOne({ otp: otp });
     while (result) {
@@ -62,15 +73,16 @@ export const sendOtp = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "Some error occurred while generating OTP. Please try again!",
-    });
+    return next(error);
   }
 };
 
 // Signup
-export const signUp = async (req: AuthRequest, res: Response) => {
+export const signUp = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const {
       firstName,
@@ -91,30 +103,18 @@ export const signUp = async (req: AuthRequest, res: Response) => {
       !confirmPassword ||
       !otp
     ) {
-      res.status(403).json({
-        success: false,
-        message: "All fields are required.",
-      });
-      return;
+      return next(new BadRequestError("User already exists!"));
     }
 
     // check password and confirmpassword
     if (password !== confirmPassword) {
-      res.status(403).json({
-        success: false,
-        message: "Both passwords should be same. Please re-check both of them.",
-      });
-      return;
+      return next(new ValidationError("Both passwords must match!"));
     }
 
     // check if user already exists or not
     const checkUser = await User.findOne({ email: email });
     if (checkUser) {
-      res.status(400).json({
-        success: false,
-        message: "User is already registered.",
-      });
-      return;
+      return next(new ConflictError("User already exists!"));
     }
 
     // find most recent otp for user
@@ -124,17 +124,9 @@ export const signUp = async (req: AuthRequest, res: Response) => {
     // validate otp
     if (recentOtp.length == 0) {
       // Otp not found
-      res.status(400).json({
-        success: false,
-        message: "OTP not found.",
-      });
-      return;
+      return next(new NotFoundError("OTP not available!"));
     } else if (recentOtp[0] && otp !== recentOtp[0].otp) {
-      res.status(400).json({
-        success: false,
-        message: "OTP doesn't match. Please try again!",
-      });
-      return;
+      return next(new BadRequestError("OTP doesn't match!"));
     }
 
     // hash password
@@ -173,32 +165,26 @@ export const signUp = async (req: AuthRequest, res: Response) => {
     });
     return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Some error occurred while signing up. Please try again!",
-    });
-    return;
+    return next(error);
   }
 };
 
 // Login
-export const login = async (req: AuthRequest, res: Response) => {
+export const login = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "All fileds are mandatory.",
-      });
+      return next(new BadRequestError("All fields are required!"));
     }
     const existingUser = await User.findOne({ email })
       .populate("additionalDetails")
       .exec();
     if (!existingUser) {
-      return res.status(401).json({
-        success: false,
-        message: "User doesn't exists. Please register first.",
-      });
+      return next(new NotFoundError("User not found!"));
     }
 
     const payload: PAYLOAD_TYPE = {
@@ -212,56 +198,142 @@ export const login = async (req: AuthRequest, res: Response) => {
       (await bcrypt.compare(password, existingUser.password))
     ) {
       // password matched
-      const token = jwt.sign(payload, CONFIGS.jwt_secret as string, {
-        expiresIn: "24h",
+      const accessToken = signAccessToken(payload);
+      const refreshToken = signRefreshToken(payload);
+
+      logger.info("Token set to cookie in client: ", refreshToken);
+
+      await storeRefreshToken(String(existingUser._id), refreshToken, 7);
+
+      logger.info("Refresh token stored!");
+
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/api/v2/auth/refresh",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        priority: "high",
       });
+      logger.info("Cookie has been set!");
 
       const user = existingUser.toObject() as Record<string, any>;
-      user.token = token;
+      // user.token = token;
       delete user.password;
 
-      res
-        .status(200)
-        .cookie("authToken", token, {
-          expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          sameSite: true,
-          httpOnly: true,
-          secure: true,
-        })
-        .json({
-          success: true,
-          message: "User logged in successfully.",
-          loggedUser: {
-            token: token,
-            dataUser: {
-              data: user,
-            },
+      logger.info("Sending response!");
+
+      return res.status(200).json({
+        success: true,
+        message: "User logged in successfully.",
+        loggedUser: {
+          token: accessToken,
+          dataUser: {
+            data: user,
           },
-        });
-      return;
+        },
+      });
     } else {
       // password doesn't match
       const errorMessage =
         "Password is incorrect. Please re-type the correct password.";
-      return res.status(401).json({
-        success: false,
-        message: errorMessage,
-      });
+      return next(new UnauthorizedError(errorMessage));
     }
   } catch (error: any) {
-    logger.error("Error: ", error.message);
+    logger.error("Error: ", error);
 
-    res.status(500).json({
-      success: false,
-      message: "Some error occurred while login. Please try again.",
+    return next(error);
+  }
+};
+
+// Refresh access token:
+export const refreshAccessToken = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const incomingRefreshToken =
+      req.cookies.refreshToken || req.body.refreshToken;
+
+    console.log("Cookie token: ", incomingRefreshToken);
+
+    if (!incomingRefreshToken) {
+      return next(new UnauthorizedError("Refresh token is required!"));
+    }
+
+    let payload: PAYLOAD_TYPE;
+    try {
+      console.log("referesh token api called!");
+      const decoded = jwt.verify(incomingRefreshToken, CONFIGS.refresh_secret);
+      if (typeof decoded === "string") {
+        throw new Error("Invalid token decode format");
+      }
+      payload = decoded as PAYLOAD_TYPE;
+    } catch (error) {
+      return next(new UnauthorizedError("Invalid refresh token."));
+    }
+
+    const existingRefreshToken = await findRefreshToken(
+      payload.id,
+      incomingRefreshToken
+    );
+    if (!existingRefreshToken) {
+      return res.status(401).json({
+        success: false,
+        message: "Refresh token not recognized.",
+      });
+    }
+
+    await revokeRefreshToken(payload.id, incomingRefreshToken);
+
+    const newAccessToken = jwt.sign(
+      {
+        id: payload.id,
+        email: payload.email,
+        accountType: payload.accountType,
+      },
+      CONFIGS.jwt_secret,
+      { expiresIn: "15m" }
+    );
+
+    const newRefreshToken = jwt.sign(
+      {
+        id: payload.id,
+        email: payload.email,
+        accountType: payload.accountType,
+      },
+      CONFIGS.refresh_secret,
+      { expiresIn: "7d" }
+    );
+
+    await storeRefreshToken(payload.id, newRefreshToken, 7);
+
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      path: "/api/v2/auth/refresh",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    return;
+
+    return res.status(200).json({
+      success: true,
+      accessToken: newAccessToken,
+      message: "Token refreshed.",
+    });
+  } catch (error) {
+    return next(error);
   }
 };
 
 // change password
 
-export const changePassword = async (req: AuthRequest, res: Response) => {
+export const changePassword = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Get data from req body
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
@@ -269,35 +341,25 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
     const email = req.auth?.authUser?.email;
 
     if (!email) {
-      res.status(403).json({
-        success: false,
-        message: "Email is required!",
-      });
-      return;
+      return next(new UnauthorizedError("Unauthorized access."));
     }
 
     // Find the existing user
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      res.status(400).json({
-        success: false,
-        message: "No user present with this email.",
-      });
-      return;
+      return next(new NotFoundError("User not found."));
     }
 
     // Validate old password
-    const isOldPasswordCorrect = await bcrypt.compare(
-      oldPassword,
-      existingUser.password
-    );
-    if (!isOldPasswordCorrect) {
-      res.status(401).json({
-        success: false,
-        message: "Old password is incorrect.",
-      });
-      return;
+    if (existingUser) {
+      const isOldPasswordCorrect = await bcrypt.compare(
+        oldPassword,
+        existingUser.password
+      );
+      if (!isOldPasswordCorrect) {
+        return next(new UnauthorizedError("Old password is incorrect."));
+      }
     }
 
     // Check if new password matches the old password
@@ -306,20 +368,20 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
       existingUser.password
     );
     if (isSameAsOldPassword) {
-      res.status(401).json({
-        success: false,
-        message: "This password has already been used. Try another one.",
-      });
-      return;
+      return next(
+        new ValidationError(
+          "New password cannot be the same as the old password."
+        )
+      );
     }
 
     // Check if new password matches confirmation password
     if (newPassword !== confirmNewPassword) {
-      res.status(400).json({
-        success: false,
-        message: "Both passwords should match. Please re-check both fields.",
-      });
-      return;
+      return next(
+        new ValidationError(
+          "Both passwords should match. Please re-check both fields."
+        )
+      );
     }
 
     // Hash the new password
@@ -346,10 +408,6 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
     });
   } catch (error: any) {
     logger.error("Error while updating password:", error.message);
-    return res.status(500).json({
-      success: false,
-      message:
-        "Something went wrong while updating the password. Please try again.",
-    });
+    return next(error);
   }
 };

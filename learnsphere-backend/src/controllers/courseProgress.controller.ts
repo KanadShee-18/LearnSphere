@@ -1,40 +1,36 @@
 import { Types } from "mongoose";
 
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { CourseProgress } from "../models/courseProgress.model.js";
 import { SubSection } from "../models/subSection.model.js";
 import { User, type IUser } from "../models/user.model.js";
 import type { AuthRequest } from "../types/extend-auth.js";
 import logger from "../configs/logger.js";
+import { BadRequestError, NotFoundError } from "../utils/error-handler.js";
 
-export const updateCourseProgress = async (req: AuthRequest, res: Response) => {
+export const updateCourseProgress = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   const { courseId, subSectionId } = req.body;
   const userId = req.auth?.authUser?.id;
 
   try {
     if (!userId) {
-      res.status(401).json({ success: false, message: "Unauthorized" });
-      return;
+      return next(new BadRequestError("User ID is required."));
     }
     // Check if the subsection exists
     const subSection = await SubSection.findById(subSectionId);
     if (!subSection) {
-      res.status(404).json({
-        success: false,
-        message: "Invalid subsection.",
-      });
-      return;
+      return next(new NotFoundError("SubSection does not exist."));
     }
 
     const user = (await User.findById(userId)) as IUser & {
       courseProgress: Types.ObjectId[];
     };
     if (!user) {
-      res.status(404).json({
-        success: false,
-        message: "User Not Registered!",
-      });
-      return;
+      return next(new NotFoundError("User does not exist."));
     }
 
     // Check if course progress exists for the user and course
@@ -45,20 +41,18 @@ export const updateCourseProgress = async (req: AuthRequest, res: Response) => {
 
     if (!courseProgress) {
       // If no course progress exists, create a new one
-      res.status(404).json({
-        success: false,
-        message: "Course progress does not exist.",
-      });
-      return;
+      return next(new NotFoundError("Course progress does not exist."));
     } else {
       // If course progress exists, check if the sub-section is already completed
       if (courseProgress.completedVideos.includes(subSectionId)) {
-        res.status(400).json({ error: "SubSection is already completed!" });
-        return;
+        return next(
+          new BadRequestError(
+            "This sub-section is already marked as completed."
+          )
+        );
+      } else {
+        courseProgress.completedVideos.push(subSectionId);
       }
-
-      // Add the subsection to the list of completed videos
-      courseProgress.completedVideos.push(subSectionId);
     }
 
     if (
@@ -81,17 +75,6 @@ export const updateCourseProgress = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in Updating course progress: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

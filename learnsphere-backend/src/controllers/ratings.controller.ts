@@ -1,13 +1,22 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import mongoose from "mongoose";
 import { Course } from "../models/course.model.js";
 import { RatingAndReviews } from "../models/rating.model.js";
 import type { AuthRequest } from "../types/extend-auth.js";
 import logger from "../configs/logger.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../utils/error-handler.js";
 
 // Create rating
 
-export const createRating = async (req: AuthRequest, res: Response) => {
+export const createRating = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // get userId
     const userId = req.auth?.authUser?.id;
@@ -24,11 +33,9 @@ export const createRating = async (req: AuthRequest, res: Response) => {
     });
 
     if (!courseDetails) {
-      res.status(404).json({
-        success: false,
-        message: "Student is not enrolled in this course.",
-      });
-      return;
+      return next(
+        new UnauthorizedError("You must be enrolled in the course to rate it.")
+      );
     }
     // make sure user hasn't made a review already.
     const alreadyReviewed = await RatingAndReviews.findOne({
@@ -36,11 +43,9 @@ export const createRating = async (req: AuthRequest, res: Response) => {
       course: courseId,
     });
     if (alreadyReviewed) {
-      res.status(403).json({
-        success: false,
-        message: "Course has already been reviewed. Thank You!",
-      });
-      return;
+      return next(
+        new UnauthorizedError("You have already reviewed this course.")
+      );
     }
     // create rating and review
     const createdRatingAndReview = await RatingAndReviews.create({
@@ -71,50 +76,33 @@ export const createRating = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in creating rating: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Edit rating:
-export const modifyRating = async (req: AuthRequest, res: Response) => {
+export const modifyRating = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const userId = req.auth?.authUser?.id;
     const { reviewId, rating, review } = req.body;
     if (!reviewId || !rating || !review || !userId) {
-      res.status(400).json({
-        success: false,
-        message: "All fields are mandatory.",
-      });
-      return;
+      return next(new BadRequestError("All fields are mandatory."));
     }
 
     const reviewDetails = await RatingAndReviews.findById(reviewId);
 
     if (!reviewDetails) {
-      res.status(404).json({
-        success: false,
-        message: "Review Details not found!",
-      });
-      return;
+      return next(new NotFoundError("Review Details not found!"));
     }
 
     if (reviewDetails.user.toString() !== userId) {
-      res.status(400).json({
-        success: false,
-        messgae: "You are not authorized to modify this rating.",
-      });
-      return;
+      return next(
+        new UnauthorizedError("You are not authorized to modify this rating.")
+      );
     }
 
     const findedReviewAndUpdate = await RatingAndReviews.findByIdAndUpdate(
@@ -124,11 +112,11 @@ export const modifyRating = async (req: AuthRequest, res: Response) => {
     );
 
     if (!findedReviewAndUpdate) {
-      res.status(400).json({
-        success: false,
-        message: "No review is found with this id. Please provide a valid id.",
-      });
-      return;
+      return next(
+        new BadRequestError(
+          "No review is found with this id. Please provide a valid id."
+        )
+      );
     }
 
     res.status(200).json({
@@ -143,50 +131,33 @@ export const modifyRating = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in modify rating: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Delete Rating
-export const deleteRating = async (req: AuthRequest, res: Response) => {
+export const deleteRating = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const userId = req.auth?.authUser?.id;
     const { reviewId } = req.body;
     if (!reviewId || !userId) {
-      res.status(400).json({
-        success: false,
-        message: "All fields are mandatory.",
-      });
-      return;
+      return next(new BadRequestError("All fields are mandatory."));
     }
 
     const reviewDetails = await RatingAndReviews.findById(reviewId);
 
     if (!reviewDetails) {
-      res.status(404).json({
-        success: false,
-        message: "Review Details not found!",
-      });
-      return;
+      return next(new NotFoundError("Review Details not found!"));
     }
 
     if (reviewDetails.user.toString() !== userId) {
-      res.status(400).json({
-        success: false,
-        messgae: "You are not authorized to modify this rating.",
-      });
-      return;
+      return next(
+        new UnauthorizedError("You are not authorized to delete this rating.")
+      );
     }
 
     const courseId = reviewDetails.course;
@@ -220,24 +191,17 @@ export const deleteRating = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in deleting rating: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Get average Rating
 
-export const getAverageRating = async (req: AuthRequest, res: Response) => {
+export const getAverageRating = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // get course id from body
     const { courseId } = req.body;
@@ -274,23 +238,16 @@ export const getAverageRating = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in getting average rating: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // get all ratings
-export const getAllRatings = async (req: AuthRequest, res: Response) => {
+export const getAllRatings = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const allReviews = await RatingAndReviews.find({})
       .sort({ rating: "desc" })
@@ -314,18 +271,7 @@ export const getAllRatings = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in getting all ratings: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
@@ -333,7 +279,8 @@ export const getAllRatings = async (req: AuthRequest, res: Response) => {
 
 export const getAllRatingsForCourse = async (
   req: AuthRequest,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     // Get course id:
@@ -346,11 +293,7 @@ export const getAllRatingsForCourse = async (
       populate: "user",
     });
     if (!courseDetails) {
-      res.status(404).json({
-        success: false,
-        message: "No course found.",
-      });
-      return;
+      return next(new NotFoundError("Course not found with this id."));
     }
 
     // return response
@@ -362,17 +305,6 @@ export const getAllRatingsForCourse = async (
     return;
   } catch (error) {
     logger.error("Error in getting all ratings for course: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };

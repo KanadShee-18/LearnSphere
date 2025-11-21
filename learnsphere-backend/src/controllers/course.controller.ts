@@ -1,5 +1,5 @@
 import type { AuthRequest } from "../types/extend-auth.js";
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 
 import { Course, type ICourse } from "../models/course.model.js";
 import { Category } from "../models/category.model.js";
@@ -16,6 +16,7 @@ import {
 
 import { convertSecondsToDuration } from "../utils/secToDuration.js";
 import type { UploadedFile } from "express-fileupload";
+import { BadRequestError, NotFoundError } from "../utils/error-handler.js";
 
 type CourseUpdate = Partial<
   Pick<
@@ -56,7 +57,11 @@ export interface ICoursePopulated {
 
 // Create Course handler function:
 
-export const createCourse = async (req: AuthRequest, res: Response) => {
+export const createCourse = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // Fetch all data
     const {
@@ -87,11 +92,9 @@ export const createCourse = async (req: AuthRequest, res: Response) => {
       !instructions.length ||
       !thumbnail
     ) {
-      res.status(400).json({
-        success: false,
-        message: "All fields are required.",
-      });
-      return;
+      return next(
+        new BadRequestError("All fields are required to create a course.")
+      );
     }
 
     let courseStatus = status || "Draft";
@@ -103,21 +106,15 @@ export const createCourse = async (req: AuthRequest, res: Response) => {
     });
 
     if (!instructorDetails) {
-      res.status(400).json({
-        success: false,
-        message: "Instructor details not found.",
-      });
-      return;
+      return next(
+        new NotFoundError("Instructor details not found for creating course.")
+      );
     }
 
     const categoryDetails = await Category.findById(category);
 
     if (!categoryDetails) {
-      res.status(404).json({
-        success: false,
-        message: "Category details not found.",
-      });
-      return;
+      return next(new NotFoundError("Category details not found."));
     }
 
     // After all validation, upload image to cloudinary
@@ -173,24 +170,17 @@ export const createCourse = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Update course details:
 
-export const editCourse = async (req: AuthRequest, res: Response) => {
+export const editCourse = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { courseId, ...updatesRaw } = req.body;
     const updates: CourseUpdate = updatesRaw;
@@ -200,11 +190,7 @@ export const editCourse = async (req: AuthRequest, res: Response) => {
     const course = await Course.findById(courseId);
 
     if (!course) {
-      res.status(404).json({
-        success: false,
-        message: "No Course Found!",
-      });
-      return;
+      return next(new NotFoundError("Course not found with the given id."));
     }
 
     // If thumbnail image is found
@@ -282,24 +268,17 @@ export const editCourse = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in editing course: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Get all courses handler function:
 
-export const getAllCourses = async (req: AuthRequest, res: Response) => {
+export const getAllCourses = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const allCourses = await Course.find(
       {},
@@ -326,22 +305,15 @@ export const getAllCourses = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in getting all courses: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
-export const getCourseDetails = async (req: AuthRequest, res: Response) => {
+export const getCourseDetails = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     logger.info("Request comes to get course details.");
 
@@ -367,11 +339,9 @@ export const getCourseDetails = async (req: AuthRequest, res: Response) => {
       .exec()) as unknown as ICoursePopulated;
 
     if (!courseDetails) {
-      res.status(400).json({
-        success: false,
-        message: `Could not find course with id: ${courseId}`,
-      });
-      return;
+      return next(
+        new NotFoundError(`Could not find course with id: ${courseId}`)
+      );
     }
 
     let totalDurationInSeconds = 0;
@@ -393,30 +363,20 @@ export const getCourseDetails = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in getting course details: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Get all courses made by an instructor
 
-export const getInstructorCourses = async (req: AuthRequest, res: Response) => {
+export const getInstructorCourses = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // get the instructor id
     const instructorId = req.auth?.authUser?.id;
-    // const { instructorId } = req.body;
-
-    // Find all courses of that instructor and return
 
     const instructorCourses = await Course.find({
       instructor: instructorId,
@@ -433,35 +393,24 @@ export const getInstructorCourses = async (req: AuthRequest, res: Response) => {
     return;
   } catch (error) {
     logger.error("Error in getting instructor courses: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Delete the Course:
 
-export const deleteCourse = async (req: AuthRequest, res: Response) => {
+export const deleteCourse = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { courseId } = req.body;
 
     // Find the Course:
     const course = await Course.findById(courseId);
     if (!course) {
-      res.status(404).json({
-        success: false,
-        message: "Course not found!",
-      });
-      return;
+      return next(new NotFoundError("Course not found with the given id."));
     }
 
     // Unenroll students from the course
@@ -495,24 +444,17 @@ export const deleteCourse = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in deleting course: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Get Full course details:
 
-export const getFullCourseDetails = async (req: AuthRequest, res: Response) => {
+export const getFullCourseDetails = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { courseId } = req.body;
     const userId = req.auth?.authUser?.id;
@@ -543,10 +485,9 @@ export const getFullCourseDetails = async (req: AuthRequest, res: Response) => {
     logger.info("courseProgressCount : ", courseProgressCount);
 
     if (!courseDetails) {
-      return res.status(400).json({
-        success: false,
-        message: `Could not find course with id: ${courseId}`,
-      });
+      return next(
+        new NotFoundError(`Could not find course with id: ${courseId}`)
+      );
     }
 
     let totalDurationInSeconds = 0;
@@ -573,24 +514,17 @@ export const getFullCourseDetails = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in getting full course details: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
 
 // Get courses acccording to Tags:
 
-export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
+export const getTaggedCourses = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { searchQuery } = req.query;
 
@@ -601,11 +535,9 @@ export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
       Array.isArray(searchQuery) ||
       typeof searchQuery !== "string"
     ) {
-      res.status(400).json({
-        success: false,
-        message: "Search Query is required and must be a string.",
-      });
-      return;
+      return next(
+        new BadRequestError("Search Query is required and must be a string.")
+      );
     }
 
     const queryString = searchQuery as string;
@@ -617,11 +549,9 @@ export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
       Array.isArray(searchQuery) ||
       typeof searchQuery !== "string"
     ) {
-      res.status(400).json({
-        success: false,
-        message: "Search Query is required and must be a string.",
-      });
-      return;
+      return next(
+        new BadRequestError("Search Query is required and must be a string.")
+      );
     }
 
     const regex = new RegExp(escapedQuery, "i");
@@ -634,10 +564,9 @@ export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
     });
 
     if (courseDetails.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: `No courses found for the tag: "${searchQuery}"`,
-      });
+      return next(
+        new NotFoundError("No courses found related to the given tag.")
+      );
     }
 
     // Map the course details to only include courseId and tags
@@ -654,17 +583,6 @@ export const getTaggedCourses = async (req: AuthRequest, res: Response) => {
     });
   } catch (error) {
     logger.error("Error in getting tagged courses: ", error);
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: "An unknown error occurred.",
-      });
-    }
-    return;
+    return next(error);
   }
 };
