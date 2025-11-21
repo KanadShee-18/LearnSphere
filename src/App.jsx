@@ -15,6 +15,7 @@ import Catalog from "./pages/Catalog";
 import Home from "./pages/Home";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import OnlineStatus from "./utils/OnlineStatus";
+import Dashboard from "./pages/Dashboard";
 
 // Lazy-loaded components
 const CourseDetails = lazy(() => import("./pages/CourseDetails"));
@@ -27,7 +28,7 @@ const Error = lazy(() => import("./pages/Error"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const PrivateRoute = lazy(() => import("./components/core/auth/PrivateRoute"));
-const Dashboard = lazy(() => import("./pages/Dashboard"));
+// const Dashboard = lazy(() => import("./pages/Dashboard"));
 const MyProfile = lazy(() => import("./components/core/dashboard/MyProfile"));
 const Settings = lazy(() =>
   import("./components/core/dashboard/Settings/Settings")
@@ -56,7 +57,6 @@ const VideoDetails = lazy(() =>
 );
 
 function App() {
-
   const online = OnlineStatus();
 
   const { user } = useSelector((state) => state.profile);
